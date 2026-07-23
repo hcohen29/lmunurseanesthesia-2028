@@ -66,7 +66,7 @@ def render_entry(d):
     iso   = js_string(d["iso"])
 
   
-        plan_flag = ""
+    plan_flag = ""
 
     lines = ['    {{ mo:"{}", dy:"{}", type:"{}", title:"{}",'.format(mo, dy, typ, title)]
 
