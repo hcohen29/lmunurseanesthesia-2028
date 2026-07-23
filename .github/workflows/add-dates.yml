@@ -1,1 +1,41 @@
+name: Add Calendar Dates
 
+on:
+  workflow_dispatch:
+    inputs:
+      dates:
+        description: 'One date per line: YYYY-MM-DD | MON | DD | Title | type | Details (optional) | Range (optional)'
+        required: true
+        type: string
+      semester_label:
+        description: 'Optional semester label (e.g. Spring 2027)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  add-dates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Add dates to index.html
+        env:
+          DATES_INPUT: ${{ github.event.inputs.dates }}
+          SEMESTER_LABEL: ${{ github.event.inputs.semester_label }}
+        run: python .github/scripts/add_dates.py
+      - name: Commit and push
+        run: |
+          git config user.name "Class Hub Bot"
+          git config user.email "lmunurseanesthesia2028@gmail.com"
+          git add class-hub/index.html
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Add calendar dates via GitHub Actions"
+            git push
+          fi
