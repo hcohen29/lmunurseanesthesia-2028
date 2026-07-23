@@ -65,10 +65,7 @@ def render_entry(d):
     title = js_string(d["title"])
     iso   = js_string(d["iso"])
 
-    try:
-        dt = datetime.strptime(d["iso"], "%Y-%m-%d")
-        plan_flag = ", plan:true" if (dt - datetime.today()).days > 60 else ""
-    except Exception:
+  
         plan_flag = ""
 
     lines = ['    {{ mo:"{}", dy:"{}", type:"{}", title:"{}",'.format(mo, dy, typ, title)]
