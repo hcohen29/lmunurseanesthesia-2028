@@ -10,126 +10,285 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --ink: #08121f; --ink-mid: #0d1f36; --ink-soft: #132840;
-      --gold: #C9A84C; --gold-dim: rgba(201,168,76,0.15); --gold-line: rgba(201,168,76,0.3);
-      --white: #ffffff; --off-white: #f7f6f4;
-      --muted: rgba(255,255,255,0.45); --muted-dark: #6b7280;
-      --border-dark: rgba(255,255,255,0.08); --border-light: #e8e6e2;
-      --radius: 8px;
-      --serif: 'Playfair Display', Georgia, serif;
-      --sans: 'Inter', -apple-system, sans-serif;
-      --c-didactic: #1a4aaa; --c-didactic-bg: #e8f0ff;
-      --c-clinical: #1a7040; --c-clinical-bg: #e8f5ee;
-      --c-dnp: #5020a0; --c-dnp-bg: #f0eaff;
-      --c-lab: #7a5a00; --c-lab-bg: rgba(201,168,76,0.18);
-      --c-async: #6b7280; --c-async-bg: #f3f4f6;
-      --c-sync: #9b1c1c; --c-sync-bg: #fde8e8;
+      --ink:        #08121f;
+      --ink-mid:    #0d1f36;
+      --ink-soft:   #132840;
+      --gold:       #C9A84C;
+      --gold-dim:   rgba(201,168,76,0.15);
+      --gold-line:  rgba(201,168,76,0.3);
+      --white:      #ffffff;
+      --off-white:  #f7f6f4;
+      --muted:      rgba(255,255,255,0.45);
+      --muted-dark: #6b7280;
+      --border-dark: rgba(255,255,255,0.08);
+      --border-light: #e8e6e2;
+      --radius:     8px;
+      --serif:      'Playfair Display', Georgia, serif;
+      --sans:       'Inter', -apple-system, sans-serif;
+
+      --c-didactic:     #1a4aaa;
+      --c-didactic-bg:  #e8f0ff;
+      --c-clinical:     #1a7040;
+      --c-clinical-bg:  #e8f5ee;
+      --c-dnp:          #5020a0;
+      --c-dnp-bg:       #f0eaff;
+      --c-lab:          #7a5a00;
+      --c-lab-bg:       rgba(201,168,76,0.18);
+      --c-async:        #6b7280;
+      --c-async-bg:     #f3f4f6;
+      --c-sync:         #9b1c1c;
+      --c-sync-bg:      #fde8e8;
     }
     html { scroll-behavior: smooth; }
     body { font-family: var(--sans); background: var(--off-white); color: var(--ink); line-height: 1.6; }
-    nav { position: sticky; top: 0; z-index: 200; background: var(--ink); border-bottom: 1px solid var(--border-dark); padding: 0 56px; display: flex; align-items: center; justify-content: space-between; height: 66px; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--ink);
+      border-bottom: 1px solid var(--border-dark);
+      padding: 0 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 66px;
+    }
     .nav-left { display: flex; align-items: center; gap: 20px; }
-    .nav-back { display: flex; align-items: center; gap: 8px; color: var(--muted); text-decoration: none; font-size: 12px; font-weight: 500; padding: 6px 10px; border-radius: var(--radius); transition: all 0.15s; }
+    .nav-back {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--muted); text-decoration: none;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.3px;
+      padding: 6px 10px; border-radius: var(--radius);
+      transition: all 0.15s;
+    }
     .nav-back:hover { color: white; background: rgba(255,255,255,0.06); }
+    .nav-back-arrow { font-size: 14px; }
     .nav-divider { width: 1px; height: 20px; background: var(--border-dark); }
     .nav-label { color: white; font-size: 14px; font-weight: 600; }
     .nav-sub { color: var(--muted); font-size: 11px; }
     nav > ul { list-style: none; display: flex; gap: 2px; }
-    nav > ul a { color: var(--muted); text-decoration: none; font-size: 12.5px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.15s; }
+    nav > ul a { color: var(--muted); text-decoration: none; font-size: 12.5px; font-weight: 500; letter-spacing: 0.3px; padding: 6px 12px; border-radius: 6px; transition: all 0.15s; }
     nav > ul a:hover { color: white; background: rgba(255,255,255,0.06); }
-    .hero { background: var(--ink); padding: 80px 56px 72px; position: relative; overflow: hidden; }
-    .hero-bg-line { position: absolute; right: 30%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold-line), transparent); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink); padding: 80px 56px 72px;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg-line {
+      position: absolute; right: 30%; top: 0; bottom: 0;
+      width: 1px; background: linear-gradient(to bottom, transparent, var(--gold-line), transparent);
+    }
     .hero-inner { max-width: 700px; position: relative; z-index: 1; }
-    .hero-kicker { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-kicker {
+      font-size: 11px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+    }
     .hero-kicker::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
-    .hero h1 { font-family: var(--serif); font-size: clamp(32px,4.5vw,54px); font-weight: 800; line-height: 1.1; color: white; margin-bottom: 20px; }
+    .hero h1 {
+      font-family: var(--serif); font-size: clamp(32px, 4.5vw, 54px);
+      font-weight: 800; line-height: 1.1; color: white; margin-bottom: 20px;
+    }
     .hero h1 span { color: var(--gold); }
     .hero p { font-size: 15px; color: var(--muted); line-height: 1.75; max-width: 480px; font-weight: 300; }
-    .progress-strip { background: var(--ink-soft); border-bottom: 1px solid var(--border-dark); padding: 20px 56px; display: flex; align-items: center; }
-    .prog-sem { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; }
-    .prog-sem::after { content: ''; position: absolute; top: 10px; left: 50%; right: -50%; height: 2px; background: var(--border-dark); z-index: 0; }
+
+    /* ── PROGRESS BAR ── */
+    .progress-strip {
+      background: var(--ink-soft); border-bottom: 1px solid var(--border-dark);
+      padding: 20px 56px; display: flex; align-items: center; gap: 0;
+    }
+    .prog-sem {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      position: relative; cursor: default;
+    }
+    .prog-sem::after {
+      content: ''; position: absolute; top: 10px; left: 50%; right: -50%;
+      height: 2px; background: var(--border-dark); z-index: 0;
+    }
     .prog-sem:last-child::after { display: none; }
-    .prog-dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border-dark); background: var(--ink-soft); position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--muted); }
-    .prog-sem.done .prog-dot { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+    .prog-dot {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid var(--border-dark);
+      background: var(--ink-soft);
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; color: var(--muted);
+      transition: all 0.2s;
+    }
+    .prog-sem.done .prog-dot   { background: var(--gold); border-color: var(--gold); color: var(--ink); }
     .prog-sem.current .prog-dot { background: white; border-color: white; color: var(--ink); }
     .prog-sem.done::after, .prog-sem.current::after { background: var(--gold); opacity: 0.4; }
-    .prog-label { font-size: 9px; color: var(--muted); margin-top: 6px; text-align: center; }
+    .prog-label { font-size: 9px; color: var(--muted); margin-top: 6px; letter-spacing: 0.5px; text-align: center; }
     .prog-sem.done .prog-label, .prog-sem.current .prog-label { color: rgba(255,255,255,0.7); }
-    .legend-bar { background: white; border-bottom: 1px solid var(--border-light); padding: 14px 56px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+
+    /* ── LEGEND ── */
+    .legend-bar {
+      background: white; border-bottom: 1px solid var(--border-light);
+      padding: 14px 56px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    }
     .legend-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted-dark); margin-right: 8px; }
     .leg { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted-dark); }
     .leg-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── MAIN CONTENT ── */
     .content { max-width: 1060px; margin: 0 auto; padding: 56px; }
+
+    /* ── SEMESTER BLOCK ── */
     .sem-block { margin-bottom: 52px; }
-    .sem-divider { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-light); }
-    .sem-number { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--ink); flex-shrink: 0; }
+    .sem-divider {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 20px; padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .sem-number {
+      font-family: var(--serif); font-size: 22px; font-weight: 700;
+      color: var(--ink); flex-shrink: 0;
+    }
     .sem-info { flex: 1; }
     .sem-term { font-size: 14px; font-weight: 600; color: var(--ink); }
     .sem-credits { font-size: 12px; color: var(--muted-dark); margin-top: 1px; }
-    .sem-badge { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; flex-shrink: 0; }
-    .sb-didactic { background: var(--c-didactic-bg); color: var(--c-didactic); }
-    .sb-clinical { background: var(--c-clinical-bg); color: var(--c-clinical); }
-    .sb-mixed { background: var(--gold-dim); color: #7a5a00; border: 1px solid var(--gold-line); }
+    .sem-badge {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 4px 12px; flex-shrink: 0;
+    }
+    .sb-didactic  { background: var(--c-didactic-bg);  color: var(--c-didactic); }
+    .sb-clinical  { background: var(--c-clinical-bg);  color: var(--c-clinical); }
+    .sb-mixed     { background: var(--gold-dim);        color: #7a5a00; border: 1px solid var(--gold-line); }
     .sem-block.current-sem .sem-divider { border-bottom-color: var(--gold); }
-    .sem-block.current-sem .sem-number { color: var(--gold); }
-    .current-badge { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 10px; background: var(--ink); color: var(--gold); }
-    .courses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
-    .course-card { background: white; border: 1px solid var(--border-light); padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; transition: box-shadow 0.15s; cursor: pointer; }
+    .sem-block.current-sem .sem-number  { color: var(--gold); }
+    .current-badge {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 3px 10px; background: var(--ink); color: var(--gold);
+    }
+
+    /* ── COURSE GRID ── */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+
+    /* ── COURSE CARD ── */
+    .course-card {
+      background: white; border: 1px solid var(--border-light);
+      padding: 18px 20px; display: flex; flex-direction: column;
+      gap: 10px; transition: box-shadow 0.15s;
+      cursor: pointer; position: relative;
+    }
     .course-card:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
-    .course-card.open { box-shadow: 0 2px 16px rgba(0,0,0,0.07); border-color: var(--ink); }
+    .course-card.open  { box-shadow: 0 2px 16px rgba(0,0,0,0.07); border-color: var(--ink); }
     .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-    .course-code { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted-dark); }
+    .course-code {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted-dark);
+    }
     .card-badges { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
-    .badge { font-size: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 2px 7px; }
-    .b-async { background: var(--c-async-bg); color: var(--c-async); }
-    .b-sync { background: var(--c-sync-bg); color: var(--c-sync); }
+    .badge {
+      font-size: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      padding: 2px 7px;
+    }
+    .b-async    { background: var(--c-async-bg);    color: var(--c-async); }
+    .b-sync     { background: var(--c-sync-bg);     color: var(--c-sync); }
     .b-didactic { background: var(--c-didactic-bg); color: var(--c-didactic); }
     .b-clinical { background: var(--c-clinical-bg); color: var(--c-clinical); }
-    .b-dnp { background: var(--c-dnp-bg); color: var(--c-dnp); }
-    .b-lab { background: var(--c-lab-bg); color: var(--c-lab); }
-    .course-name { font-size: 13.5px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+    .b-dnp      { background: var(--c-dnp-bg);      color: var(--c-dnp); }
+    .b-lab      { background: var(--c-lab-bg);       color: var(--c-lab); }
+    .course-name {
+      font-size: 13.5px; font-weight: 600; color: var(--ink); line-height: 1.4;
+    }
     .course-credits { font-size: 11px; color: var(--muted-dark); }
-    .course-faculty { display: flex; align-items: center; gap: 8px; padding-top: 10px; border-top: 1px solid var(--border-light); margin-top: auto; flex-wrap: wrap; }
-    .faculty-initials { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; }
+    .course-faculty {
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+      padding-top: 10px; border-top: 1px solid var(--border-light);
+      margin-top: auto;
+    }
+    .faculty-initials {
+      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
+    }
     .fi-tbd { background: var(--off-white); color: var(--muted-dark); border: 1px dashed #d1d5db; }
     .fi-set { background: var(--ink); color: var(--gold); }
     .faculty-name-text { font-size: 12px; color: var(--muted-dark); font-style: italic; }
     .faculty-name-text.set { font-style: normal; color: var(--ink); font-weight: 500; }
-    .card-detail { display: none; padding-top: 10px; border-top: 1px solid var(--border-light); font-size: 12.5px; color: var(--muted-dark); line-height: 1.7; }
+
+    /* ── EXPANDED DETAIL ── */
+    .card-detail {
+      display: none; padding-top: 10px; border-top: 1px solid var(--border-light);
+      font-size: 12.5px; color: var(--muted-dark); line-height: 1.7;
+    }
     .course-card.open .card-detail { display: block; }
     .detail-row { display: flex; gap: 8px; margin-bottom: 4px; }
     .detail-row strong { color: var(--ink); font-weight: 600; min-width: 70px; }
-    .totals-strip { display: flex; gap: 28px; margin-top: 14px; padding: 12px 0 0; border-top: 1px dashed var(--border-light); font-size: 12px; color: var(--muted-dark); }
+
+    /* ── TOTALS STRIP ── */
+    .totals-strip {
+      display: flex; gap: 28px; margin-top: 14px;
+      padding: 12px 0 0; border-top: 1px dashed var(--border-light);
+      font-size: 12px; color: var(--muted-dark);
+    }
     .totals-strip strong { color: var(--ink); font-weight: 600; }
+
+    /* ── FUTURE PLACEHOLDER ── */
+    .future-note {
+      background: white; border: 1px dashed #d1d5db;
+      padding: 20px 24px; display: flex; align-items: center; gap: 16px;
+    }
+    .future-icon { font-size: 20px; opacity: 0.35; }
+    .future-note p { font-size: 13px; color: var(--muted-dark); line-height: 1.6; }
+    .future-note strong { color: var(--ink); font-weight: 600; }
+
+    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav, .legend-bar, .progress-strip { padding-left: 20px; padding-right: 20px; }
-      .hero { padding: 56px 20px 48px; } .content { padding: 32px 20px; }
-      nav > ul { display: none; } .progress-strip { overflow-x: auto; } .prog-label { display: none; }
+      .hero { padding: 56px 20px 48px; }
+      .content { padding: 32px 20px; }
+      nav > ul { display: none; }
+      .progress-strip { overflow-x: auto; }
+      .prog-label { display: none; }
     }
   </style>
 </head>
 <body>
+
+<!-- NAV -->
 <nav>
   <div class="nav-left">
-    <a href="./index.html" class="nav-back"><span>←</span> Class Hub</a>
+    <a href="./index.html" class="nav-back">
+      <span class="nav-back-arrow">←</span> Class Hub
+    </a>
     <div class="nav-divider"></div>
-    <div><div class="nav-label">Curriculum Overview</div><div class="nav-sub">BSN-DNP Nurse Anesthesia · Class of 2028</div></div>
+    <div>
+      <div class="nav-label">Curriculum Overview</div>
+      <div class="nav-sub">BSN-DNP Nurse Anesthesia · Class of 2028</div>
+    </div>
   </div>
   <ul>
-    <li><a href="#sem-1">Sem 1</a></li><li><a href="#sem-2">Sem 2</a></li><li><a href="#sem-3">Sem 3</a></li>
-    <li><a href="#sem-4">Sem 4</a></li><li><a href="#sem-5">Sem 5</a></li><li><a href="#sem-6">Sem 6</a></li>
-    <li><a href="#sem-7">Sem 7</a></li><li><a href="#sem-8">Sem 8</a></li><li><a href="#sem-9">Sem 9</a></li>
+    <li><a href="#sem-1">Sem 1</a></li>
+    <li><a href="#sem-2">Sem 2</a></li>
+    <li><a href="#sem-3">Sem 3</a></li>
+    <li><a href="#sem-4">Sem 4</a></li>
+    <li><a href="#sem-5">Sem 5</a></li>
+    <li><a href="#sem-6">Sem 6</a></li>
+    <li><a href="#sem-7">Sem 7</a></li>
+    <li><a href="#sem-8">Sem 8</a></li>
+    <li><a href="#sem-9">Sem 9</a></li>
   </ul>
 </nav>
+
+<!-- HERO -->
 <section class="hero">
   <div class="hero-bg-line"></div>
   <div class="hero-inner">
-    <div class="hero-kicker">Lincoln Memorial University · DNP Nurse Anesthesia</div>
+    <div class="hero-kicker">Lincoln Memorial University &nbsp;·&nbsp; DNP Nurse Anesthesia</div>
     <h1>Curriculum Overview<br><span>Class of 2028.</span></h1>
-    <p>9 semesters · 109 credit hours · Spring 2026 through Fall 2028. Click any course to see details. Faculty fills in as we confirm them.</p>
+    <p>9 semesters · 109 credit hours · Spring 2026 through Fall 2028. Click any course to see details. Faculty links fill in as we confirm them.</p>
   </div>
 </section>
+
+<!-- PROGRESS STRIP -->
 <div class="progress-strip" id="progressStrip"></div>
+
+<!-- LEGEND -->
 <div class="legend-bar">
   <span class="legend-label">Course type</span>
   <div class="leg"><div class="leg-dot" style="background:var(--c-didactic)"></div>Didactic</div>
@@ -139,100 +298,320 @@
   <div class="leg"><div class="leg-dot" style="background:var(--c-async)"></div>Asynchronous (online)</div>
   <div class="leg"><div class="leg-dot" style="background:var(--c-sync)"></div>Synchronous (attendance required)</div>
 </div>
+
+<!-- CURRICULUM -->
 <div class="content" id="curriculumContent"></div>
+
+<!-- FACULTY ROSTER -->
+<div class="content" id="faculty" style="padding-top:0;">
+  <div style="border-top:1px solid var(--border-light);padding-top:48px;margin-bottom:36px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:12px;">
+      <span style="display:block;width:28px;height:1px;background:var(--gold);"></span>Faculty
+    </div>
+    <h2 style="font-family:var(--serif);font-size:28px;font-weight:800;color:var(--ink);line-height:1.2;">Program Faculty</h2>
+  </div>
+  <div id="facultyRoster" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;"></div>
+</div>
+
+<!-- FOOTER -->
 <footer style="background:var(--ink);border-top:1px solid var(--border-dark);padding:28px 56px;display:flex;justify-content:space-between;align-items:center;">
-  <div style="font-size:12px;color:var(--muted);"><strong style="color:rgba(255,255,255,0.7);">LMU Nurse Anesthesia · Class of 2028</strong><br>Curriculum plan revised July 2025 · 109 total credit hours</div>
+  <div style="font-size:12px;color:var(--muted);">
+    <strong style="color:rgba(255,255,255,0.7);">LMU Nurse Anesthesia · Class of 2028</strong><br>
+    Curriculum plan revised July 2025 · 109 total credit hours
+  </div>
   <a href="./index.html" style="font-size:12px;color:var(--gold);text-decoration:none;">← Back to Class Hub</a>
 </footer>
+
 <script>
-  const CURRENT_SEM = 2;
+  // ═══════════════════════════════════════════════════════
+  //  CURRICULUM DATA
+  //  To update faculty: change faculty: null to faculty: "Dr. Name"
+  //  To restructure semesters: move course objects between semester arrays
+  //  course types: 'didactic' | 'clinical' | 'dnp' | 'lab'
+  //  * = online (set online: true)
+  // ═══════════════════════════════════════════════════════
+
+  const CURRENT_SEM = 2; // update each semester
+
   const FACULTY = [
-    { id: "conder", name: "Dr. Stephanie Conder", credentials: "Associate Professor of Nursing" },
-    { id: "julien", name: "Dr. Marie Julien", credentials: "Assistant Professor & Assistant Director of Nurse Anesthesia" },
+    { id: "conder",        name: "Dr. Stephanie Conder",       credentials: "Associate Professor of Nursing" },
+    { id: "england",       name: "Dr. Jami England",           credentials: "Assistant Professor of Nursing" },
+    { id: "julien",        name: "Dr. Marie Julien",           credentials: "Assistant Professor & Assistant Director of Nurse Anesthesia" },
+    { id: "lingerfelt",    name: "Dr. Carrie Lingerfelt",      credentials: "Faculty" },
+    { id: "mapes",         name: "Dr. Christy Mapes",         credentials: "Instructor of Nursing, DNP, FNP-BC" },
     { id: "stewart-glenn", name: "Dr. Jennifer Stewart-Glenn", credentials: "Associate Professor & Director, DNP Program" },
-    { id: "stocks", name: "Dr. Jennifer Stocks", credentials: "Associate Professor & Assistant Dean of Graduate Nursing" },
+    { id: "stocks",        name: "Dr. Jennifer Stocks",        credentials: "Associate Professor & Assistant Dean of Graduate Nursing" },
+    { id: "todd",          name: "Dr. Raleigh Todd",           credentials: "Director, Nurse Anesthesia Concentration & Associate Professor of Nursing" },
   ];
+
   const SEMESTERS = [
-    { number:1, label:"Semester 1", term:"Spring 2026", type:"didactic", credits:12, courses:[
-      { code:"NURS 702", name:"Theoretical Foundations and Research Methods", credits:4, online:true, type:"didactic", faculty:"stewart-glenn" },
-      { code:"NURS 731", name:"Advanced Pharmacology & Therapeutics", credits:4, online:true, type:"didactic", faculty:"conder", guests:["stocks"] },
-      { code:"NURS 740", name:"Interprofessional Collaboration, Health Policy, & Organizational Systems", credits:4, online:true, type:"didactic", faculty:null },
-    ]},
-    { number:2, label:"Semester 2", term:"Summer 2026", type:"didactic", credits:11, courses:[
-      { code:"NURS 705", name:"Informational Systems and Technology Application", credits:2, online:true, type:"didactic", faculty:"julien" },
-      { code:"NURS 710", name:"Biostatistics", credits:3, online:true, type:"didactic", faculty:"stewart-glenn" },
-      { code:"NURS 721", name:"Advanced Health Assessment", credits:3, online:true, type:"didactic", faculty:"stocks" },
-      { code:"NURS 732", name:"Advanced Anesthesia Pharmacology I", credits:3, online:true, type:"didactic", faculty:null },
-    ]},
-    { number:3, label:"Semester 3", term:"Fall 2026", type:"didactic", credits:15, courses:[
-      { code:"NURS 701", name:"Advanced A&P and Pathophysiology", credits:4, online:false, type:"didactic", faculty:null },
-      { code:"NURS 733", name:"Advanced Anesthesia Pharmacology II", credits:3, online:false, type:"didactic", faculty:null },
-      { code:"NURS 741", name:"Adaptive Leadership", credits:4, online:true, type:"didactic", faculty:null },
-      { code:"NURS 753", name:"Principles and Practice of Anesthesia I", credits:3, online:false, type:"didactic", faculty:null },
-      { code:"NURS 753A", name:"Principles and Practice of Anesthesia I — Lab", credits:1, online:false, type:"lab", faculty:null },
-    ]},
-    { number:4, label:"Semester 4", term:"Spring 2027", type:"didactic", credits:11, courses:[
-      { code:"NURS 700", name:"Knowledge Development in Nursing Science", credits:3, online:true, type:"didactic", faculty:null },
-      { code:"NURS 711", name:"Advanced A&P and Pathophysiology I", credits:4, online:false, type:"didactic", faculty:null },
-      { code:"NURS 754", name:"Principles and Practice of Anesthesia II", credits:3, online:false, type:"didactic", faculty:null },
-      { code:"NURS 754A", name:"Principles and Practice of Anesthesia II — Lab", credits:1, online:false, type:"lab", faculty:null },
-    ]},
-    { number:5, label:"Semester 5", term:"Summer 2027", type:"mixed", credits:12, courses:[
-      { code:"NURS 712", name:"Advanced A&P and Pathophysiology II", credits:2, online:false, type:"didactic", faculty:null },
-      { code:"NURS 720", name:"Translational Research for Evidence Based Practice", credits:4, online:true, type:"didactic", faculty:null },
-      { code:"NURS 771", name:"DNP Anesthesia Clinical Practicum I", credits:6, online:false, type:"clinical", faculty:null },
-    ]},
-    { number:6, label:"Semester 6", term:"Fall 2027", type:"mixed", credits:15, courses:[
-      { code:"NURS 730", name:"Epidemiology and Population Health", credits:3, online:true, type:"didactic", faculty:null },
-      { code:"NURS 755", name:"Principles and Practice of Anesthesia III", credits:3, online:false, type:"didactic", faculty:null },
-      { code:"NURS 755A", name:"Principles and Practice of Anesthesia III — Lab", credits:1, online:false, type:"lab", faculty:null },
-      { code:"NURS 772", name:"DNP Anesthesia Clinical Practicum II", credits:6, online:false, type:"clinical", faculty:null },
-      { code:"NURS 781", name:"DNP Project I", credits:2, online:true, type:"dnp", faculty:null },
-    ]},
-    { number:7, label:"Semester 7", term:"Spring 2028", type:"clinical", credits:10, courses:[
-      { code:"NURS 756", name:"Principles and Practice of Anesthesia IV", credits:2, online:false, type:"didactic", faculty:null },
-      { code:"NURS 773", name:"DNP Anesthesia Clinical Practicum III", credits:6, online:false, type:"clinical", faculty:null },
-      { code:"NURS 782", name:"DNP Project II", credits:2, online:true, type:"dnp", faculty:null },
-    ]},
-    { number:8, label:"Semester 8", term:"Summer 2028", type:"clinical", credits:12, courses:[
-      { code:"NURS 742", name:"Strategic Systems Thinking", credits:4, online:true, type:"didactic", faculty:null },
-      { code:"NURS 757", name:"Principles and Practice of Anesthesia V", credits:2, online:false, type:"didactic", faculty:null },
-      { code:"NURS 777", name:"DNP Anesthesia Clinical Practicum IV", credits:6, online:false, type:"clinical", faculty:null },
-    ]},
-    { number:9, label:"Semester 9", term:"Fall 2028", type:"clinical", credits:11, courses:[
-      { code:"NURS 778", name:"DNP Anesthesia Clinical Practicum V", credits:6, online:false, type:"clinical", faculty:null },
-      { code:"NURS 783", name:"DNP Project III", credits:2, online:true, type:"dnp", faculty:null },
-      { code:"NURS 789", name:"Advanced Anesthesia Synthesis", credits:3, online:false, type:"didactic", faculty:null },
-    ]},
+    {
+      number: 1,
+      label: "Semester 1",
+      term: "Spring 2026",
+      type: "didactic",
+      credits: 12,
+      courses: [
+        { code: "NURS 702", name: "Theoretical Foundations and Research Methods",                           credits: 4, online: true,  type: "didactic", faculty: "stewart-glenn" },
+        { code: "NURS 731", name: "Advanced Pharmacology & Therapeutics",                                   credits: 4, online: true,  type: "didactic", faculty: "conder" },
+        { code: "NURS 740", name: "Interprofessional Collaboration, Health Policy, & Organizational Systems", credits: 4, online: true,  type: "didactic", faculty: "lingerfelt" },
+      ]
+    },
+    {
+      number: 2,
+      label: "Semester 2",
+      term: "Summer 2026",
+      type: "didactic",
+      credits: 11,
+      courses: [
+        { code: "NURS 705", name: "Informational Systems and Technology Application",   credits: 2, online: true,  type: "didactic", faculty: "julien" },
+        { code: "NURS 710", name: "Biostatistics",                                      credits: 3, online: true,  type: "didactic", faculty: "stewart-glenn" },
+        { code: "NURS 721", name: "Advanced Health Assessment",                         credits: 3, online: true,  type: "didactic", faculty: ["mapes", "england"] },
+        { code: "NURS 732", name: "Advanced Anesthesia Pharmacology I",                 credits: 3, online: true,  type: "didactic", faculty: "todd" },
+      ]
+    },
+    {
+      number: 3,
+      label: "Semester 3",
+      term: "Fall 2026",
+      type: "didactic",
+      credits: 15,
+      courses: [
+        { code: "NURS 701",  name: "Advanced A&P and Pathophysiology",                 credits: 4, online: false, type: "didactic", faculty: null },
+        { code: "NURS 733",  name: "Advanced Anesthesia Pharmacology II",               credits: 3, online: false, type: "didactic", faculty: null },
+        { code: "NURS 741",  name: "Adaptive Leadership",                               credits: 4, online: true,  type: "didactic", faculty: null },
+        { code: "NURS 753",  name: "Principles and Practice of Anesthesia I",           credits: 3, online: false, type: "didactic", faculty: null },
+        { code: "NURS 753A", name: "Principles and Practice of Anesthesia I — Lab",     credits: 1, online: false, type: "lab",      faculty: null },
+      ]
+    },
+    {
+      number: 4,
+      label: "Semester 4",
+      term: "Spring 2027",
+      type: "didactic",
+      credits: 11,
+      courses: [
+        { code: "NURS 700",  name: "Knowledge Development in Nursing Science",         credits: 3, online: true,  type: "didactic", faculty: null },
+        { code: "NURS 711",  name: "Advanced A&P and Pathophysiology I",               credits: 4, online: false, type: "didactic", faculty: null },
+        { code: "NURS 754",  name: "Principles and Practice of Anesthesia II",         credits: 3, online: false, type: "didactic", faculty: null },
+        { code: "NURS 754A", name: "Principles and Practice of Anesthesia II — Lab",   credits: 1, online: false, type: "lab",      faculty: null },
+      ]
+    },
+    {
+      number: 5,
+      label: "Semester 5",
+      term: "Summer 2027",
+      type: "mixed",
+      credits: 12,
+      courses: [
+        { code: "NURS 712", name: "Advanced A&P and Pathophysiology II",               credits: 2, online: false, type: "didactic", faculty: null },
+        { code: "NURS 720", name: "Translational Research for Evidence Based Practice", credits: 4, online: true,  type: "didactic", faculty: null },
+        { code: "NURS 771", name: "DNP Anesthesia Clinical Practicum I",               credits: 6, online: false, type: "clinical", faculty: null },
+      ]
+    },
+    {
+      number: 6,
+      label: "Semester 6",
+      term: "Fall 2027",
+      type: "mixed",
+      credits: 15,
+      courses: [
+        { code: "NURS 730",  name: "Epidemiology and Population Health",               credits: 3, online: true,  type: "didactic", faculty: null },
+        { code: "NURS 755",  name: "Principles and Practice of Anesthesia III",        credits: 3, online: false, type: "didactic", faculty: null },
+        { code: "NURS 755A", name: "Principles and Practice of Anesthesia III — Lab",  credits: 1, online: false, type: "lab",      faculty: null },
+        { code: "NURS 772",  name: "DNP Anesthesia Clinical Practicum II",             credits: 6, online: false, type: "clinical", faculty: null },
+        { code: "NURS 781",  name: "DNP Project I",                                    credits: 2, online: true,  type: "dnp",      faculty: null },
+      ]
+    },
+    {
+      number: 7,
+      label: "Semester 7",
+      term: "Spring 2028",
+      type: "clinical",
+      credits: 10,
+      courses: [
+        { code: "NURS 756", name: "Principles and Practice of Anesthesia IV",          credits: 2, online: false, type: "didactic", faculty: null },
+        { code: "NURS 773", name: "DNP Anesthesia Clinical Practicum III",             credits: 6, online: false, type: "clinical", faculty: null },
+        { code: "NURS 782", name: "DNP Project II",                                    credits: 2, online: true,  type: "dnp",      faculty: null },
+      ]
+    },
+    {
+      number: 8,
+      label: "Semester 8",
+      term: "Summer 2028",
+      type: "clinical",
+      credits: 12,
+      courses: [
+        { code: "NURS 742", name: "Strategic Systems Thinking",                        credits: 4, online: true,  type: "didactic", faculty: null },
+        { code: "NURS 757", name: "Principles and Practice of Anesthesia V",           credits: 2, online: false, type: "didactic", faculty: null },
+        { code: "NURS 777", name: "DNP Anesthesia Clinical Practicum IV",              credits: 6, online: false, type: "clinical", faculty: null },
+      ]
+    },
+    {
+      number: 9,
+      label: "Semester 9",
+      term: "Fall 2028",
+      type: "clinical",
+      credits: 11,
+      courses: [
+        { code: "NURS 778", name: "DNP Anesthesia Clinical Practicum V",               credits: 6, online: false, type: "clinical", faculty: null },
+        { code: "NURS 783", name: "DNP Project III",                                   credits: 2, online: true,  type: "dnp",      faculty: null },
+        { code: "NURS 789", name: "Advanced Anesthesia Synthesis",                     credits: 3, online: false, type: "didactic", faculty: null },
+      ]
+    },
   ];
-  const TYPE_BADGE = { didactic:'<span class="badge b-didactic">Didactic</span>', clinical:'<span class="badge b-clinical">Clinical</span>', dnp:'<span class="badge b-dnp">DNP Project</span>', lab:'<span class="badge b-lab">Lab</span>' };
-  const SEM_BADGE_CLASS = { didactic:'sb-didactic', clinical:'sb-clinical', mixed:'sb-mixed' };
-  const SEM_BADGE_LABEL = { didactic:'Didactic', clinical:'Clinical', mixed:'Didactic + Clinical' };
-  function getFacultyDisplay(id, guests) {
+
+  // ═══════════════════════════════════════════════════════
+  //  NO EDITS NEEDED BELOW THIS LINE
+  // ═══════════════════════════════════════════════════════
+
+  const TYPE_BADGE = {
+    didactic: '<span class="badge b-didactic">Didactic</span>',
+    clinical: '<span class="badge b-clinical">Clinical</span>',
+    dnp:      '<span class="badge b-dnp">DNP Project</span>',
+    lab:      '<span class="badge b-lab">Lab</span>',
+  };
+
+  const SEM_BADGE_CLASS = {
+    didactic: 'sb-didactic',
+    clinical: 'sb-clinical',
+    mixed:    'sb-mixed',
+  };
+
+  const SEM_BADGE_LABEL = {
+    didactic: 'Didactic',
+    clinical: 'Clinical',
+    mixed:    'Didactic + Clinical',
+  };
+
+  function shortName(name) {
+    return name.replace(/^Dr\.\s+/, '');
+  }
+
+  function getInitials(name) {
+    return name.split(/[\s\-]/)
+      .filter(w => !w.match(/^(Dr|Prof|Mr|Ms|Mrs|RN|CRNA|DNP)\.?$/i) && w.match(/^[A-Z]/))
+      .map(w => w[0]).join('').substring(0, 3);
+  }
+
+  function getFacultyDisplay(facultyId, guests) {
     let html = '';
-    if (!id) { html = '<div class="faculty-initials fi-tbd">TBD</div><span class="faculty-name-text">Faculty TBD</span>'; }
-    else { const f=FACULTY.find(x=>x.id===id); if(!f){html='<div class="faculty-initials fi-tbd">?</div><span class="faculty-name-text">Unknown</span>';} else { const i=f.name.split(' ').filter(w=>w.match(/[A-Z]/)).map(w=>w[0]).join('').substring(0,2); html='<div class="faculty-initials fi-set">'+i+'</div><span class="faculty-name-text set">'+f.name+'</span>'; } }
-    if(guests&&guests.length){guests.forEach(gid=>{const g=FACULTY.find(x=>x.id===gid);if(g){const gi=g.name.split(' ').filter(w=>w.match(/[A-Z]/)).map(w=>w[0]).join('').substring(0,2);html+='<div class="faculty-initials fi-set" style="opacity:0.55;margin-left:4px;" title="Guest lecturer">'+gi+'</div>';}});}
+    const primaryIds = Array.isArray(facultyId) ? facultyId : facultyId ? [facultyId] : [];
+    if (primaryIds.length === 0) {
+      html = `<div class="faculty-initials fi-tbd">TBD</div><span class="faculty-name-text">Faculty TBD</span>`;
+    } else {
+      primaryIds.forEach((id, i) => {
+        if (i > 0) html += `<div style="flex-basis:100%;height:2px"></div>`;
+        const f = FACULTY.find(x => x.id === id);
+        if (f) {
+          html += `<div class="faculty-initials fi-set">${getInitials(f.name)}</div><span class="faculty-name-text set">${shortName(f.name)}</span>`;
+        } else {
+          html += `<div class="faculty-initials fi-tbd">?</div><span class="faculty-name-text">Unknown</span>`;
+        }
+      });
+    }
+    if (guests && guests.length) {
+      html += `<div style="flex-basis:100%;height:2px"></div>`;
+      guests.forEach(gid => {
+        const g = FACULTY.find(x => x.id === gid);
+        if (g) {
+          html += `<div class="faculty-initials fi-set" style="opacity:0.7;" title="Guest lecturer">${getInitials(g.name)}</div><span class="faculty-name-text set" style="opacity:0.8;font-size:11.5px">${shortName(g.name)}</span>`;
+        }
+      });
+    }
     return html;
   }
+
   function renderProgress() {
-    document.getElementById('progressStrip').innerHTML=SEMESTERS.map(s=>{ const cls=s.number<CURRENT_SEM?'done':s.number===CURRENT_SEM?'current':''; return '<div class="prog-sem '+cls+'"><div class="prog-dot">'+s.number+'</div><div class="prog-label">'+s.term.replace(' 20','<br>')+'</div></div>'; }).join('');
-  }
-  function renderCurriculum() {
-    document.getElementById('curriculumContent').innerHTML=SEMESTERS.map(s=>{
-      const isCurrent=s.number===CURRENT_SEM;
-      const ch=s.courses.map((c,idx)=>{
-        const db=c.type==='clinical'?'':c.online?'<span class="badge b-async">Asynchronous</span>':'<span class="badge b-sync">Synchronous</span>';
-        const b=(TYPE_BADGE[c.type]||'')+db;
-        const fh=getFacultyDisplay(c.faculty,c.guests);
-        return '<div class="course-card" id="card-'+s.number+'-'+idx+'" onclick="toggleCard('+s.number+','+idx+')">'+'<div class="card-top"><div class="course-code">'+c.code+'</div><div class="card-badges">'+b+'</div></div>'+'<div class="course-name">'+c.name+'</div>'+'<div class="course-credits">'+c.credits+' credit hour'+(c.credits!==1?'s':'')+'</div>'+'<div class="course-faculty">'+fh+'</div>'+'<div class="card-detail"><div class="detail-row"><strong>Code</strong> '+c.code+'</div><div class="detail-row"><strong>Credits</strong> '+c.credits+' cr. hrs.</div><div class="detail-row"><strong>Delivery</strong> '+(c.online?'Asynchronous (online)':'Synchronous (attendance required)')+'</div><div class="detail-row"><strong>Semester</strong> '+s.term+'</div></div></div>';
-      }).join('');
-      const oc=s.courses.filter(c=>c.online).length, sc=s.courses.length-oc;
-      return '<div class="sem-block '+(isCurrent?'current-sem':'')+'" id="sem-'+s.number+'">'+'<div class="sem-divider"><div class="sem-number">'+s.label+'</div><div class="sem-info"><div class="sem-term">'+s.term+'</div><div class="sem-credits">'+s.credits+' credit hours · '+s.courses.length+' courses</div></div>'+(isCurrent?'<span class="current-badge">Current</span>':'')+'<span class="sem-badge '+(SEM_BADGE_CLASS[s.type]||'sb-didactic')+'">'+( SEM_BADGE_LABEL[s.type]||s.type)+'</span></div>'+'<div class="courses-grid">'+ch+'</div>'+'<div class="totals-strip"><span><strong>'+s.credits+'</strong> credit hours</span><span><strong>'+s.courses.length+'</strong> courses</span>'+(oc?'<span><strong>'+oc+'</strong> asynchronous</span>':'')+(sc?'<span><strong>'+sc+'</strong> synchronous</span>':'')+'</div></div>';
+    const strip = document.getElementById('progressStrip');
+    strip.innerHTML = SEMESTERS.map(s => {
+      const done    = s.number < CURRENT_SEM;
+      const current = s.number === CURRENT_SEM;
+      const cls = done ? 'done' : current ? 'current' : '';
+      return `<div class="prog-sem ${cls}">
+        <div class="prog-dot">${s.number}</div>
+        <div class="prog-label">${s.term.replace(' 20','<br>')}</div>
+      </div>`;
     }).join('');
   }
-  function toggleCard(n,i){document.getElementById('card-'+n+'-'+i).classList.toggle('open');}
-  renderProgress(); renderCurriculum();
+
+  function renderCurriculum() {
+    const container = document.getElementById('curriculumContent');
+    container.innerHTML = SEMESTERS.map(s => {
+      const isCurrent = s.number === CURRENT_SEM;
+      const badgeCls  = SEM_BADGE_CLASS[s.type] || 'sb-didactic';
+      const badgeLbl  = SEM_BADGE_LABEL[s.type] || s.type;
+
+      const coursesHTML = s.courses.map((c, idx) => {
+        const deliveryBadge = c.type === 'clinical'
+          ? ''
+          : c.online
+            ? '<span class="badge b-async">Asynchronous</span>'
+            : '<span class="badge b-sync">Synchronous</span>';
+        const badges = [TYPE_BADGE[c.type] || '', deliveryBadge].join('');
+        const facultyHTML = getFacultyDisplay(c.faculty, c.guests);
+        return `<div class="course-card" id="card-${s.number}-${idx}" onclick="toggleCard(${s.number},${idx})">
+          <div class="card-top">
+            <div class="course-code">${c.code}</div>
+            <div class="card-badges">${badges}</div>
+          </div>
+          <div class="course-name">${c.name}</div>
+          <div class="course-credits">${c.credits} credit hour${c.credits !== 1 ? 's' : ''}</div>
+          <div class="course-faculty">${facultyHTML}</div>
+          <div class="card-detail">
+            <div class="detail-row"><strong>Code</strong> ${c.code}</div>
+            <div class="detail-row"><strong>Credits</strong> ${c.credits} cr. hrs.</div>
+            <div class="detail-row"><strong>Delivery</strong> ${c.online ? 'Asynchronous (online)' : 'Synchronous (attendance required)'}</div>
+            <div class="detail-row"><strong>Semester</strong> ${s.term}</div>
+          </div>
+        </div>`;
+      }).join('');
+
+      const onlineCt   = s.courses.filter(c => c.online).length;
+      const inPersonCt = s.courses.length - onlineCt;
+
+      return `<div class="sem-block ${isCurrent ? 'current-sem' : ''}" id="sem-${s.number}">
+        <div class="sem-divider">
+          <div class="sem-number">${s.label}</div>
+          <div class="sem-info">
+            <div class="sem-term">${s.term}</div>
+            <div class="sem-credits">${s.credits} credit hours · ${s.courses.length} courses</div>
+          </div>
+          ${isCurrent ? '<span class="current-badge">Current</span>' : ''}
+          <span class="sem-badge ${badgeCls}">${badgeLbl}</span>
+        </div>
+        <div class="courses-grid">${coursesHTML}</div>
+        <div class="totals-strip">
+          <span><strong>${s.credits}</strong> credit hours</span>
+          <span><strong>${s.courses.length}</strong> courses</span>
+          ${onlineCt   ? `<span><strong>${onlineCt}</strong> online</span>` : ''}
+          ${inPersonCt ? `<span><strong>${inPersonCt}</strong> synchronous</span>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function toggleCard(semNum, idx) {
+    const card = document.getElementById(`card-${semNum}-${idx}`);
+    card.classList.toggle('open');
+  }
+
+  function renderFaculty() {
+    const roster = document.getElementById('facultyRoster');
+    roster.innerHTML = FACULTY.map(f => `
+      <div style="background:white;border:1px solid var(--border-light);border-radius:var(--radius);padding:20px;display:flex;align-items:flex-start;gap:14px;">
+        <div class="faculty-initials fi-set" style="width:38px;height:38px;font-size:12px;flex-shrink:0;">${getInitials(f.name)}</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--ink);line-height:1.3;">${f.name}</div>
+          <div style="font-size:11px;color:var(--muted-dark);margin-top:3px;line-height:1.4;">${f.credentials}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  renderProgress();
+  renderCurriculum();
+  renderFaculty();
 </script>
 </body>
 </html>

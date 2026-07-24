@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar · LMU Nurse Anesthesia Class of 2028</title>
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --ink:        #1a2744;
+      --ink-soft:   #1e2e52;
+      --gold:       #c9a84c;
+      --gold-dim:   #fdf3dc;
+      --gold-line:  #e8d5a0;
+      --off-white:  #f8f7f4;
+      --border-light: #e5e2da;
+      --border-dark:  #2e3d60;
+      --muted:      rgba(255,255,255,0.45);
+      --muted-dark: #6b6a66;
+      --serif: Georgia, 'Times New Roman', serif;
+      --sans:  -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--off-white); color: var(--ink); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--ink); border-bottom: 1px solid var(--border-dark);
+      padding: 0 56px; display: flex; align-items: center;
+      justify-content: space-between; height: 60px;
+    }
+    .nav-brand-wrap { position: relative; }
+    .nav-brand {
+      display: flex; align-items: center; gap: 12px; cursor: pointer;
+      padding: 8px 0; user-select: none;
+    }
+    .nav-monogram {
+      width: 36px; height: 36px; background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 11px; color: var(--ink); letter-spacing: 1px;
+    }
+    .nav-wordmark { line-height: 1.2; }
+    .nav-title { font-size: 13px; font-weight: 700; color: white; letter-spacing: 0.5px; }
+    .nav-sub { font-size: 10px; color: var(--muted); letter-spacing: 0.3px; }
+    .nav-caret { font-size: 8px; color: var(--muted); transition: transform 0.2s; }
+    .nav-brand.open .nav-caret { transform: rotate(180deg); }
+    .nav-dropdown {
+      display: none; position: absolute; top: calc(100% + 8px); left: 0;
+      background: white; border: 1px solid var(--border-light);
+      min-width: 280px; z-index: 200;
+    }
+    .nav-dropdown.open { display: block; }
+    .dd-section { padding: 12px 0; border-bottom: 1px solid var(--border-light); }
+    .dd-section:last-child { border-bottom: none; }
+    .dd-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted-dark); padding: 4px 20px 8px; }
+    .dd-item {
+      display: flex; align-items: center; gap: 12px; padding: 9px 20px;
+      font-size: 13px; color: var(--ink); transition: background 0.1s; cursor: pointer;
+    }
+    .dd-item:hover { background: var(--off-white); }
+    .dd-dot { width: 5px; height: 5px; background: var(--gold); flex-shrink: 0; }
+    .dd-sub { font-size: 11px; color: var(--muted-dark); margin-top: 1px; }
+    nav > ul { display: flex; gap: 32px; list-style: none; }
+    nav > ul li a { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.7);
+      letter-spacing: 0.5px; transition: color 0.15s; }
+    nav > ul li a:hover { color: white; }
+
+    /* ── PAGE SHELL ── */
+    .page-inner {
+      max-width: 860px; margin: 0 auto; padding: 64px 40px 80px;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-kicker {
+      font-size: 9px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted-dark); margin-bottom: 10px;
+    }
+    .page-h {
+      font-family: var(--serif); font-size: 34px; font-weight: 700;
+      color: var(--ink); margin-bottom: 6px; line-height: 1.2;
+    }
+    .page-sub {
+      font-size: 14px; color: var(--muted-dark); font-weight: 300; margin-bottom: 48px;
+    }
+
+    /* ── CAL NAV ── */
+    .cal-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .cal-month-label {
+      font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink);
+    }
+    .cal-nav-btns { display: flex; gap: 8px; align-items: center; }
+    .cal-btn {
+      width: 32px; height: 32px; border: 1px solid var(--border-light);
+      background: white; color: var(--ink); cursor: pointer; font-size: 14px;
+      font-family: var(--sans); display: flex; align-items: center; justify-content: center;
+      transition: all 0.12s;
+    }
+    .cal-btn:hover { background: var(--ink); color: white; border-color: var(--ink); }
+    .cal-today-btn {
+      height: 32px; padding: 0 14px; border: 1px solid var(--border-light);
+      background: white; color: var(--ink); cursor: pointer; font-size: 11px;
+      font-weight: 600; letter-spacing: 0.5px; font-family: var(--sans);
+      transition: all 0.12s;
+    }
+    .cal-today-btn:hover { background: var(--ink); color: white; border-color: var(--ink); }
+
+    /* ── CALENDAR GRID ── */
+    .cal-grid {
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      border: 1px solid var(--border-light); background: var(--border-light); gap: 1px;
+    }
+    .cal-dow {
+      background: var(--off-white); text-align: center;
+      font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted-dark); padding: 10px 4px;
+    }
+    .cal-day {
+      background: white; padding: 10px 10px 8px; min-height: 64px;
+      position: relative; cursor: default;
+    }
+    .cal-day.other-month { background: var(--off-white); }
+    .cal-day.has-events { cursor: pointer; }
+    .cal-day.has-events:hover { background: #f5f3ee; }
+    .cal-day.is-today .cal-dn {
+      background: var(--ink); color: white;
+      width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cal-day.selected { background: var(--gold-dim); }
+    .cal-dn {
+      font-size: 12px; font-weight: 500; color: var(--ink);
+      font-family: var(--serif); width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cal-day.other-month .cal-dn { color: #ccc; }
+    .cal-day-header {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .cal-dots {
+      display: flex; gap: 3px; flex-wrap: wrap; align-items: center;
+    }
+    .cal-dot {
+      width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
+    }
+    .cd-academic  { background: #b8860b; }
+    .cd-event     { background: var(--ink); }
+    .cd-deadline  { background: #c0392b; }
+    .cd-clinical  { background: #1565c0; }
+    .cd-holiday   { background: #2e7d6b; }
+
+    /* range blocks — filled chip that bleeds across grid gaps to look like one shape */
+    .cal-day { overflow: visible; }
+    .cal-range-block {
+      position: absolute; height: 13px; bottom: 9px; pointer-events: none; z-index: 1;
+    }
+    /* range labels — direct children of the grid so they span freely across cells */
+    .cal-grid { position: relative; }
+    .rbl-overlay {
+      position: absolute; font-size: 7px; font-weight: 600; letter-spacing: -0.2px;
+      line-height: 13px; white-space: nowrap; pointer-events: none; z-index: 10;
+    }
+    .crbl-academic { color: rgba(184,134,11,0.85); }
+    .crbl-holiday  { color: rgba(46,125,107,0.90); }
+    .crbl-event    { color: rgba(26,39,68,0.70); }
+    .crbl-deadline { color: rgba(192,57,43,0.80); }
+    .crbl-clinical { color: rgba(21,101,192,0.80); }
+    .crb-start  { left: 5px;  right: -1px; border-radius: 6px 0 0 6px; }
+    .crb-mid    { left: -1px; right: -1px; }
+    .crb-end    { left: -1px; right: 5px;  border-radius: 0 6px 6px 0; }
+    .crb-single { left: 5px;  right: 5px;  border-radius: 6px; }
+    .crb-academic { background: rgba(184,134,11,0.22); }
+    .crb-event    { background: rgba(26,39,68,0.16); }
+    .crb-deadline { background: rgba(192,57,43,0.22); }
+    .crb-clinical { background: rgba(21,101,192,0.22); }
+    .crb-holiday  { background: rgba(46,125,107,0.20); }
+
+    /* popup */
+    .cal-popup-overlay {
+      display: none; position: fixed; inset: 0; z-index: 400;
+    }
+    .cal-popup-overlay.open { display: block; }
+    .cal-popup {
+      position: fixed; z-index: 401; background: white;
+      border: 1px solid var(--border-light);
+      width: 300px; padding: 0;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.14);
+      transform: translateX(-50%) translateY(-50%);
+      top: 50%; left: 50%;
+    }
+    .popup-type-bar {
+      height: 4px; width: 100%;
+    }
+    .popup-type-bar.ep-academic { background: #b8860b; }
+    .popup-type-bar.ep-event    { background: var(--ink); }
+    .popup-type-bar.ep-deadline { background: #c0392b; }
+    .popup-type-bar.ep-clinical { background: #1565c0; }
+    .popup-type-bar.ep-holiday  { background: #2e7d6b; }
+    .popup-inner { padding: 18px 20px 20px; }
+    .popup-meta {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--muted-dark); margin-bottom: 6px;
+    }
+    .popup-title {
+      font-family: var(--serif); font-size: 16px; font-weight: 700;
+      color: var(--ink); margin-bottom: 12px; line-height: 1.3;
+    }
+    .popup-details {
+      font-size: 13px; color: var(--muted-dark); line-height: 1.8;
+      border-top: 1px solid var(--border-light); padding-top: 12px;
+    }
+    .popup-close {
+      position: absolute; top: 12px; right: 14px;
+      background: none; border: none; cursor: pointer;
+      font-size: 18px; color: var(--muted-dark); line-height: 1;
+      padding: 0; z-index: 1;
+    }
+    .popup-close:hover { color: var(--ink); }
+
+    /* ── LEGEND ── */
+    .cal-legend {
+      display: flex; gap: 20px; margin-top: 14px; flex-wrap: wrap;
+    }
+    .leg-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11px; color: var(--muted-dark); font-weight: 400;
+    }
+    .leg-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── DIVIDER ── */
+    .cal-divider {
+      border: none; border-top: 1px solid var(--border-light); margin: 40px 0 32px;
+    }
+
+    /* ── AGENDA ── */
+    .agenda-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .agenda-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--muted-dark);
+    }
+    .agenda-month-name {
+      font-family: var(--serif); font-size: 13px; font-weight: 700; color: var(--ink);
+    }
+    .agenda-empty {
+      font-size: 14px; color: var(--muted-dark); font-weight: 300;
+      padding: 32px 0; border-top: 1px solid var(--border-light);
+    }
+
+    /* event rows */
+    .ev-row {
+      display: flex; align-items: flex-start; gap: 24px;
+      padding: 20px 0; border-bottom: 1px solid var(--border-light);
+    }
+    .ev-row:first-child { border-top: 1px solid var(--border-light); }
+    .ev-cal {
+      flex-shrink: 0; width: 48px; text-align: center;
+    }
+    .ev-mo {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted-dark);
+    }
+    .ev-dy {
+      font-size: 26px; font-weight: 700; font-family: var(--serif);
+      color: var(--ink); line-height: 1.1; margin-top: 1px;
+    }
+    .ev-body { flex: 1; }
+    .ev-title {
+      font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 4px;
+    }
+    .ev-detail {
+      font-size: 13px; color: var(--muted-dark); font-weight: 300; line-height: 1.5;
+      margin-bottom: 6px;
+    }
+    .ev-pill {
+      display: inline-block; font-size: 9px; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px;
+    }
+    .ep-academic { background: var(--gold-dim); color: #7a5a00; }
+    .ep-event    { background: #eef0f5; color: var(--ink); }
+    .ep-deadline { background: #fde8e8; color: #8b0000; }
+    .ep-clinical { background: #e3f0fc; color: #0d3b6e; }
+    .ep-holiday  { background: #e6f4f1; color: #1a5248; }
+
+    .plan-badge {
+      display: inline-block; font-size: 8px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; padding: 2px 7px;
+      background: var(--gold-dim); color: #7a5a00;
+      border: 1px solid var(--gold-line); margin-left: 8px; vertical-align: middle;
+    }
+
+    /* ── TBD SECTION ── */
+    .tbd-section { margin-top: 40px; }
+    .tbd-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted-dark); margin-bottom: 16px;
+    }
+    .tbd-row {
+      display: flex; align-items: center; gap: 16px;
+      padding: 14px 0; border-bottom: 1px solid var(--border-light); font-size: 13px;
+    }
+    .tbd-row:first-of-type { border-top: 1px solid var(--border-light); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink); border-top: 1px solid var(--border-dark);
+      padding: 36px 56px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-left { font-size: 12px; color: var(--muted); }
+    .footer-left strong { color: rgba(255,255,255,0.7); font-weight: 600; }
+    .footer-right { font-size: 11px; color: var(--muted); }
+    .footer-right a { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding-left: 24px; padding-right: 24px; }
+      nav > ul { display: none; }
+      .page-inner { padding: 40px 24px 64px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
+      .cal-day { min-height: 48px; padding: 6px; }
+      .ev-cal { width: 36px; }
+      .ev-dy { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand-wrap">
+    <div class="nav-brand" onclick="toggleDropdown()">
+      <div class="nav-monogram">NA</div>
+      <div class="nav-wordmark">
+        <div class="nav-title">Class of 2028</div>
+        <div class="nav-sub">LMU Nurse Anesthesia · Harrogate, TN</div>
+      </div>
+      <span class="nav-caret">&#9660;</span>
+    </div>
+    <div class="nav-dropdown" id="navDropdown">
+      <div class="dd-section">
+        <div class="dd-label">Hub</div>
+        <a href="./index.html" class="dd-item"><span class="dd-dot"></span><div><div>Class Hub</div><div class="dd-sub">Updates, board, surveys &amp; resources</div></div></a>
+        <a href="./calendar.html" class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Full Calendar</div><div class="dd-sub">All program dates in one view</div></div></a>
+        <a href="./program.html" class="dd-item"><span class="dd-dot"></span><div><div>Curriculum Overview</div><div class="dd-sub">All 9 semesters mapped out</div></div></a>
+      </div>
+      <div class="dd-section">
+        <div class="dd-label">Quick Links</div>
+        <a href="mailto:lmunurseanesthesia2028@gmail.com" class="dd-item"><span class="dd-dot"></span><div><div>Class Email</div><div class="dd-sub">lmunurseanesthesia2028@gmail.com</div></div></a>
+        <a href="https://www.aana.com" target="_blank" class="dd-item"><span class="dd-dot"></span><div><div>AANA</div><div class="dd-sub">American Assoc. of Nurse Anesthesiology</div></div></a>
+        <a href="https://lmunet.edu" target="_blank" class="dd-item"><span class="dd-dot"></span><div><div>LMU Student Portal</div><div class="dd-sub">lmunet.edu</div></div></a>
+      </div>
+    </div>
+  </div>
+  <ul>
+    <li><a href="./index.html">Hub</a></li>
+    <li><a href="./calendar.html" style="color:white;">Calendar</a></li>
+    <li><a href="./program.html">Program</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE -->
+<div class="page-inner">
+
+  <div class="page-kicker">Class of 2028</div>
+  <h1 class="page-h">Program Calendar</h1>
+  <p class="page-sub">Key dates, intensives, and deadlines across the full program.</p>
+
+  <!-- CALENDAR NAV -->
+  <div class="cal-nav">
+    <span class="cal-month-label" id="calLabel"></span>
+    <div class="cal-nav-btns">
+      <button class="cal-today-btn" onclick="goToday()">Today</button>
+      <button class="cal-btn" onclick="prevMonth()">&#8592;</button>
+      <button class="cal-btn" onclick="nextMonth()">&#8594;</button>
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="cal-grid" id="calGrid"></div>
+
+  <!-- LEGEND -->
+  <div class="cal-legend">
+    <div class="leg-item"><div class="leg-dot cd-academic"></div> Academic</div>
+    <div class="leg-item"><div class="leg-dot cd-holiday"></div> Holiday / Break</div>
+    <div class="leg-item"><div class="leg-dot cd-event"></div> Event</div>
+    <div class="leg-item"><div class="leg-dot cd-deadline"></div> Deadline</div>
+    <div class="leg-item"><div class="leg-dot cd-clinical"></div> Clinical</div>
+  </div>
+
+  <hr class="cal-divider">
+
+  <!-- AGENDA -->
+  <div class="agenda-header">
+    <span class="agenda-label">Events</span>
+    <span class="agenda-month-name" id="agendaMonthName"></span>
+  </div>
+  <div id="agendaList"></div>
+
+  <!-- TBD -->
+  <div class="tbd-section" id="tbdSection" style="display:none">
+    <div class="tbd-label">Dates TBD</div>
+    <div id="tbdList"></div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <strong>LMU Nurse Anesthesia &middot; Class of 2028</strong><br>
+    Lincoln Memorial University &middot; Harrogate, Tennessee
+  </div>
+  <div class="footer-right">
+    <a href="mailto:lmunurseanesthesia2028@gmail.com">lmunurseanesthesia2028@gmail.com</a>
+  </div>
+</footer>
+
+<!-- POPUP -->
+<div id="popupOverlay" class="cal-popup-overlay" onclick="closePopup()">
+  <div id="calPopup" class="cal-popup" onclick="event.stopPropagation()">
+    <div class="popup-type-bar"></div>
+    <div class="popup-inner"></div>
+  </div>
+</div>
+
+<script>
+  /* ── DATA ── */
+  const DATES = [
+    // ── FALL 2026 ──
+    { mo:"AUG", dy:"17",  type:"academic", title:"Fall 2026 — Classes Begin",
+      details:["August 17, 2026", "First day of the Fall 2026 semester"], iso:"2026-08-17" },
+    { mo:"SEP", dy:"7",   type:"holiday",  title:"Labor Day",
+      details:["September 7, 2026", "No classes"], iso:"2026-09-07" },
+    { mo:"OCT", dy:"22",  type:"holiday",  title:"Fall Break",
+      range:"Oct 22–23, 2026",
+      details:["October 22–23, 2026", "No classes"], iso:"2026-10-22", isoEnd:"2026-10-23" },
+    { mo:"NOV", dy:"9",   type:"academic", title:"753A Simulation Intensive", blockLabel:"753A Intensive",
+      range:"Nov 9–13, 2026",
+      details:["November 9–13, 2026", "On campus, full days", "Includes white coat fitting for Class of 2028"],
+      iso:"2026-11-09", isoEnd:"2026-11-13", badge:"Harrogate, TN" },
+    { mo:"NOV", dy:"13",  type:"event",    title:"DNP Project Dissemination",
+      details:["November 13, 2026", "2026 cohort presentation", "All cohorts required to attend", "Via Zoom"],
+      iso:"2026-11-13" },
+    { mo:"NOV", dy:"25",  type:"holiday",  title:"Thanksgiving Break",
+      range:"Nov 25–27, 2026",
+      details:["November 25–27, 2026", "No classes"], iso:"2026-11-25", isoEnd:"2026-11-27", blockLabel:"Thanksgiving Break" },
+
+    // ── SPRING 2027 ──
+    { mo:"JAN", dy:"11",  type:"academic", title:"Spring 2027 — Classes Begin",
+      details:["January 11, 2027", "First day of the Spring 2027 semester"], iso:"2027-01-11" },
+    { mo:"JAN", dy:"18",  type:"holiday",  title:"MLK Day",
+      details:["January 18, 2027", "No classes"], iso:"2027-01-18" },
+    { mo:"FEB", dy:"12",  type:"event",    title:"Lincoln / Founders Day",
+      details:["February 12, 2027", "Special university activities"], iso:"2027-02-12" },
+    { mo:"MAR", dy:"20",  type:"academic", title:"NURS 756 — Maverick Regional Anesthesia",
+      range:"Mar 20–21, 2027",
+      details:["March 20–21, 2027", "On-campus clinical skills event"],
+      iso:"2027-03-20", isoEnd:"2027-03-21", blockLabel:"NURS 756" },
+    { mo:"MAR", dy:"26",  type:"holiday",  title:"Good Friday",
+      details:["March 26, 2027", "No classes"], iso:"2027-03-26" },
+    { mo:"MAR", dy:"29",  type:"holiday",  title:"Spring Break",
+      range:"Mar 29–Apr 2, 2027",
+      details:["March 29–April 2, 2027", "No classes"], iso:"2027-03-29", isoEnd:"2027-04-02" },
+    { mo:"APR", dy:"19",  type:"academic", title:"NURS 754A Simulation Intensive", blockLabel:"754A Intensive",
+      range:"Apr 19–23, 2027",
+      details:["April 19–23, 2027", "On campus, full days"],
+      iso:"2027-04-19", isoEnd:"2027-04-23" },
+
+    // ── SUMMER 2027 ──
+    { mo:"MAY", dy:"10",  type:"academic", title:"Summer 2027 — Classes Begin",
+      details:["May 10, 2027", "First day of the Summer 2027 term"], iso:"2027-05-10" },
+    { mo:"MAY", dy:"31",  type:"holiday",  title:"Memorial Day",
+      details:["May 31, 2027", "No classes"], iso:"2027-05-31" },
+    { mo:"JUL", dy:"4",   type:"holiday",  title:"Independence Day",
+      details:["July 4, 2027", "No classes", "Classes resume July 5"], iso:"2027-07-04" },
+
+    // ── FALL 2027 ──
+    { mo:"AUG", dy:"16",  type:"academic", title:"Fall 2027 — Classes Begin",
+      details:["August 16, 2027", "First day of the Fall 2027 semester"], iso:"2027-08-16" },
+    { mo:"SEP", dy:"6",   type:"holiday",  title:"Labor Day",
+      details:["September 6, 2027", "No classes"], iso:"2027-09-06" },
+    { mo:"OCT", dy:"21",  type:"holiday",  title:"Fall Break",
+      range:"Oct 21–22, 2027",
+      details:["October 21–22, 2027", "No classes"], iso:"2027-10-21", isoEnd:"2027-10-22" },
+    { mo:"NOV", dy:"24",  type:"holiday",  title:"Thanksgiving Break",
+      range:"Nov 24–26, 2027",
+      details:["November 24–26, 2027", "No classes"], iso:"2027-11-24", isoEnd:"2027-11-26", blockLabel:"Thanksgiving Break" },
+
+    // ── SPRING 2028 ──
+    { mo:"JAN", dy:"10",  type:"academic", title:"Spring 2028 — Classes Begin",
+      details:["January 10, 2028", "First day of the Spring 2028 semester"], iso:"2028-01-10" },
+    { mo:"JAN", dy:"17",  type:"holiday",  title:"MLK Day",
+      details:["January 17, 2028", "No classes"], iso:"2028-01-17" },
+    { mo:"FEB", dy:"11",  type:"event",    title:"Lincoln / Founders Day",
+      details:["February 11, 2028", "Special university activities"], iso:"2028-02-11" },
+    { mo:"MAR", dy:"27",  type:"holiday",  title:"Spring Break",
+      range:"Mar 27–31, 2028",
+      details:["March 27–31, 2028", "No classes"], iso:"2028-03-27", isoEnd:"2028-03-31" },
+    { mo:"APR", dy:"14",  type:"holiday",  title:"Good Friday",
+      details:["April 14, 2028", "No classes"], iso:"2028-04-14" },
+
+    // ── SUMMER 2028 ──
+    { mo:"MAY", dy:"8",   type:"academic", title:"Summer 2028 — Classes Begin",
+      details:["May 8, 2028", "First day of the Summer 2028 term"], iso:"2028-05-08" },
+    { mo:"MAY", dy:"29",  type:"holiday",  title:"Memorial Day",
+      details:["May 29, 2028", "No classes"], iso:"2028-05-29" },
+    { mo:"JUL", dy:"4",   type:"holiday",  title:"Independence Day",
+      details:["July 4, 2028", "No classes"], iso:"2028-07-04" },
+
+    // ── FALL 2028 ──
+    { mo:"AUG", dy:"14",  type:"academic", title:"Fall 2028 — Classes Begin",
+      details:["August 14, 2028", "First day of the Fall 2028 semester"], iso:"2028-08-14" },
+    { mo:"SEP", dy:"4",   type:"holiday",  title:"Labor Day",
+      details:["September 4, 2028", "No classes"], iso:"2028-09-04" },
+    { mo:"OCT", dy:"19",  type:"holiday",  title:"Fall Break",
+      range:"Oct 19–20, 2028",
+      details:["October 19–20, 2028", "No classes"], iso:"2028-10-19", isoEnd:"2028-10-20" },
+    { mo:"NOV", dy:"22",  type:"holiday",  title:"Thanksgiving Break",
+      range:"Nov 22–24, 2028",
+      details:["November 22–24, 2028", "No classes"], iso:"2028-11-22", isoEnd:"2028-11-24", blockLabel:"Thanksgiving Break" },
+  ];
+
+  const DATES_TBD = [
+    { title:"Fall Intensives Social Event", detail:"Date TBD — during intensives week (Nov 9–13)", type:"event" },
+    { title:"Thanksgiving Gathering",       detail:"Date TBD — November 2026",                    type:"event" },
+    { title:"White Coat Ceremony",          detail:"Date TBD — during 754A Intensives week (Apr 19–23, 2027)", type:"event" },
+    { title:"Commencement — Class of 2028", detail:"Winter 2028 — exact date TBD",                type:"event" },
+  ];
+
+  /* ── STATE ── */
+  const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const DAYS   = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const today  = new Date();
+  let cur = { y: today.getFullYear(), m: today.getMonth() };
+
+  /* ── HELPERS ── */
+  function eventsForMonth(y, m) {
+    return DATES.filter(d => {
+      if (!d.iso) return false;
+      const dt = new Date(d.iso + 'T00:00:00');
+      return dt.getFullYear() === y && dt.getMonth() === m;
+    });
+  }
+
+  function eventsForDay(y, m, day) {
+    return DATES.filter(d => {
+      if (!d.iso) return false;
+      const start = new Date(d.iso + 'T00:00:00');
+      const end   = d.isoEnd ? new Date(d.isoEnd + 'T00:00:00') : start;
+      const check = new Date(y, m, day);
+      return check >= start && check <= end;
+    });
+  }
+
+  function pillClass(type) {
+    return { academic:'ep-academic', event:'ep-event', deadline:'ep-deadline', clinical:'ep-clinical', holiday:'ep-holiday' }[type] || 'ep-event';
+  }
+  function dotClass(type) {
+    return { academic:'cd-academic', event:'cd-event', deadline:'cd-deadline', clinical:'cd-clinical', holiday:'cd-holiday' }[type] || 'cd-event';
+  }
+
+  /* ── RENDER CALENDAR ── */
+  function renderCalendar() {
+    const { y, m } = cur;
+    document.getElementById('calLabel').textContent = MONTHS[m] + ' ' + y;
+    document.getElementById('agendaMonthName').textContent = MONTHS[m] + ' ' + y;
+
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+
+    // Day-of-week headers
+    DAYS.forEach(d => {
+      const el = document.createElement('div');
+      el.className = 'cal-dow';
+      el.textContent = d;
+      grid.appendChild(el);
+    });
+
+    const firstDay = new Date(y, m, 1).getDay();
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const daysInPrev  = new Date(y, m, 0).getDate();
+
+    // Build cells
+    const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+
+    for (let i = 0; i < totalCells; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'cal-day';
+
+      let cellDay, cellY = y, cellM = m;
+      if (i < firstDay) {
+        cellDay = daysInPrev - firstDay + i + 1;
+        cellM = m - 1;
+        if (cellM < 0) { cellM = 11; cellY = y - 1; }
+        cell.classList.add('other-month');
+      } else if (i >= firstDay + daysInMonth) {
+        cellDay = i - firstDay - daysInMonth + 1;
+        cellM = m + 1;
+        if (cellM > 11) { cellM = 0; cellY = y + 1; }
+        cell.classList.add('other-month');
+      } else {
+        cellDay = i - firstDay + 1;
+      }
+
+      // Today highlight
+      if (cellY === today.getFullYear() && cellM === today.getMonth() && cellDay === today.getDate()) {
+        cell.classList.add('is-today');
+      }
+
+      const header = document.createElement('div');
+      header.className = 'cal-day-header';
+      const dn = document.createElement('div');
+      dn.className = 'cal-dn';
+      dn.textContent = cellDay;
+      header.appendChild(dn);
+      cell.appendChild(header);
+
+      // Range blocks (outlined band spanning all days of a multi-day event)
+      const check = new Date(cellY, cellM, cellDay);
+      DATES.filter(d => d.iso && d.isoEnd).forEach(ev => {
+        const start = new Date(ev.iso + 'T00:00:00');
+        const end   = new Date(ev.isoEnd + 'T00:00:00');
+        if (check >= start && check <= end) {
+          const isStart = check.getTime() === start.getTime();
+          const isEnd   = check.getTime() === end.getTime();
+          const pos = (isStart && isEnd) ? 'crb-single'
+                    : isStart ? 'crb-start'
+                    : isEnd   ? 'crb-end'
+                    : 'crb-mid';
+          const block = document.createElement('div');
+          block.className = `cal-range-block crb-${ev.type} ${pos}`;
+          cell.appendChild(block);
+          cell.classList.add('has-events');
+        }
+      });
+
+      // Dots (single-day events only)
+      const allEvs = eventsForDay(cellY, cellM, cellDay);
+      if (allEvs.length) cell.classList.add('has-events');
+      const singleEvs = allEvs.filter(e => !e.isoEnd);
+      if (singleEvs.length) {
+        const dots = document.createElement('div');
+        dots.className = 'cal-dots';
+        const seen = new Set();
+        singleEvs.forEach(e => {
+          if (!seen.has(e.type)) {
+            seen.add(e.type);
+            const dot = document.createElement('div');
+            dot.className = 'cal-dot ' + dotClass(e.type);
+            dots.appendChild(dot);
+          }
+        });
+        header.appendChild(dots);
+      }
+
+      // Click to open popup
+      if (cell.classList.contains('has-events')) {
+        const cellEvs = eventsForDay(cellY, cellM, cellDay);
+        cell.addEventListener('click', () => openPopup(cellEvs));
+      }
+
+      grid.appendChild(cell);
+    }
+
+    renderAgenda();
+    requestAnimationFrame(addRangeLabels);
+  }
+
+  /* ── RANGE LABEL OVERLAY ── */
+  function addRangeLabels() {
+    const grid = document.getElementById('calGrid');
+    grid.querySelectorAll('.rbl-overlay').forEach(el => el.remove());
+
+    const { y: curY, m: curM } = cur;
+    const firstDay = new Date(curY, curM, 1).getDay();
+    const cells = Array.from(grid.children); // includes 7 DOW headers
+
+    DATES.filter(d => d.iso && d.isoEnd).forEach(ev => {
+      const startDate = new Date(ev.iso + 'T00:00:00');
+      if (startDate.getFullYear() !== curY || startDate.getMonth() !== curM) return;
+
+      const cellIndex = 7 + firstDay + (startDate.getDate() - 1);
+      if (cellIndex >= cells.length) return;
+
+      const cell = cells[cellIndex];
+      const lbl = document.createElement('div');
+      lbl.className = `rbl-overlay crbl-${ev.type}`;
+      lbl.textContent = ev.blockLabel || ev.title;
+      lbl.style.left = (cell.offsetLeft + 10) + 'px';
+      lbl.style.top  = (cell.offsetTop + cell.offsetHeight - 22) + 'px';
+      grid.appendChild(lbl);
+    });
+  }
+
+  /* ── RENDER AGENDA ── */
+  function renderAgenda() {
+    const { y, m } = cur;
+    const evs = eventsForMonth(y, m);
+    const list = document.getElementById('agendaList');
+
+    if (!evs.length) {
+      list.innerHTML = '<p class="agenda-empty">No program dates this month.</p>';
+      return;
+    }
+
+    list.innerHTML = evs.map(ev => {
+      const detailStr = ev.details ? ev.details.slice(1).join(' &middot; ') : '';
+      const rangeStr  = ev.range ? `<span style="font-size:12px;color:var(--muted-dark)">${ev.range}</span>` : '';
+      const planBadge = ev.badge ? `<span class="plan-badge">${ev.badge}</span>` : '';
+
+      return `<div class="ev-row">
+        <div class="ev-cal">
+          <div class="ev-mo">${ev.mo}</div>
+          <div class="ev-dy">${ev.dy}</div>
+        </div>
+        <div class="ev-body">
+          <div class="ev-title">${ev.title}${planBadge}</div>
+          ${ev.range ? `<div class="ev-detail">${ev.range}</div>` : ''}
+          ${detailStr ? `<div class="ev-detail">${detailStr}</div>` : ''}
+          <span class="ev-pill ${pillClass(ev.type)}">${ev.type}</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  /* ── NAVIGATION ── */
+  function prevMonth() {
+    cur.m--;
+    if (cur.m < 0) { cur.m = 11; cur.y--; }
+    renderCalendar();
+    requestAnimationFrame(addRangeLabels);
+  }
+  function nextMonth() {
+    cur.m++;
+    if (cur.m > 11) { cur.m = 0; cur.y++; }
+    renderCalendar();
+    requestAnimationFrame(addRangeLabels);
+  }
+  function goToday() {
+    cur = { y: today.getFullYear(), m: today.getMonth() };
+    renderCalendar();
+    requestAnimationFrame(addRangeLabels);
+  }
+
+  /* ── TBD LIST ── */
+  function renderTBD() {
+    const sec  = document.getElementById('tbdSection');
+    const list = document.getElementById('tbdList');
+    if (!DATES_TBD.length) return;
+    sec.style.display = 'block';
+    list.innerHTML = DATES_TBD.map(d => `
+      <div class="tbd-row">
+        <span class="ev-pill ${pillClass(d.type)}" style="flex-shrink:0">${d.type}</span>
+        <div>
+          <span style="font-weight:500;color:var(--ink)">${d.title}</span>
+          <span style="color:var(--muted-dark);margin-left:10px">${d.detail}</span>
+        </div>
+      </div>`).join('');
+  }
+
+  /* ── POPUP ── */
+  function openPopup(evs) {
+    const overlay = document.getElementById('popupOverlay');
+    const popup   = document.getElementById('calPopup');
+    if (!evs.length) return;
+
+    // Build content for all events on this day
+    const html = evs.map((ev, i) => {
+      const typeLabel = ev.type.charAt(0).toUpperCase() + ev.type.slice(1);
+      const dateStr   = ev.range || (ev.details && ev.details[0]) || (ev.mo + ' ' + ev.dy);
+      const detailLines = ev.details ? ev.details.slice(1) : [];
+      return `
+        ${i > 0 ? '<hr style="border:none;border-top:1px solid var(--border-light);margin:16px 0">' : ''}
+        <div class="popup-meta">${typeLabel}</div>
+        <div class="popup-title">${ev.title}</div>
+        ${detailLines.length ? `<div class="popup-details">${detailLines.join('<br>')}</div>` : ''}
+      `;
+    }).join('');
+
+    // Use first event's type for the color bar
+    popup.querySelector('.popup-type-bar').className = 'popup-type-bar ep-' + evs[0].type;
+    popup.querySelector('.popup-inner').innerHTML = `
+      <button class="popup-close" onclick="closePopup()">&#x2715;</button>
+      ${html}
+    `;
+
+    overlay.classList.add('open');
+  }
+
+  function closePopup() {
+    document.getElementById('popupOverlay').classList.remove('open');
+  }
+
+  /* ── NAV DROPDOWN ── */
+  function toggleDropdown() {
+    const d = document.getElementById('navDropdown');
+    const b = document.querySelector('.nav-brand');
+    const open = d.classList.toggle('open');
+    b.classList.toggle('open', open);
+    if (open) setTimeout(() => document.addEventListener('click', outsideClick), 0);
+    else document.removeEventListener('click', outsideClick);
+  }
+  function closeDropdown() {
+    document.getElementById('navDropdown').classList.remove('open');
+    document.querySelector('.nav-brand').classList.remove('open');
+    document.removeEventListener('click', outsideClick);
+  }
+  function outsideClick(e) {
+    if (!document.querySelector('.nav-brand-wrap').contains(e.target)) closeDropdown();
+  }
+
+  /* ── INIT ── */
+  renderCalendar();
+  renderTBD();
+</script>
+</body>
+</html>
