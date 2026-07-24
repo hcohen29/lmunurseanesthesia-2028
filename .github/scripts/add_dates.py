@@ -82,7 +82,9 @@ def render_entry(d):
 
 
 def main():
-    dates_input    = os.environ.get("DATES_INPUT", "").strip()
+    import json
+    dates_raw = os.environ.get("DATES_INPUT", '""')
+    dates_input = json.loads(dates_raw).strip()
     semester_label = os.environ.get("SEMESTER_LABEL", "").strip()
 
     if not dates_input:
