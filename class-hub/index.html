@@ -494,10 +494,11 @@
       <p class="section-sub">Everything you submit lives here. We update the status as we work on it so you always know where things stand.</p>
     </div>
     <div class="board-filters">
-      <button class="filter-btn active" onclick="filterBoard('all',this)">All</button>
+      <button class="filter-btn active" onclick="filterBoard('all',this)">Active</button>
       <button class="filter-btn" onclick="filterBoard('idea',this)">Ideas</button>
       <button class="filter-btn" onclick="filterBoard('concern',this)">Concerns</button>
       <button class="filter-btn" onclick="filterBoard('request',this)">Requests</button>
+      <button class="filter-btn" onclick="filterBoard('resolved',this)" style="margin-left:8px;border-color:#d1fae5;color:#065f46;">Resolved</button>
     </div>
     <div class="board-wrap">
       <table class="board-table" id="boardTable">
@@ -894,7 +895,14 @@
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     document.querySelectorAll('#boardTable tbody tr').forEach(r => {
-      r.style.display = (type === 'all' || r.dataset.type === type) ? '' : 'none';
+      const isResolved = r.dataset.status === 'done';
+      if (type === 'resolved') {
+        r.style.display = isResolved ? '' : 'none';
+      } else if (type === 'all') {
+        r.style.display = isResolved ? 'none' : '';
+      } else {
+        r.style.display = (!isResolved && r.dataset.type === type) ? '' : 'none';
+      }
     });
   }
 
@@ -990,7 +998,7 @@
       const lbl  = TYPE_LABEL[t] || item.type;
       const dot  = STATUS_DOT[s] || 'sd-received';
       const slbl = STATUS_LBL[s] || item.status;
-      return `<tr data-type="${t}">
+      return `<tr data-type="${t}" data-status="${s}">
         <td><span class="type-pill ${pill}">${lbl}</span></td>
         <td>${item.summary || ''}</td>
         <td>${item.submitted || '—'}</td>
@@ -1003,7 +1011,7 @@
 
   fetch('/board-data.json')
     .then(r => r.ok ? r.json() : Promise.reject())
-    .then(data => renderBoard(data))
+    .then(data => { renderBoard(data); filterBoard('all', document.querySelector('.filter-btn.active')); })
     .catch(() => renderBoard([]));
 
   document.addEventListener('DOMContentLoaded', () => {
