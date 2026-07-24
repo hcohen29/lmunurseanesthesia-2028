@@ -506,28 +506,8 @@
             <th>Type</th><th>Summary</th><th>Submitted</th><th>Status</th><th>Update</th>
           </tr>
         </thead>
-        <tbody>
-          <tr data-type="idea">
-            <td><span class="type-pill tp-idea">Idea</span></td>
-            <td>Class merch — sweatshirts &amp; tees</td>
-            <td>Jul 2026</td>
-            <td><span class="status-dot sd-inprogress">In Progress</span></td>
-            <td>Design input phase. Vendor research underway.</td>
-          </tr>
-          <tr data-type="request">
-            <td><span class="type-pill tp-request">Request</span></td>
-            <td>Clinical site resource guide</td>
-            <td>Jul 2026</td>
-            <td><span class="status-dot sd-inprogress">In Progress</span></td>
-            <td>Gathering resources and recommendations for upcoming clinical sites.</td>
-          </tr>
-          <tr data-type="concern">
-            <td><span class="type-pill tp-concern">Concern</span></td>
-            <td>Your submissions will appear here</td>
-            <td>—</td>
-            <td><span class="status-dot sd-received">Received</span></td>
-            <td>—</td>
-          </tr>
+        <tbody id="boardTbody">
+          <tr><td colspan="5" style="text-align:center;color:var(--muted-dark);padding:32px;font-size:13px;">Loading…</td></tr>
         </tbody>
       </table>
     </div>
@@ -985,6 +965,40 @@
     const btn = document.getElementById('formBtn');
     if (btn && CONFIG.submitFormUrl !== '#') btn.href = CONFIG.submitFormUrl;
   }
+
+  const TYPE_PILL  = { idea:'tp-idea', concern:'tp-concern', request:'tp-request', question:'tp-request' };
+  const TYPE_LABEL = { idea:'Idea', concern:'Concern', request:'Request', question:'Question' };
+  const STATUS_DOT = { 'not started':'sd-received', 'in progress':'sd-inprogress', 'done':'sd-resolved' };
+  const STATUS_LBL = { 'not started':'Not Started', 'in progress':'In Progress', 'done':'Resolved' };
+
+  function renderBoard(items) {
+    const tbody = document.getElementById('boardTbody');
+    if (!items || !items.length) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted-dark);padding:32px;font-size:13px;">No items to display yet.</td></tr>';
+      renderStats(); return;
+    }
+    tbody.innerHTML = items.map(item => {
+      const t   = (item.type || 'idea').toLowerCase();
+      const s   = (item.status || 'not started').toLowerCase();
+      const pill = TYPE_PILL[t]  || 'tp-idea';
+      const lbl  = TYPE_LABEL[t] || item.type;
+      const dot  = STATUS_DOT[s] || 'sd-received';
+      const slbl = STATUS_LBL[s] || item.status;
+      return `<tr data-type="${t}">
+        <td><span class="type-pill ${pill}">${lbl}</span></td>
+        <td>${item.summary || ''}</td>
+        <td>${item.submitted || '—'}</td>
+        <td><span class="status-dot ${dot}">${slbl}</span></td>
+        <td>${item.update || '—'}</td>
+      </tr>`;
+    }).join('');
+    renderStats();
+  }
+
+  fetch('/board-data.json')
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => renderBoard(data))
+    .catch(() => renderBoard([]));
 
   document.addEventListener('DOMContentLoaded', () => {
     renderDates(); renderSurveys(); renderStats(); applyConfig();
