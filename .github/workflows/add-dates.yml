@@ -25,7 +25,7 @@ jobs:
           python-version: '3.11'
       - name: Add dates to index.html
         env:
-          DATES_INPUT: ${{ github.event.inputs.dates }}
+          DATES_INPUT: ${{ toJSON(github.event.inputs.dates) }}
           SEMESTER_LABEL: ${{ github.event.inputs.semester_label }}
         run: python .github/scripts/add_dates.py
       - name: Commit and push
