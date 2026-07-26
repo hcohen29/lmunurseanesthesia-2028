@@ -139,6 +139,50 @@
     .stat-progress { margin-top: 10px; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
     .stat-progress-fill { height: 100%; background: var(--gold); border-radius: 2px; transition: width 0.6s ease; }
 
+    /* ── NOTICES ── */
+    .notices-bar {
+      background: white;
+      border-bottom: 1px solid var(--border-light);
+      padding: 20px 56px;
+    }
+    .notices-inner { max-width: 960px; margin: 0 auto; }
+    .notices-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--muted-dark);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+    }
+    .notices-label::before { content:''; display:block; width:20px; height:1px; background:var(--muted-dark); }
+    .notices-grid { display: flex; flex-direction: column; gap: 10px; }
+    .notice-card {
+      background: white; border: 1px solid var(--border-light);
+      border-left: 3px solid var(--gold);
+      border-radius: var(--radius); padding: 16px 20px;
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .notice-card.nc-deadline { border-left-color: #c0392b; }
+    .notice-card.nc-info     { border-left-color: #1a4aaa; }
+    .notice-card.nc-action   { border-left-color: var(--gold); }
+    .notice-tag {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 3px 7px; border-radius: 4px;
+      white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+    }
+    .nt-deadline { background: #fde8e8; color: #c0392b; }
+    .nt-info     { background: #e8f0ff; color: #1a4aaa; }
+    .nt-action   { background: var(--gold-dim); color: #7a5a00; }
+    .notice-body { flex: 1; }
+    .notice-title { font-size: 13.5px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+    .notice-desc  { font-size: 12px; color: var(--muted-dark); margin-top: 3px; line-height: 1.5; }
+    .notice-link  {
+      display: inline-flex; align-items: center; gap: 5px;
+      margin-top: 8px; font-size: 11.5px; font-weight: 600;
+      color: var(--gold); text-decoration: none;
+      border-bottom: 1px solid var(--gold-line); padding-bottom: 1px;
+      transition: border-color 0.15s;
+    }
+    .notice-link:hover { border-color: var(--gold); }
+    .notice-date { font-size: 11px; color: var(--muted-dark); white-space: nowrap; flex-shrink: 0; margin-top: 3px; }
+
     /* ── REPS ── */
     .reps-section { background: white; padding: 72px 56px; border-bottom: 1px solid var(--border-light); }
     .reps-inner { max-width: 960px; margin: 0 auto; }
@@ -227,6 +271,25 @@
     .site-tip:last-child { border-bottom: none; }
     .tip-label { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink); min-width: 60px; flex-shrink: 0; padding-top: 2px; }
     .site-empty { padding: 36px 24px; text-align: center; color: var(--muted-dark); font-size: 13.5px; line-height: 1.6; font-weight: 300; }
+
+    /* ── REP MODAL ── */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:500; align-items:center; justify-content:center; }
+    .modal-overlay.open { display:flex; }
+    .modal-card { background:white; max-width:380px; width:90%; padding:40px; position:relative; }
+    .modal-close { position:absolute; top:16px; right:20px; font-size:20px; cursor:pointer; color:var(--muted-dark); line-height:1; background:none; border:none; font-family:var(--sans); }
+    .modal-close:hover { color:var(--ink); }
+    .modal-initials { width:52px; height:52px; background:var(--ink); color:var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:16px; font-weight:700; margin-bottom:16px; }
+    .modal-name { font-family:var(--serif); font-size:22px; font-weight:700; color:var(--ink); margin-bottom:4px; }
+    .modal-role { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:28px; }
+    .modal-contacts { display:flex; flex-direction:column; gap:0; border:1px solid var(--border-light); }
+    .modal-contact { display:flex; flex-direction:column; padding:14px 18px; border-bottom:1px solid var(--border-light); }
+    .modal-contact:last-child { border-bottom:none; }
+    .mc-label { font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted-dark); margin-bottom:4px; }
+    .mc-val { font-size:13.5px; color:var(--ink); text-decoration:none; font-weight:500; }
+    .mc-val:hover { color:var(--gold); }
+    .mc-note { font-size:11px; color:var(--muted-dark); font-weight:300; margin-top:3px; }
+    .rep-card { cursor:pointer; }
+    .rep-card:hover { box-shadow:0 4px 24px rgba(0,0,0,0.1); }
 
     /* ── BOARD ── */
     .board-filters { display: flex; gap: 8px; margin-bottom: 20px; }
@@ -406,31 +469,13 @@
   <div class="stat"><div class="stat-val">2028</div><div class="stat-lbl">Graduation Year</div></div>
 </div>
 
-<!-- REPS -->
-<section class="reps-section">
-  <div class="reps-inner">
-    <div class="section-kicker">Your Representatives</div>
-    <div class="section-h">Meet Amelia &amp; Hailey</div>
-    <div class="rep-grid">
-      <div class="rep-card">
-        <div class="rep-initials">AS</div>
-        <div>
-          <div class="rep-name">Amelia Scofield</div>
-          <div class="rep-role">Class Representative · 2028</div>
-          <div class="rep-bio">Travel & adventure lover from upstate New York. Excited to help make this wild ride a little easier, smoother, and hopefully more fun!</div>
-        </div>
-      </div>
-      <div class="rep-card">
-        <div class="rep-initials">HC</div>
-        <div>
-          <div class="rep-name">Hailey Cohen</div>
-          <div class="rep-role">Class Representative · 2028</div>
-          <div class="rep-bio">Knoxville native & UT alum. Here to make sure the Class of 2028 actually feels like a class, even from a distance. Happiest outside :)</div>
-        </div>
-      </div>
-    </div>
+<!-- NOTICES -->
+<div class="notices-bar" id="noticesBar" style="display:none;">
+  <div class="notices-inner">
+    <div class="notices-label">Class Notices</div>
+    <div class="notices-grid" id="noticesGrid"></div>
   </div>
-</section>
+</div>
 
 <!-- UPDATES -->
 <section class="section s-off" id="updates">
@@ -772,22 +817,71 @@
 <section class="section s-dark" id="contact">
   <div class="section-inner">
     <div class="section-header">
-      <div class="section-kicker" style="color:var(--gold);">Direct Contact</div>
-      <div class="section-h" style="color:white;">Reach us directly</div>
-      <p class="section-sub" style="color:var(--muted);">Prefer to send an email? We check the class inbox regularly.</p>
+      <div class="section-kicker" style="color:var(--gold);">Your Representatives</div>
+      <div class="section-h" style="color:white;">We're here for you.</div>
+      <p class="section-sub" style="color:var(--muted);">Tap to reach us directly.</p>
     </div>
-    <div class="contact-grid">
+    <div class="rep-grid" style="margin-bottom:32px;">
+      <div class="rep-card" onclick="openModal('amelia')" style="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.08);cursor:pointer;">
+        <div class="rep-initials">AS</div>
+        <div>
+          <div class="rep-name" style="color:white;">Amelia Scofield</div>
+          <div class="rep-role" style="color:var(--muted);">Class Representative · 2028</div>
+        </div>
+      </div>
+      <div class="rep-card" onclick="openModal('hailey')" style="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.08);cursor:pointer;">
+        <div class="rep-initials">HC</div>
+        <div>
+          <div class="rep-name" style="color:white;">Hailey Cohen</div>
+          <div class="rep-role" style="color:var(--muted);">Class Representative · 2028</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-grid" style="max-width:100%;">
       <div class="contact-cell">
         <div class="cc-label">Class Email</div>
         <a href="mailto:lmunurseanesthesia2028@gmail.com" class="cc-val">lmunurseanesthesia2028@gmail.com</a>
       </div>
       <div class="contact-cell">
-        <div class="cc-label">Your Representatives</div>
-        <div class="cc-val">Amelia Scofield &amp; Hailey Cohen</div>
+        <div class="cc-label">Anonymous Submission</div>
+        <a href="https://forms.gle/aAyir8F4eNh2iSZD7" target="_blank" class="cc-val">Submit a concern or idea →</a>
       </div>
     </div>
   </div>
 </section>
+
+<!-- REP MODAL -->
+<div class="modal-overlay" id="repModal" onclick="closeModal(event)">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-initials" id="modalInitials"></div>
+    <div class="modal-name" id="modalName"></div>
+    <div class="modal-role">Class Representative · 2028</div>
+    <p id="modalBio" style="font-size:13.5px;color:var(--muted-dark);line-height:1.65;font-weight:300;margin-bottom:24px;"></p>
+    <div class="modal-contacts">
+      <div class="modal-contact">
+        <div class="mc-label">Mobile</div>
+        <a class="mc-val" id="modalPhone"></a>
+        <div class="mc-note">Quick questions & day-to-day. Text or call.</div>
+      </div>
+      <div class="modal-contact">
+        <div class="mc-label">LMU Email</div>
+        <a class="mc-val" id="modalLmuEmail"></a>
+        <div class="mc-note">Direct, formal communication.</div>
+      </div>
+      <div class="modal-contact">
+        <div class="mc-label">Rep Email</div>
+        <a class="mc-val" href="mailto:lmunurseanesthesia2028@gmail.com">lmunurseanesthesia2028@gmail.com</a>
+        <div class="mc-note">Official rep matters — we both see this.</div>
+      </div>
+      <div class="modal-contact">
+        <div class="mc-label">Have a concern?</div>
+        <a class="mc-val" href="https://forms.gle/aAyir8F4eNh2iSZD7" target="_blank">Submit your feedback</a>
+        <div class="mc-note">We track everything submitted.</div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -810,6 +904,60 @@
     totalSemesters:  9,
     whiteCoatDate: "2027-04-23", // week of Apr 19-23 — likely Friday, confirm when official
   };
+
+  // ═══════════════════════════════════════════════════════
+  //  NOTICES — pinned housekeeping announcements
+  //  type: 'action' | 'deadline' | 'info'
+  //  expires: ISO date string — notice hides automatically after this date (optional)
+  //  link / linkLabel: optional CTA
+  // ═══════════════════════════════════════════════════════
+  const NOTICES = [
+    {
+      type: "deadline",
+      title: "Scrub & Jacket Order Deadline — July 31",
+      desc: "Last day to order through Lambert's as a class and have your student discount automatically applied. Use code LMUDNP at checkout.",
+      link: "https://shopuniforms.lambertshc.com/GroupLogin",
+      linkLabel: "Order at Lambert's →",
+      date: "Jul 31, 2026",
+      expires: "2026-08-01",
+    },
+  ];
+
+  function dismissNotice(btn) {
+    const card = btn.closest('.notice-card');
+    card.style.transition = 'opacity 0.2s';
+    card.style.opacity = '0';
+    setTimeout(() => {
+      card.remove();
+      if (!document.querySelector('.notice-card')) {
+        document.getElementById('noticesBar').style.display = 'none';
+      }
+    }, 200);
+  }
+
+  function renderNotices() {
+    const bar  = document.getElementById('noticesBar');
+    const grid = document.getElementById('noticesGrid');
+    const today = new Date(); today.setHours(0,0,0,0);
+    const active = NOTICES.filter(n => {
+      if (!n.expires) return true;
+      return new Date(n.expires + 'T00:00:00') > today;
+    });
+    if (!active.length) return;
+    bar.style.display = 'block';
+    grid.innerHTML = active.map(n => `
+      <div class="notice-card nc-${n.type}">
+        <span class="notice-tag nt-${n.type}">${n.type}</span>
+        <div class="notice-body">
+          <div class="notice-title">${n.title}</div>
+          ${n.desc ? `<div class="notice-desc">${n.desc}</div>` : ''}
+          ${n.link ? `<a class="notice-link" href="${n.link}" target="_blank" rel="noopener">${n.linkLabel || n.link}</a>` : ''}
+        </div>
+        ${n.date ? `<div class="notice-date">${n.date}</div>` : ''}
+        <button onclick="dismissNotice(this)" title="Dismiss" style="background:none;border:none;cursor:pointer;color:var(--muted-dark);font-size:16px;line-height:1;padding:0 0 0 12px;flex-shrink:0;align-self:flex-start;margin-top:1px;transition:color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted-dark)'">&times;</button>
+      </div>
+    `).join('');
+  }
 
   // ═══════════════════════════════════════════════════════
   //  DATES — add / remove entries here
@@ -1027,8 +1175,36 @@
     if (btn && CONFIG.submitFormUrl !== '#') btn.href = CONFIG.submitFormUrl;
   }
 
+  const REPS = {
+    amelia: { initials:'AS', name:'Amelia Scofield', phone:'585.545.1339', lmuEmail:'amelia.scofield@lmunet.edu',
+              bio:'Travel & adventure lover from upstate New York. Excited to help make this wild ride a little easier, smoother, and hopefully more fun!' },
+    hailey: { initials:'HC', name:'Hailey Cohen',   phone:'865.356.2708', lmuEmail:'hailey.cohen@lmunet.edu',
+              bio:'Knoxville native & UT alum. Here to make sure the Class of 2028 actually feels like a class, even from a distance. Happiest outside :)' },
+  };
+
+  function openModal(rep) {
+    const r = REPS[rep];
+    document.getElementById('modalInitials').textContent = r.initials;
+    document.getElementById('modalName').textContent = r.name;
+    document.getElementById('modalBio').textContent = r.bio || '';
+    const ph = document.getElementById('modalPhone');
+    ph.textContent = r.phone; ph.href = 'tel:' + r.phone.replace(/\./g,'-');
+    const em = document.getElementById('modalLmuEmail');
+    em.textContent = r.lmuEmail; em.href = 'mailto:' + r.lmuEmail;
+    document.getElementById('repModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(e) {
+    if (e && e.target !== document.getElementById('repModal') && !e.target.classList.contains('modal-close')) return;
+    document.getElementById('repModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { document.getElementById('repModal').classList.remove('open'); document.body.style.overflow = ''; }
+  });
+
   document.addEventListener('DOMContentLoaded', () => {
-    renderDates(); renderSurveys(); renderStats(); applyConfig();
+    renderNotices(); renderDates(); renderSurveys(); renderStats(); applyConfig();
   });
 </script>
 </body>
