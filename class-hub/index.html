@@ -334,6 +334,16 @@
     .merch-title { font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 12px; }
     .merch-sub { font-size: 14px; color: var(--muted-dark); font-weight: 300; max-width: 400px; margin: 0 auto 28px; line-height: 1.7; }
 
+    /* ── WHATSAPP EXPAND ── */
+    .wa-link {
+      display: block; font-size: 13px; font-weight: 600; color: var(--ink);
+      text-decoration: none; padding: 9px 12px;
+      border: 1px solid var(--border-light); border-radius: 6px;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .wa-link:hover { background: var(--off-white); border-color: #ccc; }
+    .wa-link::before { content: '💬 '; font-size: 12px; }
+
     /* ── COMING SOON ── */
     .cs-banner { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
     .cs-pill { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; background: var(--ink); color: var(--gold); flex-shrink: 0; }
@@ -420,12 +430,12 @@
         <div class="dd-label">Sections</div>
         <a href="#updates"   class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Weekly Updates</div><div class="dd-sub">Rep log &amp; announcements</div></div></a>
         <a href="#dates"     class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Upcoming Dates</div><div class="dd-sub">Events, deadlines &amp; key dates</div></div></a>
-        <a href="#board"     class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Ideas &amp; Concerns Board</div><div class="dd-sub">Track what we're working on</div></div></a>
-        <a href="#surveys"   class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Surveys</div><div class="dd-sub">Have your say</div></div></a>
-        <a href="#merch"     class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Class Merch</div><div class="dd-sub">Official Class of 2028 gear</div></div></a>
-        <a href="#clinical"  class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Clinical Site Guide</div><div class="dd-sub">Local tips for each rotation site</div></div></a>
-        <a href="#submit"    class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Submit an Idea or Concern</div><div class="dd-sub">Anonymous submissions welcome</div></div></a>
         <a href="#resources" class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Resources</div><div class="dd-sub">Professional orgs, study tools &amp; more</div></div></a>
+        <a href="#clinical"  class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Clinical Site Guide</div><div class="dd-sub">Local tips for each rotation site</div></div></a>
+        <a href="#surveys"   class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Surveys</div><div class="dd-sub">Have your say</div></div></a>
+        <a href="#board"     class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Ideas &amp; Concerns Board</div><div class="dd-sub">Track what we're working on</div></div></a>
+        <a href="#submit"    class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Submit an Idea or Concern</div><div class="dd-sub">Anonymous submissions welcome</div></div></a>
+        <a href="#merch"     class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Class Merch</div><div class="dd-sub">Official Class of 2028 gear</div></div></a>
       </div>
       <div class="dd-section">
         <div class="dd-label">Quick Links</div>
@@ -438,11 +448,12 @@
   <ul>
     <li><a href="#updates">Updates</a></li>
     <li><a href="#dates">Dates</a></li>
-    <li><a href="#board">Board</a></li>
-    <li><a href="#surveys">Surveys</a></li>
-    <li><a href="#merch">Merch</a></li>
+    <li><a href="#resources">Resources</a></li>
     <li><a href="#clinical">Clinical</a></li>
-    <li><a href="#submit">Submit</a></li>
+    <li><a href="#surveys">Surveys</a></li>
+    <li><a href="#board">Board</a></li>
+    <li><a href="#merch">Merch</a></li>
+    <li><a href="./program.html">Curriculum</a></li>
   </ul>
 </nav>
 
@@ -539,121 +550,8 @@
   </div>
 </section>
 
-<!-- BOARD -->
-<section class="section s-off" id="board">
-  <div class="section-inner">
-    <div class="section-header">
-      <div class="section-kicker">Transparency</div>
-      <div class="section-h">Ideas &amp; Concerns Board</div>
-      <p class="section-sub">Everything you submit lives here. We update the status as we work on it so you always know where things stand.</p>
-    </div>
-    <div class="board-filters">
-      <button class="filter-btn active" onclick="filterBoard('all',this)">Active</button>
-      <button class="filter-btn" onclick="filterBoard('idea',this)">Ideas</button>
-      <button class="filter-btn" onclick="filterBoard('concern',this)">Concerns</button>
-      <button class="filter-btn" onclick="filterBoard('request',this)">Requests</button>
-      <button class="filter-btn" onclick="filterBoard('resolved',this)" style="margin-left:8px;border-color:#d1fae5;color:#065f46;">Resolved</button>
-    </div>
-    <div class="board-wrap">
-      <table class="board-table" id="boardTable">
-        <thead>
-          <tr>
-            <th>Type</th><th>Summary</th><th>Submitted</th><th>Status</th><th>Update</th>
-          </tr>
-        </thead>
-        <tbody id="boardTbody">
-          <tr><td colspan="5" style="text-align:center;color:var(--muted-dark);padding:32px;font-size:13px;">Loading…</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- SURVEYS -->
-<section class="section s-white" id="surveys">
-  <div class="section-inner">
-    <div class="section-header">
-      <div class="section-kicker">Your Voice</div>
-      <div class="section-h">Surveys</div>
-      <p class="section-sub">We check the pulse of the class regularly. Every response shapes what we bring to leadership. Your responses — or the absence of them — directly shape what we advocate for.</p>
-    </div>
-    <div id="surveyList"></div>
-  </div>
-</section>
-
-<!-- MERCH -->
-<section class="section s-off" id="merch">
-  <div class="section-inner">
-    <div class="section-header">
-      <div class="section-kicker">Class of 2028</div>
-      <div class="section-h">Class Merch</div>
-      <p class="section-sub">Official gear for the Class of 2028.</p>
-    </div>
-    <div class="cs-banner">
-      <span class="cs-pill">Coming Soon</span>
-      <span class="cs-line"></span>
-      <span class="cs-note">Designs in progress — ordering opens soon.</span>
-    </div>
-    <div class="merch-placeholder">
-      <div class="merch-rule"></div>
-      <div class="merch-title">Designs in the Works</div>
-      <div class="merch-sub">We are working on something you will actually want to wear. Class of 2028 sweatshirts and tees are coming — we will announce here and via email when ordering opens.</div>
-      <a href="#submit" class="btn btn-dark">Have a design idea? Submit it.</a>
-    </div>
-  </div>
-</section>
-
-<!-- CLINICAL -->
-<section class="section s-white" id="clinical">
-  <div class="section-inner">
-    <div class="section-header">
-      <div class="section-kicker">Rotations</div>
-      <div class="section-h">Clinical Site Guide</div>
-      <p class="section-sub">Crowd-sourced tips from classmates who've been there — housing, food, parking, and what to expect. Grows over time.</p>
-    </div>
-    <div class="cs-banner">
-      <span class="cs-pill">Coming Soon</span>
-      <span class="cs-line"></span>
-      <span class="cs-note">We're gathering site info before clinical rotations begin. Cards below show the format.</span>
-    </div>
-    <div class="site-grid">
-      <div class="site-card" style="opacity:0.45;pointer-events:none;">
-        <div class="site-head">
-          <div class="site-name">Example Site</div>
-          <div class="site-loc">City, State</div>
-        </div>
-        <div class="site-body">
-          <div class="site-tip"><span class="tip-label">Housing</span><span>Hotel or Airbnb recommendations — avg. nightly rate, distance from site.</span></div>
-          <div class="site-tip"><span class="tip-label">Food</span><span>Local restaurant recommendations near the site.</span></div>
-          <div class="site-tip"><span class="tip-label">Parking</span><span>Where to park, cost, and any site-specific notes.</span></div>
-          <div class="site-tip"><span class="tip-label">Tips</span><span>What to know before your first day — dress code, culture, who to contact.</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SUBMIT -->
-<section class="section s-off" id="submit">
-  <div class="section-inner">
-    <div class="section-header">
-      <div class="section-kicker">Get in Touch</div>
-      <div class="section-h">Submit an Idea or Concern</div>
-      <p class="section-sub">Have something on your mind? Submissions can be anonymous. Everything is logged on the board above.</p>
-    </div>
-    <div class="form-shell">
-      <div class="form-placeholder">
-        <div class="form-rule"></div>
-        <h3>Share Something With Us</h3>
-        <p>Ideas, concerns, requests — whatever's on your mind. Submissions can be anonymous and are reviewed by your reps.</p>
-        <a href="#" id="formBtn" class="btn btn-gold">Open Submission Form</a>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- RESOURCES -->
-<section class="section s-white" id="resources">
+<section class="section s-off" id="resources">
   <div class="section-inner">
     <div class="section-header">
       <div class="section-kicker">Library</div>
@@ -669,11 +567,34 @@
         <div class="rc-desc">Our shared class folder — resources, helpful videos, notes, and anything worth saving in one place.</div>
         <div class="rc-cta">Open class drive</div>
       </a>
-      <a href="https://chat.whatsapp.com/FhJUVJoyGUN3IIX5rCJ50Y?mode=gi_t" target="_blank" class="resource-card">
-        <div class="rc-cat">Group Chat</div>
-        <div class="rc-title">Class WhatsApp</div>
-        <div class="rc-desc">The class group chat — quick updates, questions, and real-time coordination. Join if you haven't already.</div>
-        <div class="rc-cta">Join WhatsApp group</div>
+      <div class="resource-card" onclick="toggleWA(this)" style="cursor:pointer;">
+        <div class="rc-cat">Group Chats</div>
+        <div class="rc-title">Class WhatsApp <span style="font-size:11px;font-weight:400;color:var(--muted-dark);margin-left:6px;">tap to expand ↓</span></div>
+        <div class="rc-desc">Class group chats by course — join the ones relevant to you.</div>
+        <div class="wa-links" style="display:none;margin-top:16px;border-top:1px solid var(--border-light);padding-top:14px;display:none;flex-direction:column;gap:8px;">
+          <a href="https://chat.whatsapp.com/FhJUVJoyGUN3IIX5rCJ50Y?mode=gi_t" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="wa-link">General Cohort Chat</a>
+          <a href="https://chat.whatsapp.com/EIqEasKWowJC4PqiQeGgKm?s=cl&p=i&ilr=4" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="wa-link">NURS 701 — A&amp;P</a>
+          <a href="https://chat.whatsapp.com/IKgqfoAvsfJGCZeLhWmVOl?s=sh&p=i&mlu=4" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="wa-link">NURS 733 — Pharm II</a>
+          <a href="https://chat.whatsapp.com/GsLro1c4oUJ1jImrOdPgvi?s=sh&p=i&mlu=4&amv=2" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="wa-link">NURS 753 — P&amp;P I</a>
+        </div>
+      </div>
+      <a href="https://studentlmunet.sharepoint.com/sites/NAPCohort2028/SitePages/CollabHome.aspx" target="_blank" class="resource-card">
+        <div class="rc-cat">SharePoint</div>
+        <div class="rc-title">NAP Cohort 2028 — SharePoint</div>
+        <div class="rc-desc">The official LMU SharePoint site for our cohort — program resources, announcements, and collaboration tools.</div>
+        <div class="rc-cta">Open SharePoint →</div>
+      </a>
+      <a href="https://photos.app.goo.gl/QSbX67EXYgDheJDj6" target="_blank" class="resource-card">
+        <div class="rc-cat">Photo Album</div>
+        <div class="rc-title">Class of 2028 — Photo Dump</div>
+        <div class="rc-desc">Add your photos, share moments, and keep the memories in one place. Open to the whole class.</div>
+        <div class="rc-cta">Add your photos →</div>
+      </a>
+      <a href="https://lmu.zoom.us/j/86301644455?pwd=eLnWZGqvNfLj744jembAshgtEOpxoV.1" target="_blank" class="resource-card">
+        <div class="rc-cat">Weekly</div>
+        <div class="rc-title">Grand Rounds — Zoom</div>
+        <div class="rc-desc">Weekly Grand Rounds Zoom link. Required attendance — bookmark this so it's always one tap away.</div>
+        <div class="rc-cta">Join Zoom →</div>
       </a>
     </div>
 
@@ -809,6 +730,130 @@
         <div class="rc-desc">LMU's student counseling and mental health services — confidential support available to all enrolled students.</div>
         <div class="rc-cta">Visit counseling page</div>
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- CLINICAL -->
+<section class="section s-white" id="clinical">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-kicker">Rotations</div>
+      <div class="section-h">Clinical Site Guide</div>
+      <p class="section-sub">Crowd-sourced tips from classmates who've been there — housing, food, parking, and what to expect. Grows over time.</p>
+    </div>
+    <!-- SHAREPOINT LINK — swap the href below once you have the URL -->
+    <a href="https://studentlmunet.sharepoint.com/sites/NurseAnesthesiaClinicalInformation/SitePages/CollabHome.aspx" target="_blank" rel="noopener" id="sharepointLink"
+       style="display:flex;align-items:center;gap:16px;background:var(--ink);color:white;padding:20px 24px;text-decoration:none;margin-bottom:28px;border-radius:var(--radius);transition:background 0.15s;"
+       onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
+      <div style="width:40px;height:40px;background:rgba(201,168,76,0.15);border:1px solid var(--gold-line);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;">📁</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:700;color:white;margin-bottom:3px;">Nurse Anesthesia Clinical Information</div>
+        <div style="font-size:12px;color:var(--muted);font-weight:300;">Official LMU clinical information site — rotation resources, protocols, and program guidance.</div>
+      </div>
+      <div style="font-size:11px;font-weight:600;color:var(--gold);white-space:nowrap;">Open →</div>
+    </a>
+    <div class="cs-banner">
+      <span class="cs-pill">Coming Soon</span>
+      <span class="cs-line"></span>
+      <span class="cs-note">We're gathering site info before clinical rotations begin. Cards below show the format.</span>
+    </div>
+    <div class="site-grid">
+      <div class="site-card" style="opacity:0.45;pointer-events:none;">
+        <div class="site-head">
+          <div class="site-name">Example Site</div>
+          <div class="site-loc">City, State</div>
+        </div>
+        <div class="site-body">
+          <div class="site-tip"><span class="tip-label">Housing</span><span>Hotel or Airbnb recommendations — avg. nightly rate, distance from site.</span></div>
+          <div class="site-tip"><span class="tip-label">Food</span><span>Local restaurant recommendations near the site.</span></div>
+          <div class="site-tip"><span class="tip-label">Parking</span><span>Where to park, cost, and any site-specific notes.</span></div>
+          <div class="site-tip"><span class="tip-label">Tips</span><span>What to know before your first day — dress code, culture, who to contact.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SURVEYS -->
+<section class="section s-off" id="surveys">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-kicker">Your Voice</div>
+      <div class="section-h">Surveys</div>
+      <p class="section-sub">We check the pulse of the class regularly. Every response shapes what we bring to leadership.</p>
+    </div>
+    <div id="surveyList"></div>
+  </div>
+</section>
+
+<!-- BOARD -->
+<section class="section s-white" id="board">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-kicker">Transparency</div>
+      <div class="section-h">Ideas &amp; Concerns Board</div>
+      <p class="section-sub">Everything you submit lives here. We update the status as we work on it so you always know where things stand.</p>
+    </div>
+    <div class="board-filters">
+      <button class="filter-btn active" onclick="filterBoard('all',this)">Active</button>
+      <button class="filter-btn" onclick="filterBoard('idea',this)">Ideas</button>
+      <button class="filter-btn" onclick="filterBoard('concern',this)">Concerns</button>
+      <button class="filter-btn" onclick="filterBoard('request',this)">Requests</button>
+      <button class="filter-btn" onclick="filterBoard('resolved',this)" style="margin-left:8px;border-color:#d1fae5;color:#065f46;">Resolved</button>
+    </div>
+    <div class="board-wrap">
+      <table class="board-table" id="boardTable">
+        <thead>
+          <tr>
+            <th>Type</th><th>Summary</th><th>Submitted</th><th>Status</th><th>Update</th>
+          </tr>
+        </thead>
+        <tbody id="boardTbody">
+          <tr><td colspan="5" style="text-align:center;color:var(--muted-dark);padding:32px;font-size:13px;">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- SUBMIT -->
+<section class="section s-off" id="submit">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-kicker">Get in Touch</div>
+      <div class="section-h">Submit an Idea or Concern</div>
+      <p class="section-sub">Have something on your mind? Submissions can be anonymous. Everything is logged on the board above.</p>
+    </div>
+    <div class="form-shell">
+      <div class="form-placeholder">
+        <div class="form-rule"></div>
+        <h3>Share Something With Us</h3>
+        <p>Ideas, concerns, requests — whatever's on your mind. Submissions can be anonymous and are reviewed by your reps.</p>
+        <a href="#" id="formBtn" class="btn btn-gold">Open Submission Form</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MERCH -->
+<section class="section s-white" id="merch">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-kicker">Class of 2028</div>
+      <div class="section-h">Class Merch</div>
+      <p class="section-sub">Official gear for the Class of 2028.</p>
+    </div>
+    <div class="cs-banner">
+      <span class="cs-pill">Coming Soon</span>
+      <span class="cs-line"></span>
+      <span class="cs-note">Designs in progress — ordering opens soon.</span>
+    </div>
+    <div class="merch-placeholder">
+      <div class="merch-rule"></div>
+      <div class="merch-title">Designs in the Works</div>
+      <div class="merch-sub">We are working on something you will actually want to wear. Class of 2028 sweatshirts and tees are coming — we will announce here and via email when ordering opens.</div>
+      <a href="#submit" class="btn btn-dark">Have a design idea? Submit it.</a>
     </div>
   </div>
 </section>
@@ -1202,6 +1247,14 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { document.getElementById('repModal').classList.remove('open'); document.body.style.overflow = ''; }
   });
+
+  function toggleWA(card) {
+    const links = card.querySelector('.wa-links');
+    const isOpen = links.style.display === 'flex';
+    links.style.display = isOpen ? 'none' : 'flex';
+    const hint = card.querySelector('.rc-title span');
+    if (hint) hint.textContent = isOpen ? 'tap to expand ↓' : 'tap to close ↑';
+  }
 
   document.addEventListener('DOMContentLoaded', () => {
     renderNotices(); renderDates(); renderSurveys(); renderStats(); applyConfig();
