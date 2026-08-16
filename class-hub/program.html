@@ -215,6 +215,25 @@
     .detail-row { display: flex; gap: 8px; margin-bottom: 4px; }
     .detail-row strong { color: var(--ink); font-weight: 600; min-width: 70px; }
 
+    /* ── FACULTY MODAL ── */
+    .fac-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center; }
+    .fac-modal-overlay.open { display:flex; }
+    .fac-modal-card { background:white; max-width:380px; width:90%; padding:40px; position:relative; }
+    .fac-modal-close { position:absolute; top:16px; right:20px; font-size:20px; cursor:pointer; color:var(--muted-dark); line-height:1; background:none; border:none; font-family:var(--sans); }
+    .fac-modal-close:hover { color:var(--ink); }
+    .fac-modal-initials { width:52px; height:52px; background:var(--ink); color:var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:16px; font-weight:700; margin-bottom:16px; }
+    .fac-modal-name { font-family:var(--serif); font-size:22px; font-weight:700; color:var(--ink); margin-bottom:4px; }
+    .fac-modal-role { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:28px; }
+    .fac-modal-rows { display:flex; flex-direction:column; gap:0; }
+    .fac-modal-section-head { font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); padding:14px 0 8px; border-bottom:1px solid var(--border-light); margin-bottom:0; }
+    .fac-modal-row { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid var(--border-light); }
+    .fac-modal-row:last-child { border-bottom:none; }
+    .fac-modal-time { font-size:13px; color:var(--ink); font-weight:400; }
+    .fac-modal-time .course-tag { font-size:10px; font-weight:700; color:var(--muted-dark); display:block; letter-spacing:0.5px; margin-bottom:2px; }
+    .fac-modal-join { font-size:12px; font-weight:700; color:var(--gold); text-decoration:none; white-space:nowrap; flex-shrink:0; border-bottom:1px solid var(--gold-line); }
+    .fac-modal-join:hover { border-color:var(--gold); }
+    .fac-modal-tbd { font-size:12px; font-weight:500; color:var(--muted-dark); white-space:nowrap; flex-shrink:0; }
+
     /* ── TOTALS STRIP ── */
     .totals-strip {
       display: flex; gap: 28px; margin-top: 14px;
@@ -322,19 +341,38 @@
   //  * = online (set online: true)
   // ═══════════════════════════════════════════════════════
 
-  const CURRENT_SEM = 2; // update each semester
+  const CURRENT_SEM = 3; // update each semester
 
   const FACULTY = [
     { id: "conder",        name: "Dr. Stephanie Conder",       credentials: "Associate Professor of Nursing" },
     { id: "england",       name: "Dr. Jami England",           credentials: "Assistant Professor of Nursing" },
-    { id: "julien",        name: "Dr. Marie Julien",           credentials: "Assistant Professor & Assistant Director of Nurse Anesthesia" },
+    { id: "julien",        name: "Dr. Marie Julien",           credentials: "Assistant Professor & Assistant Director of Nurse Anesthesia",
+      ohLinks: [
+        { time: "Mon · 1–3 PM EST",    url: "https://us06web.zoom.us/j/82065299858?pwd=dwmWFHxkKTZVTR1CaYGhTsGdOQaHVh.1" },
+        { time: "Thu · 12–3 PM EST",   url: "https://us06web.zoom.us/j/85383800700?pwd=uknsDPYvM0k4UcaxjtkeKhG6MF9IMl.1" },
+      ]
+    },
     { id: "lingerfelt",    name: "Dr. Carrie Lingerfelt",      credentials: "Faculty" },
     { id: "mapes",         name: "Dr. Christy Mapes",          credentials: "Instructor of Nursing, DNP, FNP-BC" },
-    { id: "palmer",        name: "Michelle Palmer",             credentials: "Faculty, MSN, CRNA" },
-    { id: "roberts",       name: "Dr. Matthew Roberts",         credentials: "Faculty, DNAP, CRNA" },
+    { id: "palmer",        name: "Michelle Palmer",             credentials: "Faculty, MSN, CRNA",
+      ohLinks: [
+        { time: "Mon & Wed · 1–4 PM EST", url: null },
+      ]
+    },
+    { id: "roberts",       name: "Dr. Matthew Roberts",         credentials: "Faculty, DNAP, CRNA",
+      ohLinks: [
+        { time: "Tue & Thu · 10 AM–12 PM EST", url: "https://lmu.zoom.us/j/88362182343" },
+        { time: "Wed · 10 AM–1 PM EST",         url: "https://lmu.zoom.us/j/85755518881" },
+      ]
+    },
     { id: "stewart-glenn", name: "Dr. Jennifer Stewart-Glenn",  credentials: "Associate Professor & Director, DNP Program" },
     { id: "stocks",        name: "Dr. Jennifer Stocks",         credentials: "Associate Professor & Assistant Dean of Graduate Nursing" },
-    { id: "todd",          name: "Dr. Raleigh Todd",            credentials: "Director, Nurse Anesthesia Concentration & Associate Professor of Nursing" },
+    { id: "todd",          name: "Dr. Raleigh Todd",            credentials: "Director, Nurse Anesthesia Concentration & Associate Professor of Nursing",
+      ohLinks: [
+        { time: "Mon, Tue, Thu · 8–9 AM EST", url: "https://lmu.zoom.us/j/82121285195?pwd=r0FA6S8Mjb81apasrJ0TShVfGbn234.1" },
+        { time: "Wed · 8–11 AM EST",           url: "https://lmu.zoom.us/j/88986877532?pwd=mRpcVdsIx9bUtgfSj1DgTqBskoHo50.1" },
+      ]
+    },
   ];
 
   const SEMESTERS = [
@@ -370,10 +408,10 @@
       type: "didactic",
       credits: 15,
       courses: [
-        { code: "NURS 701",  name: "Advanced A&P and Pathophysiology",                 credits: 4, online: false, type: "didactic", faculty: "julien",             syllabus: "./syllabi/nurs-701-syllabus-2026.pdf", whatsapp: "https://chat.whatsapp.com/EIqEasKWowJC4PqiQeGgKm?s=cl&p=i&ilr=4" },
-        { code: "NURS 733",  name: "Advanced Anesthesia Pharmacology II",               credits: 3, online: false, type: "didactic", faculty: ["roberts", "todd"],   syllabus: "./syllabi/nurs-733-syllabus-2026.pdf", whatsapp: "https://chat.whatsapp.com/IKgqfoAvsfJGCZeLhWmVOl?s=sh&p=i&mlu=4" },
+        { code: "NURS 701",  name: "Advanced A&P and Pathophysiology",                 credits: 4, online: false, type: "didactic", faculty: "julien",             syllabus: "./syllabi/nurs-701-syllabus-2026.pdf", whatsapp: "https://chat.whatsapp.com/EIqEasKWowJC4PqiQeGgKm?s=cl&p=i&ilr=4", zoomLink: "https://lmu.zoom.us/j/84445738443", zoomMeta: "Tue & Thu · 9–11 AM EST" },
+        { code: "NURS 733",  name: "Advanced Anesthesia Pharmacology II",               credits: 3, online: false, type: "didactic", faculty: ["roberts", "todd"],   syllabus: "./syllabi/nurs-733-syllabus-2026.pdf", whatsapp: "https://chat.whatsapp.com/IKgqfoAvsfJGCZeLhWmVOl?s=sh&p=i&mlu=4",    zoomLink: "https://lmu.zoom.us/j/84449080445", zoomMeta: "Mon · 1–4 PM EST" },
         { code: "NURS 741",  name: "Adaptive Leadership",                               credits: 4, online: true,  type: "didactic", faculty: null },
-        { code: "NURS 753",  name: "Principles and Practice of Anesthesia I",           credits: 3, online: false, type: "didactic", faculty: ["todd", "palmer"],    syllabus: "./syllabi/nurs-753-syllabus-2026.pdf", whatsapp: "https://chat.whatsapp.com/GsLro1c4oUJ1jImrOdPgvi?s=sh&p=i&mlu=4&amv=2" },
+        { code: "NURS 753",  name: "Principles and Practice of Anesthesia I",           credits: 3, online: false, type: "didactic", faculty: ["palmer", "todd"],    syllabus: "./syllabi/nurs-753-syllabus-2026.pdf", whatsapp: "https://chat.whatsapp.com/GsLro1c4oUJ1jImrOdPgvi?s=sh&p=i&mlu=4&amv=2", zoomMeta: "Tue & Thu · 12–2 PM EST" },
         { code: "NURS 753A", name: "Principles and Practice of Anesthesia I — Lab",     credits: 1, online: false, type: "lab",      faculty: null },
       ]
     },
@@ -487,6 +525,15 @@
       .map(w => w[0]).join('').substring(0, 3);
   }
 
+  function getFacultyOHLinks(facultyId) {
+    const ids = Array.isArray(facultyId) ? facultyId : facultyId ? [facultyId] : [];
+    return ids.map(id => {
+      const f = FACULTY.find(x => x.id === id);
+      if (!f || !f.ohLink) return '';
+      return `<div class="detail-row"><strong>Office Hours</strong> <a href="${f.ohLink}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid var(--gold-line);" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--gold-line)'">${shortName(f.name)} →</a></div>`;
+    }).join('');
+  }
+
   function getFacultyDisplay(facultyId, guests) {
     let html = '';
     const primaryIds = Array.isArray(facultyId) ? facultyId : facultyId ? [facultyId] : [];
@@ -497,7 +544,7 @@
         if (i > 0) html += `<div style="flex-basis:100%;height:2px"></div>`;
         const f = FACULTY.find(x => x.id === id);
         if (f) {
-          html += `<div class="faculty-initials fi-set">${getInitials(f.name)}</div><span class="faculty-name-text set">${shortName(f.name)}</span>`;
+          html += `<div class="faculty-initials fi-set">${getInitials(f.name)}</div><span class="faculty-name-text set" style="cursor:pointer;border-bottom:1px dashed var(--muted);" onclick="event.stopPropagation();openFacModal('${f.id}')">${shortName(f.name)}</span>`;
         } else {
           html += `<div class="faculty-initials fi-tbd">?</div><span class="faculty-name-text">Unknown</span>`;
         }
@@ -581,11 +628,12 @@
   function renderFaculty() {
     const roster = document.getElementById('facultyRoster');
     roster.innerHTML = FACULTY.map(f => `
-      <div style="background:white;border:1px solid var(--border-light);border-radius:var(--radius);padding:20px;display:flex;align-items:flex-start;gap:14px;">
+      <div id="fac-${f.id}" style="background:white;border:1px solid var(--border-light);border-radius:var(--radius);padding:20px;display:flex;align-items:flex-start;gap:14px;">
         <div class="faculty-initials fi-set" style="width:38px;height:38px;font-size:12px;flex-shrink:0;">${getInitials(f.name)}</div>
         <div>
           <div style="font-size:13px;font-weight:600;color:var(--ink);line-height:1.3;">${f.name}</div>
           <div style="font-size:11px;color:var(--muted-dark);margin-top:3px;line-height:1.4;">${f.credentials}</div>
+          ${f.ohLink ? `<div style="margin-top:7px;"><a href="${f.ohLink}" target="_blank" rel="noopener" style="font-size:11px;font-weight:600;color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold-line);">Office Hours →</a></div>` : ''}
         </div>
       </div>
     `).join('');
@@ -594,6 +642,67 @@
   renderProgress();
   renderCurriculum();
   renderFaculty();
+
+  function openFacModal(id) {
+    const f = FACULTY.find(x => x.id === id);
+    if (!f) return;
+    document.getElementById('facModalInitials').textContent = getInitials(f.name);
+    document.getElementById('facModalName').textContent = f.name;
+    document.getElementById('facModalRole').textContent = f.credentials;
+
+    // Gather courses this faculty teaches that have zoom info
+    const myCourses = [];
+    SEMESTERS.forEach(s => {
+      s.courses.forEach(c => {
+        const ids = Array.isArray(c.faculty) ? c.faculty : c.faculty ? [c.faculty] : [];
+        if (ids.includes(id) && (c.zoomLink || c.zoomMeta)) myCourses.push(c);
+      });
+    });
+
+    const row = (time, url, tag) =>
+      `<div class="fac-modal-row">
+        <div class="fac-modal-time">${tag ? `<span class="course-tag">${tag}</span>` : ''}${time}</div>
+        ${url ? `<a class="fac-modal-join" href="${url}" target="_blank" rel="noopener">Join →</a>`
+               : `<span class="fac-modal-tbd">Link TBD</span>`}
+      </div>`;
+
+    let html = '';
+
+    if (myCourses.length) {
+      html += `<div class="fac-modal-section-head">Class</div>`;
+      myCourses.forEach(c => {
+        html += row(c.zoomMeta || '—', c.zoomLink || null, c.code);
+      });
+    }
+
+    if (f.ohLinks && f.ohLinks.length) {
+      html += `<div class="fac-modal-section-head" style="margin-top:${myCourses.length ? '16px' : '0'};">Office Hours</div>`;
+      f.ohLinks.forEach(oh => html += row(oh.time, oh.url || null));
+    }
+
+    if (!html) {
+      html = `<div class="fac-modal-row"><div class="fac-modal-time" style="color:var(--muted-dark);">No Zoom links on file yet.</div></div>`;
+    }
+
+    document.getElementById('facModalRows').innerHTML = html;
+    document.getElementById('facModal').classList.add('open');
+  }
+
+  function closeFacModal(e) {
+    if (e && e.target !== document.getElementById('facModal')) return;
+    document.getElementById('facModal').classList.remove('open');
+  }
 </script>
+
+<!-- FACULTY MODAL -->
+<div class="fac-modal-overlay" id="facModal" onclick="closeFacModal(event)">
+  <div class="fac-modal-card">
+    <button class="fac-modal-close" onclick="document.getElementById('facModal').classList.remove('open')">&times;</button>
+    <div class="fac-modal-initials" id="facModalInitials"></div>
+    <div class="fac-modal-name" id="facModalName"></div>
+    <div class="fac-modal-role" id="facModalRole"></div>
+    <div class="fac-modal-rows" id="facModalRows"></div>
+  </div>
+</div>
 </body>
 </html>
