@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Semester View · LMU Nurse Anesthesia · Class of 2028</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink:         #08121f;
+      --ink-mid:     #0d1f36;
+      --ink-soft:    #132840;
+      --gold:        #C9A84C;
+      --gold-dim:    rgba(201,168,76,0.15);
+      --gold-line:   rgba(201,168,76,0.3);
+      --white:       #ffffff;
+      --off-white:   #f7f6f4;
+      --muted:       rgba(255,255,255,0.45);
+      --muted-dark:  #6b7280;
+      --border-dark: rgba(255,255,255,0.08);
+      --border-light:#e8e6e2;
+      --radius:      8px;
+      --serif:       'Playfair Display', Georgia, serif;
+      --sans:        'Inter', -apple-system, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--off-white); color: var(--ink); line-height: 1.6; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--ink); border-bottom: 1px solid var(--border-dark);
+      padding: 0 56px; display: flex; align-items: center; justify-content: space-between; height: 66px;
+    }
+    nav > ul { list-style: none; display: flex; gap: 2px; }
+    nav > ul a { color: var(--muted); text-decoration: none; font-size: 12.5px; font-weight: 500; letter-spacing: 0.3px; padding: 6px 12px; border-radius: 6px; transition: all 0.15s; }
+    nav > ul a:hover { color: white; background: rgba(255,255,255,0.06); }
+
+    /* ── HERO ── */
+    .hero { background: var(--ink); padding: 64px 56px 52px; border-bottom: 1px solid var(--border-dark); }
+    .hero-inner { max-width: 1100px; margin: 0 auto; }
+    .hero-kicker { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
+    .hero-kicker::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+    .hero h1 { font-family: var(--serif); font-size: clamp(26px, 3.5vw, 42px); font-weight: 800; color: white; margin-bottom: 28px; line-height: 1.15; }
+    .hero h1 span { color: var(--gold); }
+
+    /* ── SEMESTER SELECTOR ── */
+    .sem-selector { display: flex; gap: 6px; flex-wrap: wrap; }
+    .sem-btn {
+      padding: 6px 14px; border: 1px solid var(--border-dark); background: rgba(255,255,255,0.06);
+      font-family: var(--sans); font-size: 11.5px; font-weight: 500; color: rgba(255,255,255,0.55);
+      cursor: pointer; border-radius: 20px; transition: all 0.15s; white-space: nowrap;
+    }
+    .sem-btn:hover { background: rgba(255,255,255,0.12); color: white; }
+    .sem-btn.active { background: var(--gold); color: var(--ink); border-color: var(--gold); font-weight: 700; }
+
+    /* ── CONTENT ── */
+    .content { max-width: 1100px; margin: 0 auto; padding: 52px 56px; }
+
+    /* ── SECTION LABEL ── */
+    .sec-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--gold); padding-bottom: 12px; border-bottom: 1px solid var(--gold-line);
+      margin-bottom: 20px; margin-top: 48px;
+    }
+    .sec-label:first-child { margin-top: 0; }
+
+    /* ── WEEK STRIP ── */
+    .week-strip { display: grid; grid-template-columns: repeat(5,1fr); border: 1px solid var(--border-light); background: white; overflow: hidden; }
+    .week-day { border-right: 1px solid var(--border-light); }
+    .week-day:last-child { border-right: none; }
+    .week-day-head { padding: 9px 12px 8px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted-dark); border-bottom: 1px solid var(--border-light); background: var(--off-white); }
+    .week-day-body { padding: 8px; display: flex; flex-direction: column; gap: 5px; min-height: 56px; }
+    .week-pill { display: block; border-radius: 4px; padding: 5px 8px; font-size: 10.5px; line-height: 1.3; text-decoration: none; transition: opacity 0.15s; }
+    .week-pill:hover { opacity: 0.75; }
+    .week-pill-code { font-weight: 700; display: block; }
+    .week-pill-time { opacity: 0.75; font-size: 9.5px; display: block; margin-top: 1px; }
+
+    /* ── SCHEDULE LIST ── */
+    .sched-list { border: 1px solid var(--border-light); background: white; }
+    .sched-day-head {
+      padding: 9px 20px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted-dark); background: var(--off-white); border-bottom: 1px solid var(--border-light);
+    }
+    .sched-row {
+      display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .sched-row:last-child { border-bottom: none; }
+    .sched-color { width: 4px; height: 38px; border-radius: 2px; flex-shrink: 0; }
+    .sched-body { flex: 1; min-width: 0; }
+    .sched-code { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 2px; }
+    .sched-name { font-size: 13.5px; font-weight: 500; color: var(--ink); }
+    .sched-time { font-size: 12px; color: var(--muted-dark); margin-top: 2px; }
+    .sched-actions { flex-shrink: 0; }
+    .join-btn { font-size: 11.5px; font-weight: 700; padding: 7px 14px; border-radius: 6px; text-decoration: none; transition: all 0.15s; display: inline-block; white-space: nowrap; }
+    .join-btn-live { background: #1a6dd4; color: white; }
+    .join-btn-live:hover { background: #155ab5; }
+    .join-btn-tbd { background: var(--off-white); color: var(--muted-dark); border: 1px solid var(--border-light); cursor: default; }
+    .sched-async { padding: 14px 20px; font-size: 12.5px; color: var(--muted-dark); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; gap: 12px; }
+    .sched-async:last-child { border-bottom: none; }
+    .sched-async-code { font-weight: 700; color: var(--ink); }
+
+    /* ── OFFICE HOURS ── */
+    .oh-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; background: var(--border-light); border: 1px solid var(--border-light); }
+    .oh-card { background: white; padding: 24px 26px; }
+    .oh-name { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+    .oh-courses { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+    .oh-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--border-light); gap: 12px; }
+    .oh-row:last-child { border-bottom: none; }
+    .oh-time { font-size: 12.5px; color: var(--ink); }
+    .oh-link { font-size: 11.5px; font-weight: 700; color: #1a6dd4; text-decoration: none; white-space: nowrap; padding: 5px 10px; border: 1px solid #c5d8f5; border-radius: 5px; transition: all 0.15s; }
+    .oh-link:hover { background: #1a6dd4; color: white; border-color: #1a6dd4; }
+    .oh-link.tbd { color: var(--muted-dark); border-color: var(--border-light); cursor: default; pointer-events: none; }
+    .oh-note { font-size: 11px; color: var(--muted-dark); font-style: italic; margin-top: 12px; line-height: 1.5; }
+
+    /* ── EMPTY STATE ── */
+    .empty-state { padding: 48px 32px; text-align: center; background: white; border: 1px solid var(--border-light); }
+    .empty-state p { font-size: 13.5px; color: var(--muted-dark); line-height: 1.6; }
+
+    footer { background: var(--ink); border-top: 1px solid var(--border-dark); padding: 36px 56px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-left { font-size: 12px; color: var(--muted); }
+    .footer-left strong { color: rgba(255,255,255,0.7); font-weight: 600; }
+    .footer-right a { color: var(--gold); text-decoration: none; font-size: 11px; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; } nav > ul { display: none; }
+      .hero { padding: 48px 20px 40px; }
+      .content { padding: 32px 20px; }
+      .oh-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 20px; }
+    }
+    @media (max-width: 860px) {
+      .two-col { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a href="./index.html" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+      <div style="width:36px;height:36px;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:13px;color:var(--gold);letter-spacing:1px;flex-shrink:0;">NA</div>
+      <div>
+        <div style="font-size:14px;font-weight:600;color:white;letter-spacing:0.3px;">Class of 2028</div>
+        <div style="font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0.3px;">Semester View</div>
+      </div>
+    </a>
+  </div>
+  <ul>
+    <li><a href="./index.html#updates">Updates</a></li>
+    <li><a href="./index.html#dates">Dates</a></li>
+    <li><a href="./index.html#resources">Resources</a></li>
+    <li><a href="./index.html#surveys">Surveys</a></li>
+    <li><a href="./index.html#board">Board</a></li>
+    <li><a href="./zoom.html">Zoom</a></li>
+    <li><a href="./program.html">Curriculum</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">Lincoln Memorial University &nbsp;·&nbsp; DNP Nurse Anesthesia</div>
+    <h1>Semester <span id="heroSemLabel">View</span></h1>
+    <div class="sem-selector" id="semSelector"></div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<div class="content" id="semContent"></div>
+
+<footer>
+  <div class="footer-left">
+    <strong>LMU Nurse Anesthesia · Class of 2028</strong><br>
+    Lincoln Memorial University · Harrogate, Tennessee
+  </div>
+  <div class="footer-right">
+    <a href="mailto:lmunurseanesthesia2028@gmail.com">lmunurseanesthesia2028@gmail.com</a>
+  </div>
+</footer>
+
+<script>
+  // ═══════════════════════════════════════════════════════
+  //  DATA  (keep in sync with program.html)
+  // ═══════════════════════════════════════════════════════
+  const CURRENT_SEM = 3;
+
+  const FACULTY = [
+    { id: "conder",        name: "Dr. Stephanie Conder",        credentials: "Associate Professor of Nursing" },
+    { id: "england",       name: "Dr. Jami England",            credentials: "Assistant Professor of Nursing" },
+    { id: "heatherly",     name: "Dr. Angela Heatherly",        credentials: "Assistant Professor of Nursing" },
+    { id: "julien",        name: "Dr. Marie Julien",            credentials: "Assistant Professor & Assistant Director of Nurse Anesthesia",
+      ohLinks: [
+        { time: "Mon · 1–3 PM EST",   url: "https://us06web.zoom.us/j/82065299858?pwd=dwmWFHxkKTZVTR1CaYGhTsGdOQaHVh.1",  dayIdx: 0, startMin: 780 },
+        { time: "Thu · 12–3 PM EST",  url: "https://us06web.zoom.us/j/85383800700?pwd=uknsDPYvM0k4UcaxjtkeKhG6MF9IMl.1",  dayIdx: 3, startMin: 720 },
+      ],
+      ohNote: "If these times don't work for you, reach out to Dr. Julien directly to schedule a separate time."
+    },
+    { id: "lingerfelt",    name: "Dr. Carrie Lingerfelt",       credentials: "Faculty" },
+    { id: "mapes",         name: "Dr. Christy Mapes",           credentials: "Instructor of Nursing, DNP, FNP-BC" },
+    { id: "palmer",        name: "Michelle Palmer",              credentials: "Faculty, MSN, CRNA",
+      ohLinks: [
+        { time: "Mon & Wed · 1–4 PM EST", url: null, dayIdx: 0, startMin: 780 },
+      ]
+    },
+    { id: "roberts",       name: "Dr. Matthew Roberts",          credentials: "Faculty, DNAP, CRNA",
+      ohLinks: [
+        { time: "Tue & Thu · 10 AM–12 PM EST", url: "https://lmu.zoom.us/j/88362182343", dayIdx: 1, startMin: 600 },
+        { time: "Wed · 10 AM–1 PM EST",         url: "https://lmu.zoom.us/j/85755518881", dayIdx: 2, startMin: 600 },
+      ]
+    },
+    { id: "stewart-glenn", name: "Dr. Jennifer Stewart-Glenn",   credentials: "Associate Professor & Director, DNP Program" },
+    { id: "stocks",        name: "Dr. Jennifer Stocks",          credentials: "Associate Professor & Assistant Dean of Graduate Nursing" },
+    { id: "todd",          name: "Dr. Raleigh Todd",             credentials: "Director, Nurse Anesthesia Concentration & Associate Professor of Nursing",
+      ohLinks: [
+        { time: "Mon, Tue & Thu · 8–9 AM EST", url: "https://lmu.zoom.us/j/82121285195?pwd=r0FA6S8Mjb81apasrJ0TShVfGbn234.1", dayIdx: 0, startMin: 480 },
+        { time: "Wed · 8–11 AM EST",            url: "https://lmu.zoom.us/j/88986877532?pwd=mRpcVdsIx9bUtgfSj1DgTqBskoHo50.1", dayIdx: 2, startMin: 480 },
+      ]
+    },
+  ];
+
+  const SEMESTERS = [
+    { number:1, label:"Semester 1", term:"Spring 2026", credits:12, courses:[
+      { code:"NURS 702", name:"Theoretical Foundations and Research Methods",                              credits:4, online:true,  faculty:"stewart-glenn" },
+      { code:"NURS 731", name:"Advanced Pharmacology & Therapeutics",                                      credits:4, online:true,  faculty:"conder" },
+      { code:"NURS 740", name:"Interprofessional Collaboration, Health Policy, & Organizational Systems",  credits:4, online:true,  faculty:"lingerfelt" },
+    ]},
+    { number:2, label:"Semester 2", term:"Summer 2026", credits:11, courses:[
+      { code:"NURS 705", name:"Informational Systems and Technology Application",  credits:2, online:true, faculty:"julien" },
+      { code:"NURS 710", name:"Biostatistics",                                     credits:3, online:true, faculty:"stewart-glenn", syllabus:"./syllabi/nurs-710-syllabus-2026.pdf" },
+      { code:"NURS 721", name:"Advanced Health Assessment",                        credits:3, online:true, faculty:["mapes","england"], syllabus:"./syllabi/nurs-721-syllabus-2026.pdf" },
+      { code:"NURS 732", name:"Advanced Anesthesia Pharmacology I",                credits:3, online:true, faculty:"todd" },
+    ]},
+    { number:3, label:"Semester 3", term:"Fall 2026", credits:15, courses:[
+      { code:"NURS 701",  name:"Advanced A&P and Pathophysiology",                credits:4, online:false, faculty:"julien",           syllabus:"./syllabi/nurs-701-syllabus-2026.pdf", zoomLink:"https://lmu.zoom.us/j/84445738443", schedule:[{ days:["Tue","Thu"], start:"09:00", end:"11:00" }, { days:["Tue"], start:"14:00", end:"15:00", label:"Study Session" }], color:"#4A90D9" },
+      { code:"Grand Rounds", name:"Grand Rounds",                                  credits:0, online:false, faculty:null, zoomLink:"https://lmu.zoom.us/j/86301644455?pwd=eLnWZGqvNfLj744jembAshgtEOpxoV.1", schedule:[{ days:["Mon"], start:"12:00", end:"13:00" }], color:"#C9A84C" },
+      { code:"NURS 733",  name:"Advanced Anesthesia Pharmacology II",             credits:3, online:false, faculty:["roberts","todd"], syllabus:"./syllabi/nurs-733-syllabus-2026.pdf", zoomLink:"https://lmu.zoom.us/j/84449080445", schedule:[{ days:["Mon"], start:"13:00", end:"16:00" }], color:"#2EAF7D" },
+      { code:"NURS 741",  name:"Adaptive Leadership",                             credits:4, online:true,  faculty:["heatherly","lingerfelt","roberts"] },
+      { code:"NURS 753",  name:"Principles and Practice of Anesthesia I",         credits:3, online:false, faculty:["palmer","todd"],  syllabus:"./syllabi/nurs-753-syllabus-2026.pdf", schedule:[{ days:["Tue","Thu"], start:"12:00", end:"14:00" }], color:"#9B6DD6" },
+      { code:"NURS 753A", name:"Principles and Practice of Anesthesia I — Lab",   credits:1, online:false, faculty:null },
+    ]},
+    { number:4, label:"Semester 4", term:"Spring 2027", credits:11, courses:[
+      { code:"NURS 700",  name:"Knowledge Development in Nursing Science",        credits:3, online:true,  faculty:null },
+      { code:"NURS 711",  name:"Advanced A&P and Pathophysiology I",              credits:4, online:false, faculty:null },
+      { code:"NURS 754",  name:"Principles and Practice of Anesthesia II",        credits:3, online:false, faculty:null },
+      { code:"NURS 754A", name:"Principles and Practice of Anesthesia II — Lab",  credits:1, online:false, faculty:null },
+    ]},
+    { number:5, label:"Semester 5", term:"Summer 2027", credits:12, courses:[
+      { code:"NURS 712", name:"Advanced A&P and Pathophysiology II",               credits:2, online:false, faculty:null },
+      { code:"NURS 720", name:"Translational Research for Evidence Based Practice", credits:4, online:true,  faculty:null },
+      { code:"NURS 771", name:"DNP Anesthesia Clinical Practicum I",               credits:6, online:false, faculty:null },
+    ]},
+    { number:6, label:"Semester 6", term:"Fall 2027", credits:15, courses:[
+      { code:"NURS 730",  name:"Epidemiology and Population Health",               credits:3, online:true,  faculty:null },
+      { code:"NURS 755",  name:"Principles and Practice of Anesthesia III",        credits:3, online:false, faculty:null },
+      { code:"NURS 755A", name:"Principles and Practice of Anesthesia III — Lab",  credits:1, online:false, faculty:null },
+      { code:"NURS 772",  name:"DNP Anesthesia Clinical Practicum II",             credits:6, online:false, faculty:null },
+      { code:"NURS 781",  name:"DNP Project I",                                    credits:2, online:true,  faculty:null },
+    ]},
+    { number:7, label:"Semester 7", term:"Spring 2028", credits:10, courses:[
+      { code:"NURS 756", name:"Principles and Practice of Anesthesia IV", credits:2, online:false, faculty:null },
+      { code:"NURS 773", name:"DNP Anesthesia Clinical Practicum III",    credits:6, online:false, faculty:null },
+      { code:"NURS 782", name:"DNP Project II",                           credits:2, online:true,  faculty:null },
+    ]},
+    { number:8, label:"Semester 8", term:"Summer 2028", credits:12, courses:[
+      { code:"NURS 742", name:"Strategic Systems Thinking",               credits:4, online:true,  faculty:null },
+      { code:"NURS 757", name:"Principles and Practice of Anesthesia V",  credits:2, online:false, faculty:null },
+      { code:"NURS 777", name:"DNP Anesthesia Clinical Practicum IV",     credits:6, online:false, faculty:null },
+    ]},
+    { number:9, label:"Semester 9", term:"Fall 2028", credits:11, courses:[
+      { code:"NURS 778", name:"DNP Anesthesia Clinical Practicum V",  credits:6, online:false, faculty:null },
+      { code:"NURS 783", name:"DNP Project III",                      credits:2, online:true,  faculty:null },
+      { code:"NURS 789", name:"Advanced Anesthesia Synthesis",        credits:3, online:false, faculty:null },
+    ]},
+  ];
+
+  // ═══════════════════════════════════════════════════════
+  //  HELPERS
+  // ═══════════════════════════════════════════════════════
+  const DAY_ORDER = { Mon:0, Tue:1, Wed:2, Thu:3, Fri:4 };
+  const DAY_LABELS = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+  const DAY_KEYS   = ['Mon','Tue','Wed','Thu','Fri'];
+
+  function timeToMin(hhmm) {
+    const [h, m] = hhmm.split(':').map(Number);
+    return h * 60 + m;
+  }
+
+  function fmtTime(hhmm) {
+    const [h, m] = hhmm.split(':').map(Number);
+    const suf = h >= 12 ? 'PM' : 'AM';
+    const hr  = h > 12 ? h - 12 : h === 0 ? 12 : h;
+    return m ? `${hr}:${String(m).padStart(2,'0')} ${suf}` : `${hr} ${suf}`;
+  }
+
+  function getFacultyIds(f) {
+    return Array.isArray(f) ? f : f ? [f] : [];
+  }
+
+  function shortName(name) { return name.replace(/^Dr\.\s+/, ''); }
+
+  // ═══════════════════════════════════════════════════════
+  //  RENDER
+  // ═══════════════════════════════════════════════════════
+  function render(semNumber) {
+    const s = SEMESTERS.find(x => x.number === semNumber);
+    if (!s) return;
+
+    document.getElementById('heroSemLabel').textContent = `${s.label} — ${s.term}`;
+
+    // Gather scheduled slots: { c, day, start, end, label? }
+    // sorted chronologically by (dayIdx, startMin)
+    const allSlots = [];
+    s.courses.forEach(c => {
+      if (!c.schedule) return;
+      c.schedule.forEach(slot => {
+        slot.days.forEach(day => {
+          allSlots.push({ c, day, start: slot.start, end: slot.end, slotLabel: slot.label || null });
+        });
+      });
+    });
+    allSlots.sort((a, b) => {
+      const dayDiff = DAY_ORDER[a.day] - DAY_ORDER[b.day];
+      return dayDiff !== 0 ? dayDiff : timeToMin(a.start) - timeToMin(b.start);
+    });
+
+    const asyncCourses = s.courses.filter(c => !c.schedule);
+
+    // Faculty teaching this semester who have office hours
+    const semFacultyIds = new Set();
+    s.courses.forEach(c => getFacultyIds(c.faculty).forEach(id => semFacultyIds.add(id)));
+    const ohFaculty = FACULTY.filter(f => semFacultyIds.has(f.id) && f.ohLinks && f.ohLinks.length);
+    // Sort each faculty's OH slots chronologically
+    ohFaculty.forEach(f => {
+      f.ohLinks = [...f.ohLinks].sort((a, b) => {
+        const dd = (a.dayIdx ?? 0) - (b.dayIdx ?? 0);
+        return dd !== 0 ? dd : (a.startMin ?? 0) - (b.startMin ?? 0);
+      });
+    });
+
+    const hasSchedule = allSlots.length > 0;
+    const hasOH = ohFaculty.length > 0;
+
+    let html = '';
+
+    // ── WEEK AT A GLANCE ──────────────────────────────────
+    if (hasSchedule) {
+      html += `<div class="sec-label">Week at a Glance</div>`;
+
+      // Build by-day map (sorted within day already from allSlots)
+      const byDay = {};
+      DAY_KEYS.forEach(d => byDay[d] = []);
+      allSlots.forEach(item => byDay[item.day].push(item));
+
+      const dayCols = DAY_KEYS.map(day => {
+        const pills = byDay[day].map(({ c, start, end, slotLabel }) => {
+          const color  = c.color || '#888';
+          const code   = slotLabel || c.code;
+          const sub    = slotLabel ? `${c.code} · ${fmtTime(start)} – ${fmtTime(end)}` : `${fmtTime(start)} – ${fmtTime(end)}`;
+          const tag    = c.zoomLink
+            ? `<a class="week-pill" href="${c.zoomLink}" target="_blank" rel="noopener" style="background:${color}15;border-left:3px solid ${color};">`
+            : `<div class="week-pill" style="background:${color}10;border-left:3px solid ${color}80;">`;
+          const close  = c.zoomLink ? `</a>` : `</div>`;
+          return `${tag}<span class="week-pill-code" style="color:${color};">${code}</span><span class="week-pill-time" style="color:var(--ink);">${sub}</span>${close}`;
+        }).join('');
+        return `<div class="week-day">
+          <div class="week-day-head">${day}</div>
+          <div class="week-day-body">${pills}</div>
+        </div>`;
+      }).join('');
+
+      html += `<div class="week-strip">${dayCols}</div>`;
+
+      if (asyncCourses.length) {
+        html += `<div style="display:flex;justify-content:flex-end;margin-top:6px;">
+          <span style="font-size:10.5px;color:var(--muted-dark);font-style:italic;">+ ${asyncCourses.map(c => c.code).join(', ')} — Asynchronous, no set class time</span>
+        </div>`;
+      }
+    }
+
+    // ── TWO-COLUMN: SCHEDULE (left) + OFFICE HOURS (right) ──
+    if (hasSchedule || hasOH) {
+      html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;">`;
+
+      // LEFT — Class Schedule
+      html += `<div>`;
+      if (hasSchedule) {
+        html += `<div class="sec-label" style="margin-top:0;">Class Schedule</div>`;
+        html += `<div class="sched-list">`;
+
+        DAY_KEYS.forEach((day, di) => {
+          const daySlots = allSlots.filter(x => x.day === day);
+          if (!daySlots.length) return;
+          html += `<div class="sched-day-head">${DAY_LABELS[di]}</div>`;
+          daySlots.forEach(({ c, start, end, slotLabel }) => {
+            const color   = c.color || '#aaa';
+            const code    = slotLabel || c.code;
+            const subCode = slotLabel ? c.code : '';
+            const timeStr = `${fmtTime(start)} – ${fmtTime(end)} EST`;
+            html += `<div class="sched-row">
+              <div class="sched-color" style="background:${color};"></div>
+              <div class="sched-body">
+                <div class="sched-code" style="color:${color};">${code}${subCode ? ` <span style="color:var(--muted-dark);font-weight:400;">· ${subCode}</span>` : ''}</div>
+                <div class="sched-name">${c.name}</div>
+                <div class="sched-time">${timeStr}</div>
+              </div>
+              <div class="sched-actions">
+                ${c.zoomLink
+                  ? `<a class="join-btn join-btn-live" href="${c.zoomLink}" target="_blank" rel="noopener">Join →</a>`
+                  : `<span class="join-btn join-btn-tbd">Link TBD</span>`}
+              </div>
+            </div>`;
+          });
+        });
+
+        if (asyncCourses.length) {
+          html += `<div class="sched-day-head">Asynchronous</div>`;
+          asyncCourses.forEach(c => {
+            html += `<div class="sched-async">
+              <span class="sched-async-code">${c.code}</span>
+              <span>${c.name}</span>
+              <span style="margin-left:auto;font-size:11.5px;color:var(--muted-dark);">No set meeting time</span>
+            </div>`;
+          });
+        }
+
+        html += `</div>`;
+      }
+      html += `</div>`;
+
+      // RIGHT — Office Hours
+      html += `<div>`;
+      if (hasOH) {
+        html += `<div class="sec-label" style="margin-top:0;">Office Hours</div>`;
+        html += `<div style="display:flex;flex-direction:column;gap:1px;border:1px solid var(--border-light);">`;
+
+        ohFaculty.forEach(f => {
+          const courses    = s.courses.filter(c => getFacultyIds(c.faculty).includes(f.id));
+          const courseList = courses.map(c => c.code).join(' · ');
+          const rows = f.ohLinks.map(oh =>
+            `<div class="oh-row">
+              <div class="oh-time">${oh.time}</div>
+              ${oh.url
+                ? `<a class="oh-link" href="${oh.url}" target="_blank" rel="noopener">Join →</a>`
+                : `<span class="oh-link tbd">Link TBD</span>`}
+            </div>`
+          ).join('');
+
+          html += `<div class="oh-card">
+            <div class="oh-name">${shortName(f.name)}</div>
+            <div class="oh-courses">${courseList}</div>
+            ${rows}
+            ${f.ohNote ? `<div class="oh-note">${f.ohNote}</div>` : ''}
+          </div>`;
+        });
+
+        html += `</div>`;
+      } else if (hasSchedule) {
+        html += `<div class="sec-label" style="margin-top:0;">Office Hours</div>
+          <div style="padding:24px;background:white;border:1px solid var(--border-light);font-size:12.5px;color:var(--muted-dark);">No office hours on file for this semester yet.</div>`;
+      }
+      html += `</div>`;
+
+      html += `</div>`; // end two-col grid
+    }
+
+    // ── EMPTY STATE ───────────────────────────────────────
+    if (!hasSchedule && !hasOH) {
+      html += `<div class="empty-state">
+        <p>Schedule details for <strong>${s.label} — ${s.term}</strong> will be added as the semester approaches.</p>
+      </div>`;
+    }
+
+    html += `<div style="height:32px;"></div>`;
+    document.getElementById('semContent').innerHTML = html;
+  }
+
+  // ── SEMESTER SELECTOR ────────────────────────────────────
+  (function() {
+    const selector = document.getElementById('semSelector');
+    let active = CURRENT_SEM;
+
+    SEMESTERS.forEach(s => {
+      const btn = document.createElement('button');
+      btn.className = 'sem-btn' + (s.number === CURRENT_SEM ? ' active' : '');
+      btn.textContent = `Sem ${s.number}`;
+      btn.onclick = () => {
+        active = s.number;
+        document.querySelectorAll('.sem-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        render(s.number);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+      selector.appendChild(btn);
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const initSem = parseInt(params.get('sem')) || CURRENT_SEM;
+    const initBtn = selector.querySelector(`.sem-btn:nth-child(${initSem})`);
+    if (initBtn) { document.querySelectorAll('.sem-btn').forEach(b => b.classList.remove('active')); initBtn.classList.add('active'); }
+    render(initSem);
+  })();
+</script>
+</body>
+</html>
