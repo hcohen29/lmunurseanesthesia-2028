@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Curriculum Overview · LMU Nurse Anesthesia · Class of 2028</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink:        #08121f;
+      --ink-mid:    #0d1f36;
+      --ink-soft:   #132840;
+      --gold:       #C9A84C;
+      --gold-dim:   rgba(201,168,76,0.15);
+      --gold-line:  rgba(201,168,76,0.3);
+      --white:      #ffffff;
+      --off-white:  #f7f6f4;
+      --muted:      rgba(255,255,255,0.45);
+      --muted-dark: #6b7280;
+      --border-dark: rgba(255,255,255,0.08);
+      --border-light: #e8e6e2;
+      --radius:     8px;
+      --serif:      'Playfair Display', Georgia, serif;
+      --sans:       'Inter', -apple-system, sans-serif;
+
+      --c-didactic:     #1a4aaa;
+      --c-didactic-bg:  #e8f0ff;
+      --c-clinical:     #1a7040;
+      --c-clinical-bg:  #e8f5ee;
+      --c-dnp:          #5020a0;
+      --c-dnp-bg:       #f0eaff;
+      --c-lab:          #7a5a00;
+      --c-lab-bg:       rgba(201,168,76,0.18);
+      --c-async:        #6b7280;
+      --c-async-bg:     #f3f4f6;
+      --c-sync:         #9b1c1c;
+      --c-sync-bg:      #fde8e8;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--off-white); color: var(--ink); line-height: 1.6; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--ink);
+      border-bottom: 1px solid var(--border-dark);
+      padding: 0 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 66px;
+    }
+    .nav-left { display: flex; align-items: center; gap: 20px; }
+    .nav-back {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--muted); text-decoration: none;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.3px;
+      padding: 6px 10px; border-radius: var(--radius);
+      transition: all 0.15s;
+    }
+    .nav-back:hover { color: white; background: rgba(255,255,255,0.06); }
+    .nav-back-arrow { font-size: 14px; }
+    .nav-divider { width: 1px; height: 20px; background: var(--border-dark); }
+    .nav-label { color: white; font-size: 14px; font-weight: 600; }
+    .nav-sub { color: var(--muted); font-size: 11px; }
+    nav > ul { list-style: none; display: flex; gap: 2px; }
+    nav > ul a { color: var(--muted); text-decoration: none; font-size: 12.5px; font-weight: 500; letter-spacing: 0.3px; padding: 6px 12px; border-radius: 6px; transition: all 0.15s; }
+    nav > ul a:hover { color: white; background: rgba(255,255,255,0.06); }
+    .nav-brand-wrap { position: relative; }
+    .nav-brand { display:flex; align-items:center; gap:14px; cursor:pointer; user-select:none; padding:8px 10px; border-radius:var(--radius); transition:background 0.15s; }
+    .nav-brand:hover, .nav-brand.open { background:rgba(255,255,255,0.05); }
+    .nav-monogram { width:36px; height:36px; border:1.5px solid var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:13px; color:var(--gold); letter-spacing:1px; flex-shrink:0; }
+    .nav-caret { color:var(--muted); font-size:9px; margin-left:6px; transition:transform 0.2s; }
+    .nav-brand.open .nav-caret { transform:rotate(180deg); color:var(--gold); }
+    .nav-dropdown { display:none; position:absolute; top:calc(100% + 10px); left:0; background:var(--ink-mid); border:1px solid var(--border-dark); border-radius:var(--radius); min-width:300px; box-shadow:0 20px 60px rgba(0,0,0,0.5); max-height:calc(100vh - 100px); overflow-y:auto; z-index:300; }
+    .nav-dropdown.open { display:block; }
+    .dd-section { padding:8px; border-bottom:1px solid var(--border-dark); }
+    .dd-section:last-child { border-bottom:none; }
+    .dd-label { font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); padding:8px 10px 4px; }
+    .dd-item { display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:6px; color:rgba(255,255,255,0.8); text-decoration:none; font-size:13.5px; font-weight:500; transition:background 0.12s,color 0.12s; }
+    .dd-item:hover { background:rgba(255,255,255,0.06); color:white; }
+    .dd-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); flex-shrink:0; opacity:0.7; }
+    .dd-item:hover .dd-dot { opacity:1; }
+    .dd-sub { font-size:11.5px; color:var(--muted); font-weight:400; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink); padding: 80px 56px 72px;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg-line {
+      position: absolute; right: 30%; top: 0; bottom: 0;
+      width: 1px; background: linear-gradient(to bottom, transparent, var(--gold-line), transparent);
+    }
+    .hero-inner { max-width: 700px; position: relative; z-index: 1; }
+    .hero-kicker {
+      font-size: 11px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+    }
+    .hero-kicker::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+    .hero h1 {
+      font-family: var(--serif); font-size: clamp(32px, 4.5vw, 54px);
+      font-weight: 800; line-height: 1.1; color: white; margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero p { font-size: 15px; color: var(--muted); line-height: 1.75; max-width: 480px; font-weight: 300; }
+
+    /* ── PROGRESS BAR ── */
+    .progress-strip {
+      background: var(--ink-soft); border-bottom: 1px solid var(--border-dark);
+      padding: 20px 56px; display: flex; align-items: center; gap: 0;
+    }
+    .prog-sem {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      position: relative; cursor: default;
+    }
+    .prog-sem::after {
+      content: ''; position: absolute; top: 10px; left: 50%; right: -50%;
+      height: 2px; background: var(--border-dark); z-index: 0;
+    }
+    .prog-sem:last-child::after { display: none; }
+    .prog-dot {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid var(--border-dark);
+      background: var(--ink-soft);
+      cursor: pointer;
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; color: var(--muted);
+      transition: all 0.2s;
+    }
+    .prog-label { font-size: 9px; color: var(--muted); margin-top: 6px; letter-spacing: 0.5px; text-align: center; }
+
+    /* ── LEGEND ── */
+    .legend-bar {
+      background: white; border-bottom: 1px solid var(--border-light);
+      padding: 14px 56px; display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    }
+    .legend-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted-dark); margin-right: 8px; }
+    .leg { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted-dark); }
+    .leg-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── MAIN CONTENT ── */
+    .content { max-width: 1060px; margin: 0 auto; padding: 56px; }
+
+    /* ── SEMESTER BLOCK ── */
+    .sem-block { margin-bottom: 52px; }
+    .sem-divider {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 20px; padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .sem-number {
+      font-family: var(--serif); font-size: 22px; font-weight: 700;
+      color: var(--ink); flex-shrink: 0;
+    }
+    .sem-info { flex: 1; }
+    .sem-term { font-size: 14px; font-weight: 600; color: var(--ink); }
+    .sem-credits { font-size: 12px; color: var(--muted-dark); margin-top: 1px; }
+    .sem-badge {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; padding: 4px 12px; flex-shrink: 0;
+    }
+    .sb-didactic  { background: var(--c-didactic-bg);  color: var(--c-didactic); }
+    .sb-clinical  { background: var(--c-clinical-bg);  color: var(--c-clinical); }
+    .sb-mixed     { background: var(--gold-dim);        color: #7a5a00; border: 1px solid var(--gold-line); }
+    .current-badge {
+      font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 3px 10px; background: var(--ink); color: var(--gold);
+    }
+
+    /* ── COURSE GRID ── */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+    }
+
+    /* ── COURSE CARD ── */
+    .course-card {
+      background: white; border: 1px solid var(--border-light);
+      padding: 18px 20px; display: flex; flex-direction: column;
+      gap: 10px; transition: box-shadow 0.15s;
+      cursor: pointer; position: relative;
+    }
+    .course-card:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
+    .course-card.open  { box-shadow: 0 2px 16px rgba(0,0,0,0.07); border-color: var(--ink); }
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .course-code {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted-dark);
+    }
+    .card-badges { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+    .badge {
+      font-size: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      padding: 2px 7px;
+    }
+    .b-async    { background: var(--c-async-bg);    color: var(--c-async); }
+    .b-sync     { background: var(--c-sync-bg);     color: var(--c-sync); }
+    .b-didactic { background: var(--c-didactic-bg); color: var(--c-didactic); }
+    .b-clinical { background: var(--c-clinical-bg); color: var(--c-clinical); }
+    .b-dnp      { background: var(--c-dnp-bg);      color: var(--c-dnp); }
+    .b-lab      { background: var(--c-lab-bg);       color: var(--c-lab); }
+    .course-name {
+      font-size: 13.5px; font-weight: 600; color: var(--ink); line-height: 1.4;
+    }
+    .course-credits { font-size: 11px; color: var(--muted-dark); }
+    .course-faculty {
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+      padding-top: 10px; border-top: 1px solid var(--border-light);
+      margin-top: auto;
+    }
+    .faculty-initials {
+      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
+    }
+    .fi-tbd { background: var(--off-white); color: var(--muted-dark); border: 1px dashed #d1d5db; }
+    .fi-set { background: var(--ink); color: var(--gold); }
+    .faculty-name-text { font-size: 12px; color: var(--muted-dark); font-style: italic; }
+    .faculty-name-text.set { font-style: normal; color: var(--ink); font-weight: 500; }
+
+    /* ── EXPANDED DETAIL ── */
+    .card-detail {
+      display: none; padding-top: 10px; border-top: 1px solid var(--border-light);
+      font-size: 12.5px; color: var(--muted-dark); line-height: 1.7;
+    }
+    .course-card.open .card-detail { display: block; }
+    .detail-row { display: flex; gap: 8px; margin-bottom: 4px; }
+    .detail-row strong { color: var(--ink); font-weight: 600; min-width: 70px; }
+
+    /* ── FACULTY MODAL ── */
+    .fac-modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center; }
+    .fac-modal-overlay.open { display:flex; }
+    .fac-modal-card { background:white; max-width:380px; width:90%; padding:40px; position:relative; }
+    .fac-modal-close { position:absolute; top:16px; right:20px; font-size:20px; cursor:pointer; color:var(--muted-dark); line-height:1; background:none; border:none; font-family:var(--sans); }
+    .fac-modal-close:hover { color:var(--ink); }
+    .fac-modal-initials { width:52px; height:52px; background:var(--ink); color:var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:16px; font-weight:700; margin-bottom:16px; }
+    .fac-modal-name { font-family:var(--serif); font-size:22px; font-weight:700; color:var(--ink); margin-bottom:4px; }
+    .fac-modal-role { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:28px; }
+    .fac-modal-rows { display:flex; flex-direction:column; gap:0; }
+    .fac-modal-section-head { font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); padding:14px 0 8px; border-bottom:1px solid var(--border-light); margin-bottom:0; }
+    .fac-modal-row { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid var(--border-light); }
+    .fac-modal-row:last-child { border-bottom:none; }
+    .fac-modal-time { font-size:13px; color:var(--ink); font-weight:400; }
+    .fac-modal-time .course-tag { font-size:10px; font-weight:700; color:var(--muted-dark); display:block; letter-spacing:0.5px; margin-bottom:2px; }
+    .fac-modal-join { font-size:12px; font-weight:700; color:var(--gold); text-decoration:none; white-space:nowrap; flex-shrink:0; border-bottom:1px solid var(--gold-line); }
+    .fac-modal-join:hover { border-color:var(--gold); }
+    .fac-modal-tbd { font-size:12px; font-weight:500; color:var(--muted-dark); white-space:nowrap; flex-shrink:0; }
+
+    /* ── WEEK STRIP ── */
+    .week-toggle { display:inline-flex; align-items:center; gap:6px; margin-left:auto; padding:5px 13px; border:1px solid var(--border-light); background:white; font-family:var(--sans); font-size:11px; font-weight:600; color:var(--muted-dark); letter-spacing:0.5px; cursor:pointer; transition:all 0.15s; border-radius:4px; }
+    .week-toggle:hover, .week-toggle.active { background:var(--ink); color:white; border-color:var(--ink); }
+    .week-wrap { display:none; margin-bottom:18px; border:1px solid var(--border-light); background:white; overflow:hidden; }
+    .week-wrap.open { display:block; }
+    .week-strip { display:grid; grid-template-columns:repeat(5,1fr); }
+    .week-day { border-right:1px solid var(--border-light); }
+    .week-day:last-child { border-right:none; }
+    .week-day-head { padding:8px 10px 7px; font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted-dark); border-bottom:1px solid var(--border-light); background:var(--off-white); }
+    .week-day-body { padding:7px 7px; display:flex; flex-direction:column; gap:5px; min-height:52px; }
+    .week-pill { display:block; border-radius:4px; padding:5px 8px; font-size:10.5px; line-height:1.3; text-decoration:none; transition:opacity 0.15s; }
+    .week-pill:hover { opacity:0.75; }
+    .week-pill-code { font-weight:700; display:block; }
+    .week-pill-time { opacity:0.75; font-size:9.5px; display:block; margin-top:1px; }
+    .week-async-note { padding:10px 14px; font-size:11px; color:var(--muted-dark); border-top:1px solid var(--border-light); font-style:italic; }
+
+    /* ── TOTALS STRIP ── */
+    .totals-strip {
+      display: flex; gap: 28px; margin-top: 14px;
+      padding: 12px 0 0; border-top: 1px dashed var(--border-light);
+      font-size: 12px; color: var(--muted-dark);
+    }
+    .totals-strip strong { color: var(--ink); font-weight: 600; }
+
+    /* ── FUTURE PLACEHOLDER ── */
+    .future-note {
+      background: white; border: 1px dashed #d1d5db;
+      padding: 20px 24px; display: flex; align-items: center; gap: 16px;
+    }
+    .future-icon { font-size: 20px; opacity: 0.35; }
+    .future-note p { font-size: 13px; color: var(--muted-dark); line-height: 1.6; }
+    .future-note strong { color: var(--ink); font-weight: 600; }
+
+    /* ── SEM FILTER ── */
+    .sem-pill { padding:5px 13px; border:1px solid var(--border-light); background:white; font-family:var(--sans); font-size:11.5px; font-weight:500; color:var(--muted-dark); cursor:pointer; border-radius:20px; transition:all 0.12s; white-space:nowrap; }
+    .sem-pill:hover { border-color:var(--ink); color:var(--ink); }
+    .sem-pill.active { background:var(--ink); color:white; border-color:var(--ink); font-weight:600; }
+    @media (max-width: 768px) { #semFilterBar { padding-left:20px; padding-right:20px; } }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav, .legend-bar, .progress-strip { padding-left: 20px; padding-right: 20px; }
+      .hero { padding: 56px 20px 48px; }
+      .content { padding: 32px 20px; }
+      nav > ul { display: none; }
+      .progress-strip { overflow-x: auto; }
+      .prog-label { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div style="display:flex;align-items:center;gap:4px;">
+  <a href="./index.html" style="display:flex;align-items:center;padding:8px 10px;color:var(--muted);font-size:18px;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--muted)'" title="Back to Hub">&#8592;</a>
+  <div class="nav-brand-wrap">
+    <div class="nav-brand" onclick="toggleDropdown()">
+      <div class="nav-monogram">NA</div>
+      <div>
+        <div style="font-size:14px;font-weight:600;color:white;letter-spacing:0.3px;">Class of 2028</div>
+        <div style="font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0.3px;">Curriculum Overview</div>
+      </div>
+      <span class="nav-caret">&#9660;</span>
+    </div>
+    <div class="nav-dropdown" id="navDropdown">
+      <div class="dd-section">
+        <div class="dd-label">Quick Links</div>
+        <a href="./index.html" class="dd-item"><span class="dd-dot"></span><div><div>← Back to Hub</div><div class="dd-sub">Class of 2028 home</div></div></a>
+        <a href="./semester.html" class="dd-item"><span class="dd-dot"></span><div><div>Semester Schedule</div><div class="dd-sub">Weekly class times &amp; office hours</div></div></a>
+        <a href="./zoom.html" class="dd-item"><span class="dd-dot"></span><div><div>Zoom Links</div><div class="dd-sub">Grand rounds, class meetings &amp; more</div></div></a>
+        <a href="https://forms.gle/uVoJf9nrqquicTKb7" target="_blank" class="dd-item"><span class="dd-dot"></span><div><div>Submit Feedback</div><div class="dd-sub">Anonymous submissions welcome</div></div></a>
+        <a href="https://lmunet.edu" target="_blank" class="dd-item"><span class="dd-dot"></span><div><div>LMU Student Portal</div><div class="dd-sub">lmunet.edu</div></div></a>
+        <a href="https://www.aana.com" target="_blank" class="dd-item"><span class="dd-dot"></span><div><div>AANA</div><div class="dd-sub">American Assoc. of Nurse Anesthesiology</div></div></a>
+      </div>
+      <div class="dd-section">
+        <div class="dd-label">Hub Sections</div>
+        <a href="./index.html#updates"   class="dd-item"><span class="dd-dot"></span><div><div>Weekly Updates</div></div></a>
+        <a href="./index.html#dates"     class="dd-item"><span class="dd-dot"></span><div><div>Upcoming Dates</div></div></a>
+        <a href="./index.html#resources" class="dd-item"><span class="dd-dot"></span><div><div>Resources</div></div></a>
+        <a href="./index.html#clinical"  class="dd-item"><span class="dd-dot"></span><div><div>Clinical Site Guide</div></div></a>
+        <a href="./index.html#surveys"   class="dd-item"><span class="dd-dot"></span><div><div>Surveys</div></div></a>
+        <a href="./index.html#board"     class="dd-item"><span class="dd-dot"></span><div><div>Ideas &amp; Concerns Board</div></div></a>
+        <a href="./index.html#merch"     class="dd-item"><span class="dd-dot"></span><div><div>Class Merch</div></div></a>
+      </div>
+      <div class="dd-section">
+        <div class="dd-label">Pages</div>
+        <a href="./calendar.html"        class="dd-item"><span class="dd-dot"></span><div><div>Full Calendar</div><div class="dd-sub">All program dates in one view</div></div></a>
+        <a href="./program.html"         class="dd-item"><span class="dd-dot"></span><div><div>Curriculum Overview</div><div class="dd-sub">All 9 semesters mapped out</div></div></a>
+        <a href="#faculty"               class="dd-item"><span class="dd-dot"></span><div><div>Faculty</div><div class="dd-sub">Meet the program faculty</div></div></a>
+      </div>
+    </div>
+  </div>
+  </div>
+  <ul>
+    <li><a href="./index.html#updates">Updates</a></li>
+    <li><a href="./index.html#dates">Dates</a></li>
+    <li><a href="./index.html#resources">Resources</a></li>
+    <li><a href="./index.html#clinical">Clinical</a></li>
+    <li><a href="./index.html#surveys">Surveys</a></li>
+    <li><a href="./index.html#board">Board</a></li>
+    <li><a href="./index.html#merch">Merch</a></li>
+    <li><a href="./zoom.html">Zoom</a></li>
+    <li><a href="./semester.html">Schedule</a></li>
+    <li><a href="#faculty">Faculty</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-line"></div>
+  <div class="hero-inner">
+    <div class="hero-kicker">Lincoln Memorial University &nbsp;·&nbsp; DNP Nurse Anesthesia</div>
+    <h1>Curriculum Overview<br><span>Class of 2028.</span></h1>
+    <p>9 semesters · 109 credit hours · Spring 2026 through Fall 2028. Click any course to see details. Faculty links fill in as we confirm them.</p>
+  </div>
+</section>
+
+<!-- PROGRESS STRIP -->
+<div class="progress-strip" id="progressStrip"></div>
+
+<!-- LEGEND -->
+<div class="legend-bar">
+  <span class="legend-label">Course type</span>
+  <div class="leg"><div class="leg-dot" style="background:var(--c-didactic)"></div>Didactic</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--c-clinical)"></div>Clinical practicum</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--c-dnp)"></div>DNP project</div>
+  <div class="leg"><div class="leg-dot" style="background:var(--gold)"></div>Lab / intensive</div>
+</div>
+
+<!-- SEMESTER FILTER -->
+<div style="background:white;border-bottom:1px solid var(--border-light);padding:12px 56px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;" id="semFilterBar">
+  <span style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted-dark);flex-shrink:0;">View</span>
+  <div id="semFilterPills" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
+</div>
+
+<!-- CURRICULUM -->
+<div class="content" id="curriculumContent"></div>
+
+<!-- FACULTY ROSTER -->
+<div class="content" id="faculty" style="padding-top:0;">
+  <div style="border-top:1px solid var(--border-light);padding-top:48px;margin-bottom:36px;">
+    <div style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:12px;">
+      <span style="display:block;width:28px;height:1px;background:var(--gold);"></span>Faculty
+    </div>
+    <h2 style="font-family:var(--serif);font-size:28px;font-weight:800;color:var(--ink);line-height:1.2;">Program Faculty</h2>
+  </div>
+  <div id="facultyRoster" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;"></div>
+</div>
+
+<!-- FOOTER -->
+<footer style="background:var(--ink);border-top:1px solid var(--border-dark);padding:28px 56px;display:flex;justify-content:space-between;align-items:center;">
+  <div style="font-size:12px;color:var(--muted);">
+    <strong style="color:rgba(255,255,255,0.7);">LMU Nurse Anesthesia · Class of 2028</strong><br>
+    Curriculum plan revised July 2025 · 109 total credit hours
+  </div>
+  <a href="./index.html" style="font-size:12px;color:var(--gold);text-decoration:none;">← Back to Class Hub</a>
+</footer>
+
+<script>
+  // ═══════════════════════════════════════════════════════
+  //  CURRICULUM DATA
+  //  To update faculty: change faculty: null to faculty: "Dr. Name"
+  //  To restructure semesters: move course objects between semester arrays
+  //  course types: 'didactic' | 'clinical' | 'dnp' | 'lab'
+  //  * = online (set online: true)
+  // ═══════════════════════════════════════════════════════
+
+  const CURRENT_SEM = 3; // update each semester
+
+  const FACULTY = [
+    { id: "conder",        name: "Dr. Stephanie Conder",       credentials: "Associate Professor of Nursing" },
+    { id: "england",       name: "Dr. Jami England",           credentials: "Assistant Professor of Nursing" },
+    { id: "heatherly",     name: "Dr. Angela Heatherly",       credentials: "Assistant Professor of Nursing" },
+    { id: "julien",        name: "Dr. Marie Julien",           credentials: "Assistant Professor & Assistant Director of Nurse Anesthesia",
+      ohLinks: [
+        { time: "Mon · 1–3 PM EST",    url: "https://us06web.zoom.us/j/82065299858?pwd=dwmWFHxkKTZVTR1CaYGhTsGdOQaHVh.1" },
+        { time: "Thu · 12–3 PM EST",   url: "https://us06web.zoom.us/j/85383800700?pwd=uknsDPYvM0k4UcaxjtkeKhG6MF9IMl.1" },
+      ],
+      ohNote: "If these times don't work for you, reach out to Dr. Julien directly to schedule a separate time."
+    },
+    { id: "lingerfelt",    name: "Dr. Carrie Lingerfelt",      credentials: "Faculty" },
+    { id: "mapes",         name: "Dr. Christy Mapes",          credentials: "Instructor of Nursing, DNP, FNP-BC" },
+    { id: "palmer",        name: "Michelle Palmer",             credentials: "Faculty, MSN, CRNA",
+      ohLinks: [
+        { time: "Mon & Wed · 1–4 PM EST", url: "https://lmu.zoom.us/j/86866841989?pwd=c7nyoW51LHcWUfPwQZ7yEeeXOqDtzi.1" },
+      ]
+    },
+    { id: "roberts",       name: "Dr. Matthew Roberts",         credentials: "Faculty, DNAP, CRNA",
+      ohLinks: [
+        { time: "Tue & Thu · 10 AM–12 PM EST", url: "https://lmu.zoom.us/j/88362182343" },
+        { time: "Wed · 10 AM–1 PM EST",         url: "https://lmu.zoom.us/j/85755518881" },
+      ]
+    },
+    { id: "stewart-glenn", name: "Dr. Jennifer Stewart-Glenn",  credentials: "Associate Professor & Director, DNP Program" },
+    { id: "stocks",        name: "Dr. Jennifer Stocks",         credentials: "Associate Professor & Assistant Dean of Graduate Nursing" },
+    { id: "todd",          name: "Dr. Raleigh Todd",            credentials: "Director, Nurse Anesthesia Concentration & Associate Professor of Nursing",
+      ohLinks: [
+        { time: "Mon, Tue, Thu · 8–9 AM EST", url: "https://lmu.zoom.us/j/82121285195?pwd=r0FA6S8Mjb81apasrJ0TShVfGbn234.1" },
+        { time: "Wed · 8–11 AM EST",           url: "https://lmu.zoom.us/j/88986877532?pwd=mRpcVdsIx9bUtgfSj1DgTqBskoHo50.1" },
+      ]
+    },
+  ];
+
+  const SEMESTERS = [
+    {
+      number: 1,
+      label: "Semester 1",
+      term: "Spring 2026",
+      type: "didactic",
+      credits: 12,
+      courses: [
+        { code: "NURS 702", name: "Theoretical Foundations and Research Methods",                           credits: 4, online: true,  type: "didactic", faculty: "stewart-glenn" },
+        { code: "NURS 731", name: "Advanced Pharmacology & Therapeutics",                                   credits: 4, online: true,  type: "didactic", faculty: "conder" },
+        { code: "NURS 740", name: "Interprofessional Collaboration, Health Policy, & Organizational Systems", credits: 4, online: true,  type: "didactic", faculty: "lingerfelt" },
+      ]
+    },
+    {
+      number: 2,
+      label: "Semester 2",
+      term: "Summer 2026",
+      type: "didactic",
+      credits: 11,
+      courses: [
+        { code: "NURS 705", name: "Informational Systems and Technology Application",   credits: 2, online: true,  type: "didactic", faculty: "julien" },
+        { code: "NURS 710", name: "Biostatistics",                                      credits: 3, online: true,  type: "didactic", faculty: "stewart-glenn", syllabus: "./syllabi/nurs-710-syllabus-2026.pdf" },
+        { code: "NURS 721", name: "Advanced Health Assessment",                         credits: 3, online: true,  type: "didactic", faculty: ["mapes", "england"],  syllabus: "./syllabi/nurs-721-syllabus-2026.pdf" },
+        { code: "NURS 732", name: "Advanced Anesthesia Pharmacology I",                 credits: 3, online: true,  type: "didactic", faculty: "todd" },
+      ]
+    },
+    {
+      number: 3,
+      label: "Semester 3",
+      term: "Fall 2026",
+      type: "didactic",
+      credits: 15,
+      courses: [
+        { code: "NURS 701",  name: "Advanced A&P and Pathophysiology",                 credits: 4, online: false, type: "didactic", faculty: "julien",             syllabus: "./syllabi/nurs-701-syllabus-2026.pdf", whatsapp: "https://chat.whatsapp.com/EIqEasKWowJC4PqiQeGgKm?s=cl&p=i&ilr=4", zoomLink: "https://lmu.zoom.us/j/84445738443", zoomMeta: "Tue & Thu · 9–11 AM EST", schedule: [{ days: ['Tue','Thu'], start: '09:00', end: '11:00' }, { days: ['Tue'], start: '14:00', end: '15:00', label: 'Study Session' }], color: '#4A90D9' },
+        { code: "NURS 733",  name: "Advanced Anesthesia Pharmacology II",               credits: 3, online: false, type: "didactic", faculty: ["roberts", "todd"],   syllabus: "./syllabi/nurs-733-syllabus-2026.pdf", whatsapp: "https://chat.whatsapp.com/IKgqfoAvsfJGCZeLhWmVOl?s=sh&p=i&mlu=4",    zoomLink: "https://lmu.zoom.us/j/84449080445", zoomMeta: "Mon · 1–4 PM EST",    schedule: [{ days: ['Mon'],       start: '13:00', end: '16:00' }], color: '#2EAF7D' },
+        { code: "NURS 741",  name: "Adaptive Leadership",                               credits: 4, online: true,  type: "didactic", faculty: ["heatherly", "lingerfelt", "roberts"] },
+        { code: "NURS 753",  name: "Principles and Practice of Anesthesia I",           credits: 3, online: false, type: "didactic", faculty: ["palmer", "todd"],    syllabus: "./syllabi/nurs-753-syllabus-2026.pdf", whatsapp: "https://chat.whatsapp.com/GsLro1c4oUJ1jImrOdPgvi?s=sh&p=i&mlu=4&amv=2", zoomMeta: "Tue & Thu · 12–2 PM EST", schedule: [{ days: ['Tue','Thu'], start: '12:00', end: '14:00' }], color: '#9B6DD6' },
+        { code: "NURS 753A", name: "Principles and Practice of Anesthesia I — Lab",     credits: 1, online: false, type: "lab",      faculty: null },
+      ]
+    },
+    {
+      number: 4,
+      label: "Semester 4",
+      term: "Spring 2027",
+      type: "didactic",
+      credits: 11,
+      courses: [
+        { code: "NURS 700",  name: "Knowledge Development in Nursing Science",         credits: 3, online: true,  type: "didactic", faculty: null },
+        { code: "NURS 711",  name: "Advanced A&P and Pathophysiology I",               credits: 4, online: false, type: "didactic", faculty: null },
+        { code: "NURS 754",  name: "Principles and Practice of Anesthesia II",         credits: 3, online: false, type: "didactic", faculty: null },
+        { code: "NURS 754A", name: "Principles and Practice of Anesthesia II — Lab",   credits: 1, online: false, type: "lab",      faculty: null },
+      ]
+    },
+    {
+      number: 5,
+      label: "Semester 5",
+      term: "Summer 2027",
+      type: "mixed",
+      credits: 12,
+      courses: [
+        { code: "NURS 712", name: "Advanced A&P and Pathophysiology II",               credits: 2, online: false, type: "didactic", faculty: null },
+        { code: "NURS 720", name: "Translational Research for Evidence Based Practice", credits: 4, online: true,  type: "didactic", faculty: null },
+        { code: "NURS 771", name: "DNP Anesthesia Clinical Practicum I",               credits: 6, online: false, type: "clinical", faculty: null },
+      ]
+    },
+    {
+      number: 6,
+      label: "Semester 6",
+      term: "Fall 2027",
+      type: "mixed",
+      credits: 15,
+      courses: [
+        { code: "NURS 730",  name: "Epidemiology and Population Health",               credits: 3, online: true,  type: "didactic", faculty: null },
+        { code: "NURS 755",  name: "Principles and Practice of Anesthesia III",        credits: 3, online: false, type: "didactic", faculty: null },
+        { code: "NURS 755A", name: "Principles and Practice of Anesthesia III — Lab",  credits: 1, online: false, type: "lab",      faculty: null },
+        { code: "NURS 772",  name: "DNP Anesthesia Clinical Practicum II",             credits: 6, online: false, type: "clinical", faculty: null },
+        { code: "NURS 781",  name: "DNP Project I",                                    credits: 2, online: true,  type: "dnp",      faculty: null },
+      ]
+    },
+    {
+      number: 7,
+      label: "Semester 7",
+      term: "Spring 2028",
+      type: "clinical",
+      credits: 10,
+      courses: [
+        { code: "NURS 756", name: "Principles and Practice of Anesthesia IV",          credits: 2, online: false, type: "didactic", faculty: null },
+        { code: "NURS 773", name: "DNP Anesthesia Clinical Practicum III",             credits: 6, online: false, type: "clinical", faculty: null },
+        { code: "NURS 782", name: "DNP Project II",                                    credits: 2, online: true,  type: "dnp",      faculty: null },
+      ]
+    },
+    {
+      number: 8,
+      label: "Semester 8",
+      term: "Summer 2028",
+      type: "clinical",
+      credits: 12,
+      courses: [
+        { code: "NURS 742", name: "Strategic Systems Thinking",                        credits: 4, online: true,  type: "didactic", faculty: null },
+        { code: "NURS 757", name: "Principles and Practice of Anesthesia V",           credits: 2, online: false, type: "didactic", faculty: null },
+        { code: "NURS 777", name: "DNP Anesthesia Clinical Practicum IV",              credits: 6, online: false, type: "clinical", faculty: null },
+      ]
+    },
+    {
+      number: 9,
+      label: "Semester 9",
+      term: "Fall 2028",
+      type: "clinical",
+      credits: 11,
+      courses: [
+        { code: "NURS 778", name: "DNP Anesthesia Clinical Practicum V",               credits: 6, online: false, type: "clinical", faculty: null },
+        { code: "NURS 783", name: "DNP Project III",                                   credits: 2, online: true,  type: "dnp",      faculty: null },
+        { code: "NURS 789", name: "Advanced Anesthesia Synthesis",                     credits: 3, online: false, type: "didactic", faculty: null },
+      ]
+    },
+  ];
+
+  // ═══════════════════════════════════════════════════════
+  //  NO EDITS NEEDED BELOW THIS LINE
+  // ═══════════════════════════════════════════════════════
+
+  const TYPE_BADGE = {
+    didactic: '<span class="badge b-didactic">Didactic</span>',
+    clinical: '<span class="badge b-clinical">Clinical</span>',
+    dnp:      '<span class="badge b-dnp">DNP Project</span>',
+    lab:      '<span class="badge b-lab">Lab</span>',
+  };
+
+  const SEM_BADGE_CLASS = {
+    didactic: 'sb-didactic',
+    clinical: 'sb-clinical',
+    mixed:    'sb-mixed',
+  };
+
+  const SEM_BADGE_LABEL = {
+    didactic: 'Didactic',
+    clinical: 'Clinical',
+    mixed:    'Didactic + Clinical',
+  };
+
+  function shortName(name) {
+    return name.replace(/^Dr\.\s+/, '');
+  }
+
+  function getInitials(name) {
+    return name.split(/[\s\-]/)
+      .filter(w => !w.match(/^(Dr|Prof|Mr|Ms|Mrs|RN|CRNA|DNP)\.?$/i) && w.match(/^[A-Z]/))
+      .map(w => w[0]).join('').substring(0, 3);
+  }
+
+  function getFacultyOHLinks(facultyId) {
+    const ids = Array.isArray(facultyId) ? facultyId : facultyId ? [facultyId] : [];
+    return ids.map(id => {
+      const f = FACULTY.find(x => x.id === id);
+      if (!f || !f.ohLink) return '';
+      return `<div class="detail-row"><strong>Office Hours</strong> <a href="${f.ohLink}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid var(--gold-line);" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--gold-line)'">${shortName(f.name)} →</a></div>`;
+    }).join('');
+  }
+
+  function getFacultyDisplay(facultyId, guests, courseCode) {
+    let html = '';
+    const primaryIds = Array.isArray(facultyId) ? facultyId : facultyId ? [facultyId] : [];
+    if (primaryIds.length === 0) {
+      html = `<div class="faculty-initials fi-tbd">TBD</div><span class="faculty-name-text">Faculty TBD</span>`;
+    } else {
+      primaryIds.forEach((id, i) => {
+        if (i > 0) html += `<div style="flex-basis:100%;height:2px"></div>`;
+        const f = FACULTY.find(x => x.id === id);
+        if (f) {
+          html += `<div class="faculty-initials fi-set">${getInitials(f.name)}</div><span class="faculty-name-text set" style="cursor:pointer;border-bottom:1px dashed var(--muted);" onclick="event.stopPropagation();openFacModal('${f.id}','${courseCode}')">${shortName(f.name)}</span>`;
+        } else {
+          html += `<div class="faculty-initials fi-tbd">?</div><span class="faculty-name-text">Unknown</span>`;
+        }
+      });
+    }
+    if (guests && guests.length) {
+      html += `<div style="flex-basis:100%;height:2px"></div>`;
+      guests.forEach(gid => {
+        const g = FACULTY.find(x => x.id === gid);
+        if (g) {
+          html += `<div class="faculty-initials fi-set" style="opacity:0.7;" title="Guest lecturer">${getInitials(g.name)}</div><span class="faculty-name-text set" style="opacity:0.8;font-size:11.5px">${shortName(g.name)}</span>`;
+        }
+      });
+    }
+    return html;
+  }
+
+  function renderProgress() {
+    const strip = document.getElementById('progressStrip');
+    strip.innerHTML = SEMESTERS.map(s => {
+      return `<div class="prog-sem">
+        <a href="#sem-${s.number}" style="display:flex;flex-direction:column;align-items:center;gap:0;text-decoration:none;">
+          <div class="prog-dot">${s.number}</div>
+          <div class="prog-label">${s.term.replace(' 20','<br>')}</div>
+        </a>
+      </div>`;
+    }).join('');
+  }
+
+  function toggleWeekView(semNumber) {
+    const wrap = document.getElementById('week-' + semNumber);
+    const btn  = document.getElementById('week-btn-' + semNumber);
+    const open = wrap.classList.toggle('open');
+    btn.classList.toggle('active', open);
+    btn.textContent = open ? '✕ Week View' : '⊞ Week View';
+  }
+
+  function buildWeekStrip(s) {
+    const DAYS = ['Mon','Tue','Wed','Thu','Fri'];
+
+    // Map day → list of { c, timeLabel }
+    const byDay = {};
+    DAYS.forEach(d => byDay[d] = []);
+
+    const fmt = t => {
+      const [h, m] = t.split(':').map(Number);
+      const suffix = h >= 12 ? 'PM' : 'AM';
+      const hr = h > 12 ? h - 12 : h === 0 ? 12 : h;
+      return m ? `${hr}:${String(m).padStart(2,'0')} ${suffix}` : `${hr} ${suffix}`;
+    };
+    const toMin = t => { const [h,m] = t.split(':').map(Number); return h*60+m; };
+
+    s.courses.forEach(c => {
+      if (!c.schedule) return;
+      c.schedule.forEach(slot => {
+        const timeLabel = `${fmt(slot.start)} – ${fmt(slot.end)}`;
+        slot.days.forEach(day => {
+          if (byDay[day]) byDay[day].push({ c, timeLabel, label: slot.label || null, startMin: toMin(slot.start) });
+        });
+      });
+    });
+
+    // Sort each day's pills chronologically
+    DAYS.forEach(d => byDay[d].sort((a, b) => a.startMin - b.startMin));
+
+    const asyncCourses = s.courses.filter(c => c.online && !c.schedule);
+    const hasAny = DAYS.some(d => byDay[d].length > 0);
+
+    if (!hasAny && !asyncCourses.length) {
+      return `<div style="padding:18px 20px;font-size:12px;color:var(--muted-dark);">Schedule not yet available for this semester.</div>`;
+    }
+
+    const dayCols = DAYS.map(day => {
+      const pills = byDay[day].map(({ c, timeLabel, label }) => {
+        const color = c.color || '#888';
+        const tag = c.zoomLink
+          ? `<a class="week-pill" href="${c.zoomLink}" target="_blank" rel="noopener" style="background:${color}15;border-left:3px solid ${color};">`
+          : `<div class="week-pill" style="background:${color}10;border-left:3px solid ${color}80;">`;
+        const close = c.zoomLink ? `</a>` : `</div>`;
+        const displayCode = label ? label : c.code;
+        const displaySub  = label ? `${c.code} · ${timeLabel}` : timeLabel;
+        return `${tag}<span class="week-pill-code" style="color:${color};">${displayCode}</span><span class="week-pill-time" style="color:var(--ink);">${displaySub}</span>${close}`;
+      }).join('');
+      return `<div class="week-day">
+        <div class="week-day-head">${day}</div>
+        <div class="week-day-body">${pills}</div>
+      </div>`;
+    }).join('');
+
+    const asyncNote = asyncCourses.length
+      ? `<div class="week-async-note">+ ${asyncCourses.map(c => c.code).join(', ')} — Asynchronous, no set class time</div>`
+      : '';
+
+    return `<div class="week-strip">${dayCols}</div>${asyncNote}`;
+  }
+
+  function renderCurriculum() {
+    const container = document.getElementById('curriculumContent');
+    container.innerHTML = SEMESTERS.map(s => {
+      const badgeCls  = SEM_BADGE_CLASS[s.type] || 'sb-didactic';
+      const badgeLbl  = SEM_BADGE_LABEL[s.type] || s.type;
+
+      const coursesHTML = s.courses.map((c, idx) => {
+        const badges = TYPE_BADGE[c.type] || '';
+        const facultyHTML = getFacultyDisplay(c.faculty, c.guests, c.code);
+        return `<div class="course-card" id="card-${s.number}-${idx}" onclick="toggleCard(${s.number},${idx})">
+          <div class="card-top">
+            <div class="course-code">${c.code}</div>
+            <div class="card-badges">${badges}</div>
+          </div>
+          <div class="course-name">${c.name}</div>
+          <div class="course-credits">${c.credits} credit hour${c.credits !== 1 ? 's' : ''}</div>
+          <div class="course-faculty">${facultyHTML}</div>
+          <div class="card-detail">
+            <div class="detail-row"><strong>Code</strong> ${c.code}</div>
+            <div class="detail-row"><strong>Credits</strong> ${c.credits} cr. hrs.</div>
+            <div class="detail-row"><strong>Semester</strong> ${s.term}</div>
+            ${c.syllabus  ? `<div class="detail-row"><strong>Syllabus</strong> <a href="${c.syllabus}" target="_blank" rel="noopener" style="color:var(--gold);font-weight:600;text-decoration:none;border-bottom:1px solid var(--gold-line);" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--gold-line)'">View PDF →</a></div>` : ''}
+            ${c.whatsapp  ? `<div class="detail-row"><strong>WhatsApp</strong> <a href="${c.whatsapp}" target="_blank" rel="noopener" style="color:#25D366;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(37,211,102,0.3);" onmouseover="this.style.borderColor='#25D366'" onmouseout="this.style.borderColor='rgba(37,211,102,0.3)'">Join group →</a></div>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+
+
+      return `<div class="sem-block" id="sem-${s.number}">
+        <div class="sem-divider">
+          <div class="sem-number">${s.label}</div>
+          <div class="sem-info">
+            <div class="sem-term">${s.term}</div>
+            <div class="sem-credits">${s.credits} credit hours · ${s.courses.length} courses</div>
+          </div>
+          <span class="sem-badge ${badgeCls}">${badgeLbl}</span>
+          ${s.courses.some(c => c.schedule) ? `<a href="./semester.html?sem=${s.number}" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--gold-dim);border:1px solid var(--gold-line);border-radius:4px;font-size:11.5px;font-weight:600;color:var(--gold);text-decoration:none;transition:all 0.15s;margin-left:auto;" onmouseover="this.style.background='rgba(201,168,76,0.15)'" onmouseout="this.style.background='var(--gold-dim)'">Weekly Schedule →</a>` : ''}
+        </div>
+        <div class="courses-grid">${coursesHTML}</div>
+        <div class="totals-strip">
+          <span><strong>${s.credits}</strong> credit hours</span>
+          <span><strong>${s.courses.length}</strong> courses</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function toggleCard(semNum, idx) {
+    const card = document.getElementById(`card-${semNum}-${idx}`);
+    card.classList.toggle('open');
+  }
+
+  function renderFaculty() {
+    const roster = document.getElementById('facultyRoster');
+    roster.innerHTML = FACULTY.map(f => `
+      <div id="fac-${f.id}" style="background:white;border:1px solid var(--border-light);border-radius:var(--radius);padding:20px;display:flex;align-items:flex-start;gap:14px;">
+        <div class="faculty-initials fi-set" style="width:38px;height:38px;font-size:12px;flex-shrink:0;">${getInitials(f.name)}</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--ink);line-height:1.3;">${f.name}</div>
+          <div style="font-size:11px;color:var(--muted-dark);margin-top:3px;line-height:1.4;">${f.credentials}</div>
+          ${f.ohLink ? `<div style="margin-top:7px;"><a href="${f.ohLink}" target="_blank" rel="noopener" style="font-size:11px;font-weight:600;color:var(--gold);text-decoration:none;border-bottom:1px solid var(--gold-line);">Office Hours →</a></div>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  renderProgress();
+  renderCurriculum();
+  renderFaculty();
+
+  // ── SEMESTER FILTER ──
+  (function() {
+    const pills = document.getElementById('semFilterPills');
+    let active = 'all';
+
+    const options = [{ id: 'all', label: 'All' }].concat(
+      SEMESTERS.map(s => ({ id: String(s.number), label: `Sem ${s.number}` }))
+    );
+
+    options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'sem-pill' + (opt.id === 'all' ? ' active' : '');
+      btn.textContent = opt.label;
+      btn.onclick = () => {
+        active = opt.id;
+        document.querySelectorAll('.sem-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.sem-block').forEach(block => {
+          const show = opt.id === 'all' || block.id === 'sem-' + opt.id;
+          block.style.display = show ? '' : 'none';
+        });
+        if (opt.id !== 'all') {
+          document.getElementById('sem-' + opt.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+      pills.appendChild(btn);
+    });
+  })();
+
+  function openFacModal(id, courseCode) {
+    const f = FACULTY.find(x => x.id === id);
+    if (!f) return;
+    document.getElementById('facModalInitials').textContent = getInitials(f.name);
+    document.getElementById('facModalName').textContent = f.name;
+    document.getElementById('facModalRole').textContent = f.credentials;
+
+    // Only show zoom info for the course that was clicked
+    const myCourses = [];
+    SEMESTERS.forEach(s => {
+      s.courses.forEach(c => {
+        const ids = Array.isArray(c.faculty) ? c.faculty : c.faculty ? [c.faculty] : [];
+        if (ids.includes(id) && c.code === courseCode && (c.zoomLink || c.zoomMeta)) myCourses.push(c);
+      });
+    });
+
+    const row = (time, url, tag) =>
+      `<div class="fac-modal-row">
+        <div class="fac-modal-time">${tag ? `<span class="course-tag">${tag}</span>` : ''}${time}</div>
+        ${url ? `<a class="fac-modal-join" href="${url}" target="_blank" rel="noopener">Join →</a>`
+               : `<span class="fac-modal-tbd">Link TBD</span>`}
+      </div>`;
+
+    let html = '';
+
+    if (myCourses.length) {
+      html += `<div class="fac-modal-section-head">Class</div>`;
+      myCourses.forEach(c => {
+        html += row(c.zoomMeta || '—', c.zoomLink || null, c.code);
+      });
+    }
+
+    if (f.ohLinks && f.ohLinks.length) {
+      html += `<div class="fac-modal-section-head" style="margin-top:${myCourses.length ? '16px' : '0'};">Office Hours</div>`;
+      f.ohLinks.forEach(oh => html += row(oh.time, oh.url || null));
+      if (f.ohNote) html += `<div style="font-size:11px;color:var(--muted-dark);font-style:italic;margin-top:10px;line-height:1.5;">${f.ohNote}</div>`;
+    }
+
+    if (!html) {
+      html = `<div class="fac-modal-row"><div class="fac-modal-time" style="color:var(--muted-dark);">No Zoom links on file yet.</div></div>`;
+    }
+
+    document.getElementById('facModalRows').innerHTML = html;
+    document.getElementById('facModal').classList.add('open');
+  }
+
+  function closeFacModal(e) {
+    if (e && e.target !== document.getElementById('facModal')) return;
+    document.getElementById('facModal').classList.remove('open');
+  }
+</script>
+
+<!-- FACULTY MODAL -->
+<div class="fac-modal-overlay" id="facModal" onclick="closeFacModal(event)">
+  <div class="fac-modal-card">
+    <button class="fac-modal-close" onclick="document.getElementById('facModal').classList.remove('open')">&times;</button>
+    <div class="fac-modal-initials" id="facModalInitials"></div>
+    <div class="fac-modal-name" id="facModalName"></div>
+    <div class="fac-modal-role" id="facModalRole"></div>
+    <div class="fac-modal-rows" id="facModalRows"></div>
+  </div>
+</div>
+<script>
+  function toggleDropdown() {
+    const d = document.getElementById('navDropdown');
+    const b = document.querySelector('.nav-brand');
+    const open = d.classList.toggle('open');
+    b.classList.toggle('open', open);
+    if (open) setTimeout(() => document.addEventListener('click', outsideClick), 0);
+    else document.removeEventListener('click', outsideClick);
+  }
+  function closeDropdown() {
+    document.getElementById('navDropdown').classList.remove('open');
+    document.querySelector('.nav-brand').classList.remove('open');
+    document.removeEventListener('click', outsideClick);
+  }
+  function outsideClick(e) {
+    if (!document.querySelector('.nav-brand-wrap').contains(e.target)) closeDropdown();
+  }
+</script>
+</body>
+</html>

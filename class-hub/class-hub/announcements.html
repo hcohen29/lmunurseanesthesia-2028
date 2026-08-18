@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Announcements · LMU Nurse Anesthesia · Class of 2028</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink:        #08121f;
+      --ink-mid:    #0d1f36;
+      --ink-soft:   #132840;
+      --gold:       #C9A84C;
+      --gold-dim:   rgba(201,168,76,0.15);
+      --gold-line:  rgba(201,168,76,0.3);
+      --white:      #ffffff;
+      --off-white:  #f7f6f4;
+      --muted:      rgba(255,255,255,0.45);
+      --muted-dark: #6b7280;
+      --border-dark: rgba(255,255,255,0.08);
+      --border-light: #e8e6e2;
+      --radius:     8px;
+      --serif:      'Playfair Display', Georgia, serif;
+      --sans:       'Inter', -apple-system, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--off-white); color: var(--ink); line-height: 1.6; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--ink);
+      border-bottom: 1px solid var(--border-dark);
+      padding: 0 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 66px;
+    }
+    nav > ul { list-style: none; display: flex; gap: 2px; }
+    nav > ul a { color: var(--muted); text-decoration: none; font-size: 12.5px; font-weight: 500; letter-spacing: 0.3px; padding: 6px 12px; border-radius: 6px; transition: all 0.15s; }
+    nav > ul a:hover { color: white; background: rgba(255,255,255,0.06); }
+
+    /* ── HERO ── */
+    .hero { background: var(--ink); padding: 80px 56px 72px; border-bottom: 1px solid var(--border-dark); }
+    .hero-inner { max-width: 700px; }
+    .hero-kicker { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .hero-kicker::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+    .hero h1 { font-family: var(--serif); font-size: clamp(30px, 4vw, 48px); font-weight: 800; line-height: 1.1; color: white; margin-bottom: 16px; }
+    .hero h1 span { color: var(--gold); }
+    .hero p { font-size: 15px; color: var(--muted); font-weight: 300; max-width: 480px; }
+
+    /* ── CONTENT ── */
+    .content { max-width: 900px; margin: 0 auto; padding: 56px; }
+
+    /* ── UPDATES ── */
+    .updates-list { display: flex; flex-direction: column; border: 1px solid var(--border-light); }
+    .update-item { display: grid; grid-template-columns: 160px 1fr; background: white; border-bottom: 1px solid var(--border-light); }
+    .update-item:last-child { border-bottom: none; }
+    .update-left { padding: 28px 24px; border-right: 1px solid var(--border-light); background: var(--off-white); }
+    .update-date { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--muted-dark); text-transform: uppercase; }
+    .update-tag { display: inline-block; margin-top: 8px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 8px; }
+    .ut-announce { background: #e8f0ff; color: #1a4aaa; }
+    .ut-meeting  { background: var(--gold-dim); color: #7a5a00; }
+    .ut-event    { background: #f0eaff; color: #5020a0; }
+    .ut-action   { background: #e8f5ee; color: #1a7040; }
+    .update-right { padding: 28px 32px; }
+    .update-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 10px; font-family: var(--serif); }
+    .update-body { font-size: 14px; color: var(--muted-dark); line-height: 1.7; font-weight: 300; }
+
+    footer { background: var(--ink); border-top: 1px solid var(--border-dark); padding: 36px 56px; display: flex; justify-content: space-between; align-items: center; margin-top: 80px; }
+    .footer-left { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .footer-left strong { color: rgba(255,255,255,0.7); font-weight: 600; }
+    .footer-right a { color: var(--gold); text-decoration: none; font-size: 11px; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      nav > ul { display: none; }
+      .hero { padding: 56px 24px 48px; }
+      .content { padding: 32px 24px; }
+      .update-item { grid-template-columns: 1fr; }
+      .update-left { border-right: none; border-bottom: 1px solid var(--border-light); padding: 16px 20px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="./index.html" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+    <div style="width:36px;height:36px;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:13px;color:var(--gold);letter-spacing:1px;flex-shrink:0;">NA</div>
+    <div>
+      <div style="font-size:14px;font-weight:600;color:white;letter-spacing:0.3px;">Class of 2028</div>
+      <div style="font-size:11px;color:var(--muted);font-weight:400;letter-spacing:0.3px;">Announcements</div>
+    </div>
+  </a>
+  <ul>
+    <li><a href="./index.html#updates">Updates</a></li>
+    <li><a href="./index.html#dates">Dates</a></li>
+    <li><a href="./index.html#resources">Resources</a></li>
+    <li><a href="./index.html#surveys">Surveys</a></li>
+    <li><a href="./zoom.html">Zoom</a></li>
+    <li><a href="./program.html">Curriculum</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">Class of 2028</div>
+    <h1>All <span>Announcements</span></h1>
+    <p>A running history of every update posted by your class representatives.</p>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+  <div class="updates-list">
+
+    <!-- MOST RECENT FIRST -->
+
+    <div class="update-item">
+      <div class="update-left">
+        <div class="update-date">Aug 2026</div>
+        <span class="update-tag ut-announce">Announcement</span>
+      </div>
+      <div class="update-right">
+        <div class="update-title">Semester 3 kickoff — here's what's on our radar</div>
+        <div class="update-body">Hi everyone — welcome to Semester 3! We hope you all had a chance to recharge and are feeling ready to go. A few things we want to make sure are on your radar as we get started.<br><br>Dr. Julien will be hosting a weekly study session open to the cohort — this is something she's generously offering on her own time, separate from any course. She's adjusted the time to Tuesdays at 2:00 PM EST to avoid conflicting with the end of our 753 class. We know so many of you are excited for this opportunity, so come ready to engage and bring your questions. The Zoom link is on the hub.<br><br>Grand Rounds kicks off at 12:00 PM EST each week. Worth noting that our first NURS 733 lecture follows at 1:00 PM, so make sure you're tuned in and ready for both.<br><br>On the merch front, we're working on getting cohort gear together! If everything goes to plan, designs will be ready for you to browse by end of August / first week of September, with orders closing the first week of October and everything shipped back in time for Intensives Week in November.<br><br>In preparation for the White Coat Ceremony, what we're hoping to do is have your photo and some personal details displayed on screen as your name is called. I'll be reaching out soon with more details on what you'll need to submit — just something to start thinking about for now!<br><br>More to come as always — we're here if you need anything.</div>
+      </div>
+    </div>
+
+    <div class="update-item">
+      <div class="update-left">
+        <div class="update-date">July 2026</div>
+        <span class="update-tag ut-announce">Announcement</span>
+      </div>
+      <div class="update-right">
+        <div class="update-title">Welcome — we're your Class of 2028 representatives.</div>
+        <div class="update-body">Hi everybody! Both Amelia and I feel incredibly honored and excited to have been elected as your class reps. We built this hub as a way to help keep you all informed, connected, and supported throughout the program. Our intention is to formally update you all weekly to biweekly with recaps of our meetings with faculty and leadership, share upcoming events, and log the status of anything you bring to us. This space is truly for you.</div>
+      </div>
+    </div>
+
+    <div class="update-item">
+      <div class="update-left">
+        <div class="update-date">Coming Up</div>
+        <span class="update-tag ut-event">Event</span>
+      </div>
+      <div class="update-right">
+        <div class="update-title">White Coat Ceremony — April 2027</div>
+        <div class="update-body">Planning is underway for our White Coat Ceremony. We are coordinating with program faculty on venue, ceremony structure, and logistics. A full update will be posted here once details are confirmed.</div>
+      </div>
+    </div>
+
+    <!--
+      To add a new announcement, copy this block and paste at the TOP of the list:
+      <div class="update-item">
+        <div class="update-left">
+          <div class="update-date">Month Year</div>
+          <span class="update-tag ut-announce">Announcement</span>
+        </div>
+        <div class="update-right">
+          <div class="update-title">Title</div>
+          <div class="update-body">Body text.</div>
+        </div>
+      </div>
+      Tags: ut-announce · ut-event · ut-meeting · ut-action
+    -->
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <strong>LMU Nurse Anesthesia · Class of 2028</strong><br>
+    Lincoln Memorial University · Harrogate, Tennessee
+  </div>
+  <div class="footer-right">
+    <a href="mailto:lmunurseanesthesia2028@gmail.com">lmunurseanesthesia2028@gmail.com</a>
+  </div>
+</footer>
+
+</body>
+</html>
