@@ -49,20 +49,12 @@
     .nav-sub { font-size: 10px; color: var(--muted); letter-spacing: 0.3px; }
     .nav-caret { font-size: 8px; color: var(--muted); transition: transform 0.2s; }
     .nav-brand.open .nav-caret { transform: rotate(180deg); }
-    .nav-dropdown {
-      display: none; position: absolute; top: calc(100% + 8px); left: 0;
-      background: white; border: 1px solid var(--border-light);
-      min-width: 280px; z-index: 200;
-    }
+    .nav-dropdown { display: none; position: absolute; top: calc(100% + 8px); left: 0; background: white; border: 1px solid var(--border-light); min-width: 280px; z-index: 200; }
     .nav-dropdown.open { display: block; }
     .dd-section { padding: 12px 0; border-bottom: 1px solid var(--border-light); }
     .dd-section:last-child { border-bottom: none; }
-    .dd-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--muted-dark); padding: 4px 20px 8px; }
-    .dd-item {
-      display: flex; align-items: center; gap: 12px; padding: 9px 20px;
-      font-size: 13px; color: var(--ink); transition: background 0.1s; cursor: pointer;
-    }
+    .dd-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted-dark); padding: 4px 20px 8px; }
+    .dd-item { display: flex; align-items: center; gap: 12px; padding: 9px 20px; font-size: 13px; color: var(--ink); transition: background 0.1s; cursor: pointer; }
     .dd-item:hover { background: var(--off-white); }
     .dd-dot { width: 5px; height: 5px; background: var(--gold); flex-shrink: 0; }
     .dd-sub { font-size: 11px; color: var(--muted-dark); margin-top: 1px; }
@@ -337,6 +329,8 @@
 
 <!-- NAV -->
 <nav>
+  <div style="display:flex;align-items:center;gap:4px;">
+  <a href="./index.html" style="display:flex;align-items:center;padding:8px 10px;color:var(--muted);font-size:18px;text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='white'" onmouseout="this.style.color='var(--muted)'" title="Back to Hub">&#8592;</a>
   <div class="nav-brand-wrap">
     <div class="nav-brand" onclick="toggleDropdown()">
       <div class="nav-monogram">NA</div>
@@ -360,6 +354,7 @@
         <a href="https://lmunet.edu" target="_blank" class="dd-item"><span class="dd-dot"></span><div><div>LMU Student Portal</div><div class="dd-sub">lmunet.edu</div></div></a>
       </div>
     </div>
+  </div>
   </div>
   <ul>
     <li><a href="./index.html">Hub</a></li>
@@ -824,20 +819,13 @@
 
   /* ── NAV DROPDOWN ── */
   function toggleDropdown() {
-    const d = document.getElementById('navDropdown');
-    const b = document.querySelector('.nav-brand');
-    const open = d.classList.toggle('open');
-    b.classList.toggle('open', open);
-    if (open) setTimeout(() => document.addEventListener('click', outsideClick), 0);
-    else document.removeEventListener('click', outsideClick);
+    document.getElementById('navDropdown').classList.toggle('open');
+    document.querySelector('.nav-brand').classList.toggle('open');
   }
-  function closeDropdown() {
+  function closeDropdown(e) {
+    if (e && e.target !== document.getElementById('navDropdown')) return;
     document.getElementById('navDropdown').classList.remove('open');
     document.querySelector('.nav-brand').classList.remove('open');
-    document.removeEventListener('click', outsideClick);
-  }
-  function outsideClick(e) {
-    if (!document.querySelector('.nav-brand-wrap').contains(e.target)) closeDropdown();
   }
 
   /* ── INIT ── */

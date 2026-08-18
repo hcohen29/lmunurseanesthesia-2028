@@ -64,7 +64,7 @@
       background: var(--ink-mid); border: 1px solid var(--border-dark);
       border-radius: var(--radius); min-width: 300px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      max-height: calc(100vh - 100px); overflow-y: auto;
+      max-height: calc(100vh - 100px); overflow-y: auto; z-index: 300;
     }
     .nav-dropdown.open { display: block; }
     .dd-section { padding: 8px; border-bottom: 1px solid var(--border-dark); }
@@ -232,6 +232,18 @@
     .date-card.open .date-details { display: block; }
     .date-details li { font-size: 12px; color: var(--muted-dark); line-height: 1.6; padding: 2px 0 2px 14px; position: relative; }
     .date-details li::before { content: ''; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+    /* ── DATE POPUP (mobile only) ── */
+    .date-popup-overlay { display: none; position: fixed; inset: 0; background: rgba(10,14,26,0.75); backdrop-filter: blur(4px); z-index: 500; align-items: center; justify-content: center; }
+    .date-popup-overlay.open { display: flex; }
+    .date-popup-card { background: white; border-radius: 12px; width: 90%; max-width: 420px; max-height: 80vh; overflow-y: auto; padding: 28px 24px 32px; position: relative; }
+    .date-popup-close { position: absolute; top: 16px; right: 18px; background: none; border: none; font-size: 22px; color: var(--muted-dark); cursor: pointer; line-height: 1; padding: 2px 6px; }
+    .date-popup-type { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+    .date-popup-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .date-popup-range { font-size: 13px; color: var(--muted-dark); margin-bottom: 16px; }
+    .date-popup-list { list-style: none; padding: 0; border-top: 1px solid var(--border-light); padding-top: 14px; }
+    .date-popup-list li { font-size: 13px; color: var(--muted-dark); line-height: 1.6; padding: 4px 0 4px 16px; position: relative; }
+    .date-popup-list li::before { content: ''; position: absolute; left: 0; top: 11px; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
 
     /* ── UPDATES ── */
     .updates-list { display: flex; flex-direction: column; border: 1px solid var(--border-light); }
@@ -570,17 +582,23 @@
         <div class="rc-desc">The official LMU SharePoint site for our cohort — program resources, announcements, and collaboration tools.</div>
         <div class="rc-cta">Open SharePoint →</div>
       </a>
+      <a href="https://studentlmunet.sharepoint.com/sites/NurseAnesthesiaClinicalInformation/SitePages/CollabHome.aspx" target="_blank" class="resource-card">
+        <div class="rc-cat">SharePoint</div>
+        <div class="rc-title">Clinical Rotations — SharePoint</div>
+        <div class="rc-desc">LMU's clinical rotation SharePoint — site guides, placement information, and resources for your clinical experience.</div>
+        <div class="rc-cta">Open SharePoint →</div>
+      </a>
+      <a href="https://lmu.zoom.us/j/86301644455?pwd=eLnWZGqvNfLj744jembAshgtEOpxoV.1" target="_blank" class="resource-card">
+        <div class="rc-cat">Weekly</div>
+        <div class="rc-title">Grand Rounds — Zoom</div>
+        <div class="rc-desc">Attendance and cameras are required for all Grand Rounds sessions.</div>
+        <div class="rc-cta">Join Zoom →</div>
+      </a>
       <a href="https://photos.app.goo.gl/QSbX67EXYgDheJDj6" target="_blank" class="resource-card">
         <div class="rc-cat">Photo Album</div>
         <div class="rc-title">Class of 2028 — Photo Dump</div>
         <div class="rc-desc">Add your photos, share moments, and keep the memories in one place. Open to the whole class.</div>
         <div class="rc-cta">Add your photos →</div>
-      </a>
-      <a href="https://lmu.zoom.us/j/86301644455?pwd=eLnWZGqvNfLj744jembAshgtEOpxoV.1" target="_blank" class="resource-card">
-        <div class="rc-cat">Weekly</div>
-        <div class="rc-title">Grand Rounds — Zoom</div>
-        <div class="rc-desc">Weekly Grand Rounds Zoom link. Required attendance — bookmark this so it's always one tap away.</div>
-        <div class="rc-cta">Join Zoom →</div>
       </a>
     </div>
 
@@ -1007,7 +1025,8 @@
       iso:"2026-08-17" },
     { mo:"NOV",   dy:"9",    type:"academic", title:"753A Simulation Intensive",
       range:"Nov 9–13, 2026",
-      details:["November 9–13, 2026", "On campus, full days", "Harrogate, TN", "Includes white coat fitting for Class of 2028"],
+      details:["November 9–13, 2026 · On campus, Harrogate TN", "Mon: Machine check-off demo + bay rotations (machine check, circuits, pre-op setup)", "Tue: Positioning, airway (mask/LMA), induction sequence + ACLS/BLS/PALS renewal (Dr. Roberts)", "Wed: Group A shadows at clinical site · Group B sim lab (0800)", "Thu: Groups swap — Group B shadows · Group A sim lab (0800)", "Fri: Station check-offs (machine, positioning, induction) · 0900 Lambert Uniforms white coat fitting"],
+      link:"./syllabi/NURS 753a Intensive Schedule FINAL.pdf", linkLabel:"View full schedule →",
       iso:"2026-11-09", plan:true, badge:"Harrogate" },
     { mo:"NOV",   dy:"13",   type:"deadline", title:"DNP Project Dissemination",
       details:["November 13, 2026", "2026 cohort presentation", "All cohorts required to attend", "Via Zoom"],
@@ -1161,11 +1180,14 @@
           </div>
           <div class="date-title">${d.title}</div>
           ${d.range ? `<div class="date-range">${d.range}</div>` : ''}
-          ${d.details ? `<ul class="date-details">${d.details.map(i=>`<li>${i}</li>`).join('')}</ul>` : `<div class="date-details" style="display:none;"></div>`}
+          ${d.details ? `<ul class="date-details">${d.details.map(i=>`<li>${i}</li>`).join('')}${d.link ? `<li style="list-style:none;padding-left:0;margin-top:8px;"><a href="${d.link}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="font-size:12px;font-weight:600;color:var(--gold);text-decoration:none;">${d.linkLabel || 'View document →'}</a></li>` : ''}</ul>` : `<div class="date-details" style="display:none;"></div>`}
         </div>
       </div>`).join('');
-    document.querySelectorAll('.date-card').forEach(card => {
-      card.addEventListener('click', () => card.classList.toggle('open'));
+    document.querySelectorAll('.date-card').forEach((card, i) => {
+      card.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') return;
+        openDatePopup(visible[i]);
+      });
     });
   }
 
@@ -1245,6 +1267,41 @@
   document.addEventListener('DOMContentLoaded', () => {
     renderNotices(); renderDates(); renderSurveys(); renderStats(); applyConfig();
   });
+
+  // ── Date popup (mobile) ──
+  function openDatePopup(d) {
+    const typeClass = { event:'dt-event', deadline:'dt-deadline', academic:'dt-academic', clinical:'dt-clinical' };
+    const typeLabel = { event:'Event', deadline:'Deadline', academic:'Academic', clinical:'Clinical' };
+    document.getElementById('datePopupType').className = 'date-popup-type ' + (typeClass[d.type] || 'dt-event');
+    document.getElementById('datePopupType').textContent = typeLabel[d.type] || d.type;
+    document.getElementById('datePopupTitle').textContent = d.title;
+    document.getElementById('datePopupRange').textContent = d.range || d.mo + (d.dy && d.dy !== '—' ? ' ' + d.dy : '');
+    const list = document.getElementById('datePopupList');
+    list.innerHTML = d.details ? d.details.map(i => `<li>${i}</li>`).join('') : '';
+    if (d.link) list.innerHTML += `<li style="list-style:none;padding-left:0;margin-top:10px;"><a href="${d.link}" target="_blank" rel="noopener" style="font-size:13px;font-weight:600;color:var(--gold);text-decoration:none;">${d.linkLabel || 'View document →'}</a></li>`;
+    document.getElementById('datePopupOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDatePopup(e) {
+    if (e && e.target !== document.getElementById('datePopupOverlay')) return;
+    document.getElementById('datePopupOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeDatePopupBtn() {
+    document.getElementById('datePopupOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
 </script>
+
+<!-- DATE POPUP MODAL (mobile) -->
+<div class="date-popup-overlay" id="datePopupOverlay" onclick="closeDatePopup(event)">
+  <div class="date-popup-card">
+    <button class="date-popup-close" onclick="closeDatePopupBtn()">&times;</button>
+    <div id="datePopupType" class="date-popup-type"></div>
+    <div id="datePopupTitle" class="date-popup-title"></div>
+    <div id="datePopupRange" class="date-popup-range"></div>
+    <ul id="datePopupList" class="date-popup-list"></ul>
+  </div>
+</div>
 </body>
 </html>
