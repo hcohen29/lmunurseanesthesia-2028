@@ -233,6 +233,11 @@
     .date-details li { font-size: 12px; color: var(--muted-dark); line-height: 1.6; padding: 2px 0 2px 14px; position: relative; }
     .date-details li::before { content: ''; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
 
+    /* ── LIGHTBOX ── */
+    .lightbox-overlay { display:none; position:fixed; inset:0; background:rgba(10,14,26,0.85); backdrop-filter:blur(6px); z-index:600; align-items:center; justify-content:center; cursor:zoom-out; }
+    .lightbox-overlay.open { display:flex; }
+    .lightbox-overlay img { max-width:85vw; max-height:85vh; object-fit:contain; border-radius:8px; box-shadow:0 30px 80px rgba(0,0,0,0.5); }
+
     /* ── DATE POPUP (mobile only) ── */
     .date-popup-overlay { display: none; position: fixed; inset: 0; background: rgba(10,14,26,0.75); backdrop-filter: blur(4px); z-index: 500; align-items: center; justify-content: center; }
     .date-popup-overlay.open { display: flex; }
@@ -533,12 +538,12 @@
               <span style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(201,168,76,0.4);color:var(--gold);border-radius:20px;white-space:nowrap;">Pending Approval</span>
             </div>
             <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
-              <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope.png" style="max-width:100%;max-height:90px;object-fit:contain;"/></div>
-              <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-mountain.png" style="max-width:100%;max-height:90px;object-fit:contain;"/></div>
-              <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope-text.png" style="max-width:100%;max-height:90px;object-fit:contain;"/></div>
-              <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-seal.png" style="max-width:100%;max-height:90px;object-fit:contain;"/></div>
-              <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-lmu-block.png" style="max-width:100%;max-height:90px;object-fit:contain;"/></div>
-              <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-dept.png" style="max-width:100%;max-height:90px;object-fit:contain;"/></div>
+              <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
+              <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-mountain.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
+              <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope-text.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
+              <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-seal.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
+              <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-lmu-block.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
+              <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-dept.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
             </div>
             <div style="padding:12px 20px;border-top:1px solid rgba(255,255,255,0.06);">
               <div style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:400;">Crew necks · T-shirts · Vests · Pullovers · and more</div>
@@ -1321,9 +1326,25 @@
     document.getElementById('datePopupOverlay').classList.remove('open');
     document.body.style.overflow = '';
   }
+
+  function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightboxOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
 
 <!-- DATE POPUP MODAL (mobile) -->
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+  <img id="lightboxImg" src="" alt="Logo preview"/>
+</div>
+
 <div class="date-popup-overlay" id="datePopupOverlay" onclick="closeDatePopup(event)">
   <div class="date-popup-card">
     <button class="date-popup-close" onclick="closeDatePopupBtn()">&times;</button>
