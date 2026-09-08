@@ -94,6 +94,8 @@ def main():
         props = page.get("properties", {})
 
         sub_type  = get_prop(props, "Submission Type", "select").lower()
+        if sub_type == "agenda item":
+            continue
         summary   = get_prop(props, "Issue",           "title")
         date_raw  = get_prop(props, "Date Received",   "date")
         status_raw= get_prop(props, "Status",          "status")
