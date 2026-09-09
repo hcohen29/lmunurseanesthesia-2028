@@ -430,17 +430,29 @@
       /* ── Mobile dashboard: replace sections with tiles ── */
       .mobile-dashboard { display: block; padding: 0 0 56px; }
       .hero { display: none !important; }
-      section.section { display: none !important; }
       .notices-bar { display: none !important; }
       .mob-label { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin: 28px 0 12px; }
       .mob-label:first-child { margin-top: 8px; }
       .mob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
       .mob-grid-hop .mob-tile:nth-child(3n) { grid-column: span 2; }
-      .mob-tile { background: var(--ink); color: white; border-radius: 14px; padding: 20px 16px; min-height: 96px; font-size: 15px; font-weight: 600; font-family: var(--serif); text-decoration: none; display: flex; align-items: flex-end; cursor: pointer; -webkit-tap-highlight-color: transparent; line-height: 1.25; border: none; }
+      .mob-tile { background: var(--ink); color: white; border-radius: 14px; padding: 20px 16px; min-height: 110px; text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; -webkit-tap-highlight-color: transparent; border: none; }
       .mob-tile:active { background: var(--ink-mid); }
+      .mob-tile-cat { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+      .mob-tile-title { font-size: 15px; font-weight: 700; color: white; font-family: var(--serif); line-height: 1.2; flex: 1; display: flex; align-items: center; padding: 10px 0 6px; }
+      .mob-tile-cta { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 0.3px; }
       .mob-full { grid-column: span 2 !important; }
-      .mob-tile-gold { background: var(--gold) !important; color: var(--ink) !important; font-weight: 700; }
+      .mob-tile-gold { background: var(--gold) !important; }
+      .mob-tile-gold .mob-tile-cat { color: rgba(8,18,31,0.55) !important; }
+      .mob-tile-gold .mob-tile-title { color: var(--ink) !important; }
+      .mob-tile-gold .mob-tile-cta { color: var(--ink) !important; }
       .mob-tile-gold:active { background: #b8962e !important; }
+
+      /* Sections ARE in the DOM on mobile (reachable via dropdown) but start hidden
+         from the main scroll — show them only when targeted via anchor */
+      section.section { display: block !important; }
+
+      /* Fix dropdown scroll on mobile */
+      .nav-dropdown { -webkit-overflow-scrolling: touch; touch-action: pan-y; max-height: 70vh; }
 
       /* Mobile resource cards — dark hopscotch bento grid */
       /* 6-column base; pattern repeats every 7 cards: 2-col, full, 3-col, full */
@@ -596,26 +608,84 @@
 
   <div class="mob-label">Pages</div>
   <div class="mob-grid">
-    <a href="./announcements.html" class="mob-tile">Updates</a>
-    <a href="./calendar.html" class="mob-tile">Upcoming Dates</a>
-    <a href="./program.html" class="mob-tile">Curriculum</a>
-    <div class="mob-tile" onclick="openChecklist()">What's Coming Up</div>
+    <a href="./announcements.html" class="mob-tile">
+      <div class="mob-tile-cat">Rep Log</div>
+      <div class="mob-tile-title">Updates</div>
+      <div class="mob-tile-cta">View announcements →</div>
+    </a>
+    <a href="./calendar.html" class="mob-tile">
+      <div class="mob-tile-cat">Calendar</div>
+      <div class="mob-tile-title">Calendar</div>
+      <div class="mob-tile-cta">View dates →</div>
+    </a>
+    <a href="./program.html" class="mob-tile">
+      <div class="mob-tile-cat">Program</div>
+      <div class="mob-tile-title">Curriculum</div>
+      <div class="mob-tile-cta">View map →</div>
+    </a>
+    <div class="mob-tile" onclick="openChecklist()">
+      <div class="mob-tile-cat">To Do:</div>
+      <div class="mob-tile-title">Plan</div>
+      <div class="mob-tile-cta">Open →</div>
+    </div>
   </div>
 
   <div class="mob-label">Resources</div>
   <div class="mob-grid mob-grid-hop">
-    <a href="./zoom.html" class="mob-tile">Zoom</a>
-    <div class="mob-tile" onclick="openWAModal()">WhatsApp</div>
-    <a href="https://studentlmunet.sharepoint.com/sites/NAPCohort2028/SitePages/CollabHome.aspx" target="_blank" class="mob-tile">2028 SharePoint</a>
-    <a href="https://drive.google.com/drive/folders/13E9EZUimdubnOoQ00_DSDZCDz_2G3JpP?usp=drive_link" target="_blank" class="mob-tile">Google Drive</a>
-    <a href="https://photos.app.goo.gl/QSbX67EXYgDheJDj6" target="_blank" class="mob-tile">Photo Album</a>
-    <a href="https://lmunet.instructure.com" target="_blank" class="mob-tile">Canvas</a>
+    <a href="./zoom.html" class="mob-tile">
+      <div class="mob-tile-cat">Virtual Classroom</div>
+      <div class="mob-tile-title">Zoom Links</div>
+      <div class="mob-tile-cta">View links →</div>
+    </a>
+    <div class="mob-tile" onclick="openWAModal()">
+      <div class="mob-tile-cat">Group Chats</div>
+      <div class="mob-tile-title">WhatsApp</div>
+      <div class="mob-tile-cta">View chats →</div>
+    </div>
+    <a href="https://studentlmunet.sharepoint.com/sites/NAPCohort2028/SitePages/CollabHome.aspx" target="_blank" class="mob-tile">
+      <div class="mob-tile-cat">SharePoint</div>
+      <div class="mob-tile-title">2028 Cohort</div>
+      <div class="mob-tile-cta">Open →</div>
+    </a>
+    <a href="https://drive.google.com/drive/folders/13E9EZUimdubnOoQ00_DSDZCDz_2G3JpP?usp=drive_link" target="_blank" class="mob-tile">
+      <div class="mob-tile-cat">Shared Drive</div>
+      <div class="mob-tile-title">Google Drive</div>
+      <div class="mob-tile-cta">Open →</div>
+    </a>
+    <a href="https://photos.app.goo.gl/QSbX67EXYgDheJDj6" target="_blank" class="mob-tile">
+      <div class="mob-tile-cat">Photos</div>
+      <div class="mob-tile-title">Photo Album</div>
+      <div class="mob-tile-cta">Add photos →</div>
+    </a>
+    <a href="https://lmunet.instructure.com" target="_blank" class="mob-tile">
+      <div class="mob-tile-cat">LMS</div>
+      <div class="mob-tile-title">Canvas</div>
+      <div class="mob-tile-cta">Open →</div>
+    </a>
+    <a href="https://studentlmunet.sharepoint.com/sites/NurseAnesthesiaClinicalInformation/SitePages/CollabHome.aspx" target="_blank" class="mob-tile">
+      <div class="mob-tile-cat">SharePoint</div>
+      <div class="mob-tile-title">Clinical Rotations</div>
+      <div class="mob-tile-cta">Open →</div>
+    </a>
+    <a href="https://www.typhongroup.net/nast/data/login.asp?facility=7072&expired=y" target="_blank" class="mob-tile">
+      <div class="mob-tile-cat">Clinical Tracking</div>
+      <div class="mob-tile-title">Typhon Group</div>
+      <div class="mob-tile-cta">Open →</div>
+    </a>
   </div>
 
   <div class="mob-label">More</div>
   <div class="mob-grid">
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLScA1hZWQd9KL2-JiJkhjbY1TWsAkkgLZEWKDthiKPuN1hVpRw/viewform?usp=publish-editor" target="_blank" class="mob-tile mob-full">General Info Survey</a>
-    <a href="https://forms.gle/uVoJf9nrqquicTKb7" target="_blank" class="mob-tile mob-full mob-tile-gold">Submit an Idea or Concern</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScA1hZWQd9KL2-JiJkhjbY1TWsAkkgLZEWKDthiKPuN1hVpRw/viewform?usp=publish-editor" target="_blank" class="mob-tile mob-full">
+      <div class="mob-tile-cat">Survey</div>
+      <div class="mob-tile-title">General Info</div>
+      <div class="mob-tile-cta">Take survey →</div>
+    </a>
+    <a href="https://forms.gle/uVoJf9nrqquicTKb7" target="_blank" class="mob-tile mob-full mob-tile-gold">
+      <div class="mob-tile-cat">Feedback</div>
+      <div class="mob-tile-title">Submit an Idea or Concern</div>
+      <div class="mob-tile-cta">Submit →</div>
+    </a>
   </div>
 
 </div>
