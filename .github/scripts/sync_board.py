@@ -17,7 +17,7 @@ from datetime import datetime
 
 NOTION_TOKEN   = os.environ.get("NOTION_TOKEN", "")
 DATABASE_ID    = "ae53a511f3dc496ab5bc23938d7d6494"
-OUTPUT_PATH    = "class-hub/board-data.json"
+OUTPUT_PATH    = "board-data.json"
 
 STATUS_MAP = {
     "Not started": "Not Started",
