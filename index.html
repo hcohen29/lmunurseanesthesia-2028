@@ -268,14 +268,14 @@
     /* ── RESOURCES ── */
     .resource-category { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); padding-bottom: 14px; border-bottom: 1px solid var(--gold-line); margin-bottom: 20px; margin-top: 44px; }
     .resource-category:first-of-type { margin-top: 0; }
-    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
-    .resource-card { background: var(--ink); padding: 24px; text-decoration: none; color: white; display: flex; flex-direction: column; transition: background 0.15s; border-radius: var(--radius); }
-    .resource-card:hover { background: var(--ink-mid); }
-    .rc-cat { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-    .rc-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: white; font-family: var(--serif); }
-    .rc-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; font-weight: 300; flex: 1; }
-    .rc-cta { font-size: 12px; font-weight: 600; color: var(--gold); margin-top: 16px; letter-spacing: 0.3px; }
-    .rc-placeholder { background: var(--ink-mid); opacity: 0.6; }
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--border-light); border: 1px solid var(--border-light); }
+    .resource-card { background: white; padding: 24px; text-decoration: none; color: var(--ink); display: flex; flex-direction: column; transition: background 0.15s; }
+    .resource-card:hover { background: var(--off-white); }
+    .rc-cat { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+    .rc-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--ink); }
+    .rc-desc { font-size: 13px; color: var(--muted-dark); line-height: 1.6; font-weight: 300; flex: 1; }
+    .rc-cta { font-size: 11.5px; font-weight: 600; color: var(--ink); margin-top: 16px; letter-spacing: 0.3px; border-top: 1px solid var(--border-light); padding-top: 12px; }
+    .rc-placeholder { background: var(--off-white); opacity: 0.6; }
 
     /* ── CLINICAL ── */
     .site-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: var(--border-light); border: 1px solid var(--border-light); }
@@ -403,7 +403,7 @@
     @media (max-width: 768px) {
       html, body { overflow-x: clip; max-width: 100%; }
       .resources-grid { grid-template-columns: 1fr; }
-      .clinical-grid { grid-template-columns: 1fr !important; }
+      .clinical-grid { display: grid !important; grid-template-columns: 1fr !important; }
       .cs-banner { justify-content: center; text-align: center; }
       .cs-line { display: none; }
       .merch-header-row { flex-wrap: wrap; gap: 8px !important; }
@@ -424,10 +424,11 @@
       .triage-btn:active { background: var(--off-white); }
       .tb-icon { width: 44px; height: 44px; background: var(--ink); color: var(--gold); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; letter-spacing: 0.5px; font-family: var(--sans); }
       .tb-label { font-size: 10.5px; font-weight: 600; color: var(--ink); text-align: center; line-height: 1.2; font-family: var(--sans); }
-      /* Hide desktop resource cards on mobile - replaced by triage grid */
-      .resource-category, .resources-grid, .resource-category + .resources-grid, .clinical-grid { display: none !important; }
-      /* But keep the Readings section visible on mobile */
-      .readings-mobile-show { display: block !important; }
+      /* Show resource cards on mobile as stacked single column */
+      .resources-grid { display: grid !important; grid-template-columns: 1fr !important; gap: 0 !important; }
+      .resource-category { display: block !important; }
+      /* Hide the mobile triage grid - using card style instead */
+      .mobile-triage { display: none !important; }
       nav, .hero, .reps-section, .section { padding-left: 24px; padding-right: 24px; }
       nav > ul { display: none; }
       .hero { padding-top: 72px; padding-bottom: 64px; }
@@ -656,8 +657,8 @@
 
     <div class="resource-category">DNP Program</div>
     <div class="resources-grid">
-      <a href="./program.html" class="resource-card">
-        <div class="rc-cat">Program</div>
+      <a href="./program.html" class="resource-card" style="border-color: var(--gold-line); background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, #fff 60%);">
+        <div class="rc-cat" style="color: var(--gold);">Program</div>
         <div class="rc-title">Curriculum Overview</div>
         <div class="rc-desc">All 9 semesters mapped out for the Class of 2028.</div>
         <div class="rc-cta">View program map →</div>
