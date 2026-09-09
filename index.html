@@ -398,7 +398,7 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      html, body { overflow-x: hidden; max-width: 100vw; }
+      body { overflow-x: clip; max-width: 100%; }
       nav, .hero, .reps-section, .section { padding-left: 24px; padding-right: 24px; }
       nav > ul { display: none; }
       .hero { padding-top: 72px; padding-bottom: 64px; }
@@ -408,9 +408,12 @@
       footer { flex-direction: column; gap: 12px; text-align: center; }
 
       .hero-bg-line { display: none; }
-      .stats-bar { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-      .stat { min-width: 100px; }
-      .stat-val { font-size: 22px; white-space: nowrap; }
+      .stats-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; overflow-x: visible; }
+      .stat { border-right: none; border-bottom: none; padding: 16px 12px; }
+      .stat:not(:last-child) { border-right: 1px solid var(--border-dark); }
+      .stat-val { font-size: 20px; white-space: nowrap; }
+      .stat-board, .stat-grad { display: none; }
+      .stat-arrow { display: none; }
       .nav-wordmark, .nav-caret { display: none; }
       .nav-brand { padding: 6px; }
       .nav-monogram { width: 40px; height: 40px; }
@@ -502,7 +505,7 @@
     <p>Stay informed, voice your concerns, access resources, and track what we're doing on your behalf.</p>
     <div class="hero-actions">
       <a href="#submit" class="btn btn-gold">Submit an Idea or Concern</a>
-      <a href="#board"  class="btn btn-ghost">View the Board</a>
+      <a href="#" class="btn btn-ghost" onclick="event.preventDefault();openChecklist()">What's Coming Up</a>
     </div>
   </div>
 </section>
@@ -510,16 +513,16 @@
 <!-- STATS BAR -->
 <div class="stats-bar">
   <div class="stat"><div class="stat-val" id="statWC">—</div><div class="stat-lbl">Days to White Coat</div></div>
-  <a href="./program.html" class="stat" style="text-decoration:none;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''"><div class="stat-val" id="statSem">2/9</div><div class="stat-lbl">Semester ↗</div><div class="stat-progress"><div class="stat-progress-fill" id="statSemBar"></div></div></a>
-  <a href="#surveys" class="stat" style="text-decoration:none;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''"><div class="stat-val" id="statSurveys">—</div><div class="stat-lbl">Active Surveys ↓</div></a>
-  <a href="#board" class="stat" style="text-decoration:none;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''"><div class="stat-val" id="statBoard">—</div><div class="stat-lbl">Open Board Items ↓</div></a>
-  <div class="stat"><div class="stat-val">2028</div><div class="stat-lbl">Graduation Year</div></div>
+  <a href="./program.html" class="stat" style="text-decoration:none;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''"><div class="stat-val" id="statSem">3/9</div><div class="stat-lbl">Semester<span class="stat-arrow"> ↗</span></div><div class="stat-progress"><div class="stat-progress-fill" id="statSemBar"></div></div></a>
+  <a href="#surveys" class="stat" style="text-decoration:none;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''"><div class="stat-val" id="statSurveys">—</div><div class="stat-lbl">Active Surveys<span class="stat-arrow"> ↓</span></div></a>
+  <a href="#board" class="stat stat-board" style="text-decoration:none;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background=''"><div class="stat-val" id="statBoard">—</div><div class="stat-lbl">Open Board Items<span class="stat-arrow"> ↓</span></div></a>
+  <div class="stat stat-grad"><div class="stat-val">2028</div><div class="stat-lbl">Graduation Year</div></div>
 </div>
 
 <!-- NOTICES -->
 <div class="notices-bar" id="noticesBar" style="display:none;">
   <div class="notices-inner">
-    <div class="notices-label">Class Notices</div>
+    <div class="notices-label">On Your Radar</div>
     <div class="notices-grid" id="noticesGrid"></div>
   </div>
 </div>
@@ -573,7 +576,7 @@
       </a>
       <div class="resource-card" onclick="openWAModal()" style="cursor:pointer;">
         <div class="rc-cat">Group Chats</div>
-        <div class="rc-title">Class WhatsApp</div>
+        <div class="rc-title">WhatsApp</div>
         <div class="rc-desc">Class group chats by course — join the ones relevant to you.</div>
         <div class="rc-cta">View group chats →</div>
       </div>
@@ -591,7 +594,7 @@
       </a>
       <a href="https://photos.app.goo.gl/QSbX67EXYgDheJDj6" target="_blank" class="resource-card">
         <div class="rc-cat">Photo Album</div>
-        <div class="rc-title">Class of 2028 — Photo Dump</div>
+        <div class="rc-title">Photo Album</div>
         <div class="rc-desc">Add your photos, share moments, and keep the memories in one place. Open to the whole class.</div>
         <div class="rc-cta">Add your photos →</div>
       </a>
@@ -631,37 +634,17 @@
       </a>
     </div>
 
-    <div class="resource-category">Clinical Resources</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;">
-      <a href="https://studentlmunet.sharepoint.com/sites/NurseAnesthesiaClinicalInformation/SitePages/CollabHome.aspx" target="_blank" rel="noopener"
-         style="display:flex;flex-direction:column;padding:28px;background:var(--ink);text-decoration:none;border-radius:var(--radius);transition:background 0.15s;"
-         onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
-        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">SharePoint</div>
-        <div style="font-size:16px;font-weight:700;color:white;margin-bottom:8px;font-family:var(--serif);">Clinical Rotations</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Site guides, placement information, and program resources for your clinical experience.</div>
-        <div style="margin-top:20px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.3px;">Open SharePoint →</div>
-      </a>
-      <a href="https://www.typhongroup.net/nast/data/login.asp?facility=7072&expired=y" target="_blank" rel="noopener"
-         style="display:flex;flex-direction:column;padding:28px;background:var(--ink);text-decoration:none;border-radius:var(--radius);transition:background 0.15s;"
-         onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
-        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Clinical Tracking</div>
-        <div style="font-size:16px;font-weight:700;color:white;margin-bottom:8px;font-family:var(--serif);">Typhon Group</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Log and track your clinical hours, cases, and experiences throughout the program.</div>
-        <div style="margin-top:20px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.3px;">Open Typhon →</div>
-      </a>
-    </div>
-
     <div class="resource-category">Readings &amp; Recommendations</div>
     <div class="resources-grid">
-      <a href="https://peterattiamd.com/seanmackey/" target="_blank" class="resource-card">
+      <div class="resource-card" style="display:flex;flex-direction:column;">
         <div class="rc-cat">Podcast</div>
         <div class="rc-title">Peter Attia · Dr. Sean Mackey on Pain</div>
-        <div class="rc-desc">The Drive Podcast — a deep dive into the science of chronic pain, perception, and management. Highly relevant to anesthesia practice.</div>
-        <div style="display:flex;gap:10px;margin-top:12px;">
-          <a href="https://open.spotify.com/episode/1S3XMNjf3lSnuOqCCgFPX8" target="_blank" onclick="event.stopPropagation()" style="font-size:11px;font-weight:600;color:var(--gold);text-decoration:none;border:1px solid rgba(201,168,76,0.4);padding:4px 10px;border-radius:20px;">Spotify</a>
-          <a href="https://podcasts.apple.com/us/podcast/the-drive-with-peter-attia/id1400828889" target="_blank" onclick="event.stopPropagation()" style="font-size:11px;font-weight:600;color:var(--gold);text-decoration:none;border:1px solid rgba(201,168,76,0.4);padding:4px 10px;border-radius:20px;">Apple Podcasts</a>
+        <div class="rc-desc" style="flex:1;">The Drive Podcast — a deep dive into the science of chronic pain, perception, and management. Highly relevant to anesthesia practice.</div>
+        <div style="display:flex;gap:8px;margin-top:14px;">
+          <a href="https://open.spotify.com/episode/1Ige1J8jqHNvZ7sij7N3jN" target="_blank" rel="noopener" style="font-size:11px;font-weight:700;letter-spacing:0.3px;color:var(--ink);text-decoration:none;background:var(--off-white);border:1px solid var(--border-light);padding:5px 12px;border-radius:20px;transition:background 0.15s;" onmouseover="this.style.background='#e8e8e8'" onmouseout="this.style.background='var(--off-white)'">Spotify</a>
+          <a href="https://podcasts.apple.com/us/podcast/chronic-pain-pathways-treatment-and-the-path-to/id1400828889?i=1000704261791" target="_blank" rel="noopener" style="font-size:11px;font-weight:700;letter-spacing:0.3px;color:var(--ink);text-decoration:none;background:var(--off-white);border:1px solid var(--border-light);padding:5px 12px;border-radius:20px;transition:background 0.15s;" onmouseover="this.style.background='#e8e8e8'" onmouseout="this.style.background='var(--off-white)'">Apple Podcasts</a>
         </div>
-      </a>
+      </div>
       <a href="https://store.aana.com/Products/ProductDetails/F-ANA-301" target="_blank" class="resource-card">
         <div class="rc-cat">Book</div>
         <div class="rc-title">Watchful Care</div>
@@ -704,69 +687,33 @@
       </a>
     </div>
 
-    <div class="resource-category">Professional Organizations</div>
-    <div class="resources-grid">
-      <a href="https://www.aana.com" target="_blank" class="resource-card">
-        <div class="rc-cat">National</div>
-        <div class="rc-title">AANA</div>
-        <div class="rc-desc">American Association of Nurse Anesthesiology — the national professional organization for CRNAs and student registered nurse anesthetists.</div>
-        <div class="rc-cta">Visit aana.com</div>
-      </a>
-      <a href="https://www.tncrna.com" target="_blank" class="resource-card">
-        <div class="rc-cat">State — Tennessee</div>
-        <div class="rc-title">TANA</div>
-        <div class="rc-desc">Tennessee Association of Nurse Anesthetists — your state affiliate. Essential for networking, local advocacy days, and state-level updates.</div>
-        <div class="rc-cta">Visit tncrna.com</div>
-      </a>
-      <a href="https://www.nbcrna.com" target="_blank" class="resource-card">
-        <div class="rc-cat">Certification</div>
-        <div class="rc-title">NBCRNA</div>
-        <div class="rc-desc">National Board of Certification and Recertification for Nurse Anesthetists — your certifying body. Bookmark this early and revisit often.</div>
-        <div class="rc-cta">Visit nbcrna.com</div>
-      </a>
-    </div>
+  </div>
+</section>
 
-    <div class="resource-category">Board Preparation</div>
-    <div class="resources-grid">
-      <a href="https://www.procrna.com" target="_blank" class="resource-card">
-        <div class="rc-cat">Review</div>
-        <div class="rc-title">ProCRNA</div>
-        <div class="rc-desc">Question banks and review content designed specifically for CRNA board preparation and anesthesia knowledge review.</div>
-        <div class="rc-cta">Visit procrna.com</div>
-      </a>
-      <a href="https://www.apex-anesthesia.com" target="_blank" class="resource-card">
-        <div class="rc-cat">Review</div>
-        <div class="rc-title">APEX Anesthesia</div>
-        <div class="rc-desc">Comprehensive review resource for the NCE, widely used by CRNA students for board examination preparation.</div>
-        <div class="rc-cta">Visit apex-anesthesia.com</div>
-      </a>
-      <a href="#submit" class="resource-card rc-placeholder">
-        <div class="rc-cat">Contribute</div>
-        <div class="rc-title">Recommend a Resource</div>
-        <div class="rc-desc">Know a study tool, question bank, or reference worth adding? Submit it through the form and we'll review it for the class.</div>
-        <div class="rc-cta">Submit a suggestion</div>
-      </a>
+<!-- CLINICAL -->
+<section class="section s-white" id="clinical">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-kicker">Rotations</div>
+      <div class="section-h">Clinical Resources</div>
+      <p class="section-sub">Placement info, site guides, and your clinical tracking system.</p>
     </div>
-
-    <div class="resource-category">Wellness &amp; Support</div>
-    <div class="resources-grid">
-      <a href="https://www.aana.com/membership/student-membership/student-resources/wellness-resources" target="_blank" class="resource-card">
-        <div class="rc-cat">Wellness</div>
-        <div class="rc-title">AANA Wellness Resources</div>
-        <div class="rc-desc">Mental health, resilience, and wellness resources curated specifically for student nurse anesthetists by the AANA.</div>
-        <div class="rc-cta">View resources</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <a href="https://studentlmunet.sharepoint.com/sites/NurseAnesthesiaClinicalInformation/SitePages/CollabHome.aspx" target="_blank" rel="noopener"
+         style="display:flex;flex-direction:column;padding:28px;background:var(--ink);text-decoration:none;border-radius:var(--radius);transition:background 0.15s;"
+         onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
+        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">SharePoint</div>
+        <div style="font-size:16px;font-weight:700;color:white;margin-bottom:8px;font-family:var(--serif);">Clinical Rotations</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Site guides, placement information, and program resources for your clinical experience.</div>
+        <div style="margin-top:20px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.3px;">Open SharePoint →</div>
       </a>
-      <a href="https://988lifeline.org" target="_blank" class="resource-card">
-        <div class="rc-cat">Crisis Support</div>
-        <div class="rc-title">988 Suicide &amp; Crisis Lifeline</div>
-        <div class="rc-desc">Call or text 988. Free, confidential crisis support available 24 hours a day, 7 days a week. You are not alone.</div>
-        <div class="rc-cta">988lifeline.org</div>
-      </a>
-      <a href="https://www.lmunet.edu/counseling/index.php" target="_blank" class="resource-card">
-        <div class="rc-cat">LMU</div>
-        <div class="rc-title">LMU Counseling Services</div>
-        <div class="rc-desc">LMU's student counseling and mental health services — confidential support available to all enrolled students.</div>
-        <div class="rc-cta">Visit counseling page</div>
+      <a href="https://www.typhongroup.net/nast/data/login.asp?facility=7072&expired=y" target="_blank" rel="noopener"
+         style="display:flex;flex-direction:column;padding:28px;background:var(--ink);text-decoration:none;border-radius:var(--radius);transition:background 0.15s;"
+         onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
+        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Clinical Tracking</div>
+        <div style="font-size:16px;font-weight:700;color:white;margin-bottom:8px;font-family:var(--serif);">Typhon Group</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Log and track your clinical hours, cases, and experiences throughout the program.</div>
+        <div style="margin-top:20px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.3px;">Open Typhon →</div>
       </a>
     </div>
   </div>
@@ -833,7 +780,7 @@
           <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:3px;">Sneak Peek</div>
           <div style="font-size:13px;font-weight:600;color:white;letter-spacing:0.3px;">Class of 2028 · Final Logo Designs</div>
         </div>
-        <span style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(201,168,76,0.4);color:var(--gold);border-radius:20px;white-space:nowrap;">Pending Approval</span>
+        <span style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(201,168,76,0.4);color:var(--gold);border-radius:20px;white-space:nowrap;">Approved — Sending to Vendor</span>
       </div>
       <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
         <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
@@ -865,6 +812,77 @@
         <p>Ideas, concerns, requests — whatever's on your mind. Submissions can be anonymous and are reviewed by your reps.</p>
         <a href="#" id="formBtn" class="btn btn-gold">Open Submission Form</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- MORE RESOURCES -->
+<section class="section s-off" id="more-resources">
+  <div class="section-inner">
+    <div class="resource-category">Professional Organizations</div>
+    <div class="resources-grid">
+      <a href="https://www.aana.com" target="_blank" class="resource-card">
+        <div class="rc-cat">National</div>
+        <div class="rc-title">AANA</div>
+        <div class="rc-desc">American Association of Nurse Anesthesiology — the national professional organization for CRNAs and student registered nurse anesthetists.</div>
+        <div class="rc-cta">Visit aana.com</div>
+      </a>
+      <a href="https://www.tncrna.com" target="_blank" class="resource-card">
+        <div class="rc-cat">State — Tennessee</div>
+        <div class="rc-title">TANA</div>
+        <div class="rc-desc">Tennessee Association of Nurse Anesthetists — your state affiliate. Essential for networking, local advocacy days, and state-level updates.</div>
+        <div class="rc-cta">Visit tncrna.com</div>
+      </a>
+      <a href="https://www.nbcrna.com" target="_blank" class="resource-card">
+        <div class="rc-cat">Certification</div>
+        <div class="rc-title">NBCRNA</div>
+        <div class="rc-desc">National Board of Certification and Recertification for Nurse Anesthetists — your certifying body. Bookmark this early and revisit often.</div>
+        <div class="rc-cta">Visit nbcrna.com</div>
+      </a>
+    </div>
+
+    <div class="resource-category">Board Preparation</div>
+    <div class="resources-grid">
+      <a href="https://www.procrna.com" target="_blank" class="resource-card">
+        <div class="rc-cat">Review</div>
+        <div class="rc-title">ProCRNA</div>
+        <div class="rc-desc">Question banks and review content designed specifically for CRNA board preparation and anesthesia knowledge review.</div>
+        <div class="rc-cta">Visit procrna.com</div>
+      </a>
+      <a href="https://www.apex-anesthesia.com" target="_blank" class="resource-card">
+        <div class="rc-cat">Review</div>
+        <div class="rc-title">APEX Anesthesia</div>
+        <div class="rc-desc">Comprehensive review resource for the NCE, widely used by CRNA students for board examination preparation.</div>
+        <div class="rc-cta">Visit apex-anesthesia.com</div>
+      </a>
+      <a href="#submit" class="resource-card rc-placeholder">
+        <div class="rc-cat">Contribute</div>
+        <div class="rc-title">Recommend a Resource</div>
+        <div class="rc-desc">Know a study tool, question bank, or reference worth adding? Submit it through the form and we'll review it for the class.</div>
+        <div class="rc-cta">Submit a suggestion</div>
+      </a>
+    </div>
+
+    <div class="resource-category">Wellness &amp; Support</div>
+    <div class="resources-grid">
+      <a href="https://www.aana.com/membership/student-membership/student-resources/wellness-resources" target="_blank" class="resource-card">
+        <div class="rc-cat">Wellness</div>
+        <div class="rc-title">AANA Wellness Resources</div>
+        <div class="rc-desc">Mental health, resilience, and wellness resources curated specifically for student nurse anesthetists by the AANA.</div>
+        <div class="rc-cta">View resources</div>
+      </a>
+      <a href="https://988lifeline.org" target="_blank" class="resource-card">
+        <div class="rc-cat">Crisis Support</div>
+        <div class="rc-title">988 Suicide &amp; Crisis Lifeline</div>
+        <div class="rc-desc">Call or text 988. Free, confidential crisis support available 24 hours a day, 7 days a week. You are not alone.</div>
+        <div class="rc-cta">988lifeline.org</div>
+      </a>
+      <a href="https://www.lmunet.edu/counseling/index.php" target="_blank" class="resource-card">
+        <div class="rc-cat">LMU</div>
+        <div class="rc-title">LMU Counseling Services</div>
+        <div class="rc-desc">LMU's student counseling and mental health services — confidential support available to all enrolled students.</div>
+        <div class="rc-cta">Visit counseling page</div>
+      </a>
     </div>
   </div>
 </section>
@@ -969,13 +987,54 @@
   // ═══════════════════════════════════════════════════════
   const NOTICES = [
     {
-      type: "deadline",
-      title: "Scrub & Jacket Order Deadline — July 31",
-      desc: "Last day to order through Lambert's as a class and have your student discount automatically applied. Use code LMUDNP at checkout.",
-      link: "https://shopuniforms.lambertshc.com/GroupLogin",
-      linkLabel: "Order at Lambert's →",
-      date: "Jul 31, 2026",
-      expires: "2026-08-01",
+      id: "wcc-photo",
+      type: "action",
+      title: "Submit your photo for White Coat",
+      desc: "Your photo will be displayed on screen as your name is called. Please submit a headshot via the General Info form.",
+      link: "https://docs.google.com/forms/d/e/1FAIpQLScA1hZWQd9KL2-JiJkhjbY1TWsAkkgLZEWKDthiKPuN1hVpRw/viewform?usp=publish-editor",
+      linkLabel: "General Info form",
+      date: "White Coat",
+    },
+    {
+      id: "intensives-airbnb",
+      type: "action",
+      title: "Book your Airbnb for Intensives Week",
+      desc: "Intensives run November 9–13, 2026 in Harrogate, TN. Accommodations fill up — book early.",
+      date: "Nov 9–13",
+    },
+    {
+      id: "intensives-scrubs",
+      type: "action",
+      title: "Get your navy scrubs before Intensives",
+      desc: "Navy scrubs are required for the clinical portion of Intensives Week. Make sure yours arrive in time.",
+      date: "Before Nov 9",
+    },
+    {
+      id: "npi-number",
+      type: "action",
+      title: "Apply for your NPI number",
+      desc: "Required for clinical. Apply through the NPPES registry — free and takes about 10–20 minutes.",
+      link: "https://nppes.cms.hhs.gov/",
+      linkLabel: "Apply at NPPES",
+      date: "Ongoing",
+    },
+    {
+      id: "flu-shot-typhon",
+      type: "info",
+      title: "Flu shot? Upload it to Typhon",
+      desc: "If you get a flu shot, upload documentation to Typhon to keep your clinical compliance current.",
+      link: "https://www.typhongroup.net/nast/data/login.asp?facility=7072&expired=y",
+      linkLabel: "Log in to Typhon",
+      date: "Fall 2026",
+    },
+    {
+      id: "fafsa-2027",
+      type: "action",
+      title: "Fill out your FAFSA for next school year",
+      desc: "The FAFSA for 2027–28 opens in October 2026. Complete it early to maximize aid eligibility.",
+      link: "https://studentaid.gov/h/apply-for-aid/fafsa",
+      linkLabel: "Apply at studentaid.gov",
+      date: "Opens Oct 2026",
     },
   ];
 
@@ -1049,7 +1108,7 @@
       iso:"2027-03-20", plan:true },
     { mo:"APR",   dy:"19",   type:"event",    title:"White Coat Ceremony",
       range:"Apr 19–23, 2027",
-      details:["Week of April 19–23, 2027", "NURS 754A Intensive week", "April 23 probable — subject to change", "Exact date TBD", "📸 Please submit a photo of yourself to display as your name is called — use the General Info form in the Surveys section."],
+      details:["Week of April 19–23, 2027", "NURS 754A Intensive week", "April 23 probable — subject to change", "Exact date TBD", "📸 Please submit a photo of yourself to display as your name is called — <a href='https://docs.google.com/forms/d/e/1FAIpQLScA1hZWQd9KL2-JiJkhjbY1TWsAkkgLZEWKDthiKPuN1hVpRw/viewform?usp=publish-editor' target='_blank' rel='noopener' style='color:var(--gold);'>submit via the General Info form</a>."],
       iso:"2027-04-23", plan:true },
 
     // ── Summer 2027 ──
@@ -1091,10 +1150,10 @@
     {
       date:       "Aug 2026",
       tag:        "announce", tagLabel: "Merch Update",
-      title:      "Class gear is in motion — here’s where we stand",
-      body:       "Logos are finalized and have been submitted to Dr. Julien and Dr. Todd for approval. Once we get the green light, designs go straight to the vendor, who will confirm what they can work with and walk us through our options.<br><br>From there, we&#8217;ll share everything with the class so you can see what&#8217;s available before orders open. We&#8217;re currently planning to offer crew neck sweatshirts, t-shirts, vests, and pullovers &#8212; and potentially a hat or bag depending on what the vendor supports.<br><br>The goal is still to have everything in hand before Intensives Week in November. We&#8217;ll keep you posted every step of the way.",
+      title:      "Class gear is in motion",
+      body:       "Designs are approved &#8212; Dr. Julien and Dr. Todd have signed off, and we&#8217;re now sending everything to the vendor. They&#8217;ll confirm what they can work with and walk us through the final options from there.<br><br>We&#8217;ll share everything with the class so you can see what&#8217;s available before orders open. We&#8217;re currently planning to offer crew neck sweatshirts, t-shirts, vests, and pullovers &#8212; and potentially a hat or bag depending on what the vendor supports.<br><br>The goal is still to have everything in hand before Intensives Week in November. We&#8217;ll keep you posted every step of the way.",
       minutesUrl: null,
-      extraHtml:  `<div style="margin-top:24px;background:var(--ink);border-radius:10px;overflow:hidden;max-width:620px;"><div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08);"><div><div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:3px;">Sneak Peek</div><div style="font-size:13px;font-weight:600;color:white;letter-spacing:0.3px;">Class of 2028 &middot; Final Logo Designs</div></div><span style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(201,168,76,0.4);color:var(--gold);border-radius:20px;white-space:nowrap;">Pending Approval</span></div><div style="padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;"><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-mountain.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope-text.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-seal.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-lmu-block.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-dept.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div></div><div style="padding:12px 20px;border-top:1px solid rgba(255,255,255,0.06);"><div style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:400;">Crew necks &middot; T-shirts &middot; Vests &middot; Pullovers &middot; and more</div></div></div>`
+      extraHtml:  `<div style="margin-top:24px;background:var(--ink);border-radius:10px;overflow:hidden;max-width:620px;"><div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08);"><div><div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:3px;">Sneak Peek</div><div style="font-size:13px;font-weight:600;color:white;letter-spacing:0.3px;">Class of 2028 &middot; Final Logo Designs</div></div><span style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(201,168,76,0.4);color:var(--gold);border-radius:20px;white-space:nowrap;">Approved — Sending to Vendor</span></div><div style="padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;"><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-mountain.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope-text.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-seal.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-lmu-block.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-dept.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div></div><div style="padding:12px 20px;border-top:1px solid rgba(255,255,255,0.06);"><div style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:400;">Crew necks &middot; T-shirts &middot; Vests &middot; Pullovers &middot; and more</div></div></div>`
     },
   ];
 
@@ -1289,11 +1348,104 @@
   }
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      ['repModal','waModal'].forEach(id => document.getElementById(id)?.classList.remove('open'));
+      ['repModal','waModal','checklistModal'].forEach(id => document.getElementById(id)?.classList.remove('open'));
       closeLightbox();
       document.body.style.overflow = '';
     }
   });
+
+  // ── CHECKLIST MODAL ──────────────────────────────────────
+  const CL_KEY = 'lmu2028_cl_exported'; // localStorage key for exported item IDs
+
+  function openChecklist() {
+    const exported = JSON.parse(localStorage.getItem(CL_KEY) || '[]');
+    const today = new Date(); today.setHours(0,0,0,0);
+    const active = NOTICES.filter(n => !n.expires || new Date(n.expires+'T00:00:00') > today);
+    const newItems = active.filter(n => !exported.includes(n.id));
+
+    const badge = document.getElementById('checklistNewBadge');
+    if (newItems.length && exported.length) {
+      badge.style.display = 'block';
+      badge.textContent = `${newItems.length} new item${newItems.length > 1 ? 's' : ''} since your last save`;
+    } else {
+      badge.style.display = 'none';
+    }
+
+    document.getElementById('checklistItems').innerHTML = active.map(n => {
+      const isNew = !exported.includes(n.id);
+      return `<label style="display:flex;align-items:flex-start;gap:12px;padding:12px;border-radius:8px;cursor:pointer;background:${isNew ? 'rgba(201,168,76,0.05)' : 'transparent'};border:1px solid ${isNew ? 'rgba(201,168,76,0.2)' : 'var(--border-light)'};transition:background 0.15s;" onmouseover="this.style.background='rgba(201,168,76,0.08)'" onmouseout="this.style.background='${isNew ? 'rgba(201,168,76,0.05)' : 'transparent'}'">
+        <input type="checkbox" data-id="${n.id}" style="margin-top:3px;accent-color:var(--gold);flex-shrink:0;width:16px;height:16px;" ${exported.includes(n.id) ? 'checked' : ''}>
+        <div style="flex:1;">
+          <div style="font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.3;">${n.title}${n.date ? `<span style="font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted-dark);margin-left:8px;">${n.date}</span>` : ''}</div>
+          <div style="font-size:12px;color:var(--muted-dark);margin-top:3px;line-height:1.4;">${n.desc}</div>
+          ${n.link ? `<a href="${n.link}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="font-size:11px;font-weight:600;color:var(--gold);text-decoration:none;margin-top:4px;display:inline-block;">${n.linkLabel} →</a>` : ''}
+        </div>
+      </label>`;
+    }).join('');
+
+    document.getElementById('checklistModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeChecklist(e) {
+    if (!e || e.target === document.getElementById('checklistModal')) {
+      document.getElementById('checklistModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function _buildChecklistText(onlyNew) {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const exported = JSON.parse(localStorage.getItem(CL_KEY) || '[]');
+    const active = NOTICES.filter(n => !n.expires || new Date(n.expires+'T00:00:00') > today);
+    const items = onlyNew ? active.filter(n => !exported.includes(n.id)) : active;
+    if (!items.length) return null;
+    const lines = ['LMU Nurse Anesthesia — Class of 2028', "What's Coming Up", ''];
+    items.forEach(n => {
+      lines.push(`☐  ${n.title}${n.date ? '  ('+n.date+')' : ''}`);
+      lines.push(`     ${n.desc}`);
+      if (n.link) lines.push(`     ${n.link}`);
+      lines.push('');
+    });
+    // mark all active items as exported
+    const allIds = active.map(n => n.id);
+    const merged = [...new Set([...exported, ...allIds])];
+    localStorage.setItem(CL_KEY, JSON.stringify(merged));
+    return lines.join('\n');
+  }
+
+  async function shareChecklist() {
+    const exported = JSON.parse(localStorage.getItem(CL_KEY) || '[]');
+    const today = new Date(); today.setHours(0,0,0,0);
+    const active = NOTICES.filter(n => !n.expires || new Date(n.expires+'T00:00:00') > today);
+    const newItems = active.filter(n => !exported.includes(n.id));
+    const onlyNew = newItems.length > 0 && exported.length > 0;
+    const text = _buildChecklistText(onlyNew);
+    if (!text) {
+      document.getElementById('shareBtn').textContent = 'All caught up ✓';
+      setTimeout(() => { document.getElementById('shareBtn').textContent = 'Save to Notes'; }, 2000);
+      return;
+    }
+    if (navigator.share) {
+      try { await navigator.share({ title: "What's Coming Up — LMU 2028", text }); } catch(e) {}
+    } else {
+      await copyChecklist(text);
+    }
+    // refresh badge
+    document.getElementById('checklistNewBadge').style.display = 'none';
+  }
+
+  async function copyChecklist(prebuiltText) {
+    const text = prebuiltText || _buildChecklistText(false);
+    if (!text) return;
+    try {
+      await navigator.clipboard.writeText(text);
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = 'Copied ✓';
+      setTimeout(() => { btn.textContent = 'Copy Text'; }, 2000);
+    } catch(e) {}
+  }
+  // ── END CHECKLIST ─────────────────────────────────────────
 
   function openWAModal() {
     document.getElementById('waModal').classList.add('open');
@@ -1307,7 +1459,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    renderNotices(); renderUpdates(); renderDates(); renderSurveys(); renderStats(); applyConfig();
+    renderUpdates(); renderDates(); renderSurveys(); renderStats(); applyConfig();
   });
 
   // ── Date popup (mobile) ──
@@ -1346,6 +1498,23 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
 
+<!-- CHECKLIST MODAL -->
+<div class="modal-overlay" id="checklistModal" onclick="closeChecklist(event)">
+  <div class="modal-card" style="max-width:420px;width:92%;" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeChecklist()">&times;</button>
+    <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Class of 2028</div>
+    <div class="modal-name" style="margin-bottom:4px;">What's Coming Up</div>
+    <p style="font-size:12.5px;color:var(--muted-dark);margin-bottom:20px;line-height:1.5;">Tap items to check them off. Use <strong>Save to Notes</strong> to capture your list — only new items will be added if you save again later.</p>
+    <div id="checklistItems" style="display:flex;flex-direction:column;gap:4px;margin-bottom:24px;"></div>
+    <div id="checklistNewBadge" style="display:none;font-size:11px;color:#065f46;background:#d1fae5;border-radius:6px;padding:6px 12px;margin-bottom:14px;font-weight:600;"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button onclick="shareChecklist()" class="btn btn-gold" style="flex:1;min-width:120px;" id="shareBtn">Save to Notes</button>
+      <button onclick="copyChecklist()" class="btn" style="flex:1;min-width:100px;background:var(--off-white);color:var(--ink);border:1px solid var(--border-light);" id="copyBtn">Copy Text</button>
+    </div>
+    <p style="font-size:11px;color:var(--muted-dark);margin-top:12px;margin-bottom:0;line-height:1.5;">Items already saved won't be duplicated if you save again after new ones are added.</p>
+  </div>
+</div>
+
 <!-- WHATSAPP MODAL -->
 <div class="modal-overlay" id="waModal" onclick="closeWAModal(event)">
   <div class="modal-card" style="max-width:360px;" onclick="event.stopPropagation()">
@@ -1353,11 +1522,11 @@
     <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Group Chats</div>
     <div class="modal-name" style="margin-bottom:4px;">Class WhatsApp</div>
     <p style="font-size:13px;color:var(--muted-dark);margin-bottom:20px;line-height:1.5;">Join the group chats for your courses below.</p>
-    <div style="display:flex;flex-direction:column;gap:10px;">
+    <div style="display:flex;flex-direction:column;gap:8px;">
       <a href="https://chat.whatsapp.com/FhJUVJoyGUN3IIX5rCJ50Y?mode=gi_t" target="_blank" rel="noopener" class="btn btn-gold" style="text-align:center;">General Cohort Chat</a>
-      <a href="https://chat.whatsapp.com/EIqEasKWowJC4PqiQeGgKm?s=cl&p=i&ilr=4" target="_blank" rel="noopener" class="btn btn-ghost">NURS 701 — A&amp;P</a>
-      <a href="https://chat.whatsapp.com/IKgqfoAvsfJGCZeLhWmVOl?s=sh&p=i&mlu=4" target="_blank" rel="noopener" class="btn btn-ghost">NURS 733 — Pharm II</a>
-      <a href="https://chat.whatsapp.com/GsLro1c4oUJ1jImrOdPgvi?s=sh&p=i&mlu=4&amv=2" target="_blank" rel="noopener" class="btn btn-ghost">NURS 753 — P&amp;P I</a>
+      <a href="https://chat.whatsapp.com/EIqEasKWowJC4PqiQeGgKm?s=cl&p=i&ilr=4" target="_blank" rel="noopener" class="btn" style="background:var(--off-white);color:var(--ink);border:1px solid var(--border-light);text-align:center;">NURS 701 — A&amp;P</a>
+      <a href="https://chat.whatsapp.com/IKgqfoAvsfJGCZeLhWmVOl?s=sh&p=i&mlu=4" target="_blank" rel="noopener" class="btn" style="background:var(--off-white);color:var(--ink);border:1px solid var(--border-light);text-align:center;">NURS 733 — Pharm II</a>
+      <a href="https://chat.whatsapp.com/GsLro1c4oUJ1jImrOdPgvi?s=sh&p=i&mlu=4&amv=2" target="_blank" rel="noopener" class="btn" style="background:var(--off-white);color:var(--ink);border:1px solid var(--border-light);text-align:center;">NURS 753 — P&amp;P I</a>
     </div>
   </div>
 </div>
