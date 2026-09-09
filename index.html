@@ -268,14 +268,14 @@
     /* ── RESOURCES ── */
     .resource-category { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); padding-bottom: 14px; border-bottom: 1px solid var(--gold-line); margin-bottom: 20px; margin-top: 44px; }
     .resource-category:first-of-type { margin-top: 0; }
-    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--border-light); border: 1px solid var(--border-light); }
-    .resource-card { background: white; padding: 24px; text-decoration: none; color: var(--ink); display: flex; flex-direction: column; transition: background 0.15s; }
-    .resource-card:hover { background: var(--off-white); }
-    .rc-cat { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-    .rc-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; color: var(--ink); }
-    .rc-desc { font-size: 13px; color: var(--muted-dark); line-height: 1.6; font-weight: 300; flex: 1; }
-    .rc-cta { font-size: 11.5px; font-weight: 600; color: var(--ink); margin-top: 16px; letter-spacing: 0.3px; border-top: 1px solid var(--border-light); padding-top: 12px; }
-    .rc-placeholder { background: var(--off-white); opacity: 0.6; }
+    .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+    .resource-card { background: var(--ink); padding: 24px; text-decoration: none; color: white; display: flex; flex-direction: column; transition: background 0.15s; border-radius: var(--radius); }
+    .resource-card:hover { background: var(--ink-mid); }
+    .rc-cat { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .rc-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: white; font-family: var(--serif); }
+    .rc-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6; font-weight: 300; flex: 1; }
+    .rc-cta { font-size: 12px; font-weight: 600; color: var(--gold); margin-top: 16px; letter-spacing: 0.3px; }
+    .rc-placeholder { background: var(--ink-mid); opacity: 0.6; }
 
     /* ── CLINICAL ── */
     .site-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: var(--border-light); border: 1px solid var(--border-light); }
@@ -619,71 +619,71 @@
       <a href="./zoom.html" class="resource-card">
         <div class="rc-cat">Virtual Classroom</div>
         <div class="rc-title">Zoom Links</div>
-        <div class="rc-desc">All active Zoom links in one place — lectures, Grand Rounds, study sessions, and office hours.</div>
+        <div class="rc-desc">Lectures, Grand Rounds, study sessions, and office hours.</div>
         <div class="rc-cta">View Zoom links →</div>
       </a>
       <div class="resource-card" onclick="openWAModal()" style="cursor:pointer;">
         <div class="rc-cat">Group Chats</div>
         <div class="rc-title">WhatsApp</div>
-        <div class="rc-desc">Class group chats by course — join the ones relevant to you.</div>
+        <div class="rc-desc">Course group chats — join the ones relevant to you.</div>
         <div class="rc-cta">View group chats →</div>
       </div>
       <a href="https://studentlmunet.sharepoint.com/sites/NAPCohort2028/SitePages/CollabHome.aspx" target="_blank" class="resource-card">
         <div class="rc-cat">SharePoint</div>
         <div class="rc-title">2028 Cohort — SharePoint</div>
-        <div class="rc-desc">The official LMU SharePoint site for our cohort — program resources, announcements, and collaboration tools.</div>
+        <div class="rc-desc">Cohort hub for program resources and collaboration.</div>
         <div class="rc-cta">Open SharePoint →</div>
       </a>
       <a href="https://drive.google.com/drive/folders/13E9EZUimdubnOoQ00_DSDZCDz_2G3JpP?usp=drive_link" target="_blank" class="resource-card">
         <div class="rc-cat">Shared Drive</div>
         <div class="rc-title">Class Google Drive</div>
-        <div class="rc-desc">Our shared class folder — resources, helpful videos, notes, and anything worth saving in one place.</div>
+        <div class="rc-desc">Shared class folder — notes, resources, and more.</div>
         <div class="rc-cta">Open class drive</div>
       </a>
       <a href="https://photos.app.goo.gl/QSbX67EXYgDheJDj6" target="_blank" class="resource-card">
         <div class="rc-cat">Photo Album</div>
         <div class="rc-title">Photo Album</div>
-        <div class="rc-desc">Add your photos, share moments, and keep the memories in one place. Open to the whole class.</div>
+        <div class="rc-desc">Shared album, open to the whole class.</div>
         <div class="rc-cta">Add your photos →</div>
       </a>
       <a href="https://lmunet.instructure.com" target="_blank" class="resource-card">
         <div class="rc-cat">Learning Management</div>
         <div class="rc-title">Canvas</div>
-        <div class="rc-desc">LMU's course management platform — assignments, grades, course materials, and announcements from your instructors.</div>
+        <div class="rc-desc">Assignments, grades, and course materials.</div>
         <div class="rc-cta">Open Canvas →</div>
       </a>
     </div>
 
     <div class="resource-category">DNP Program</div>
     <div class="resources-grid">
-      <a href="./program.html" class="resource-card" style="border-color: var(--gold-line); background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, #fff 60%);">
-        <div class="rc-cat" style="color: var(--gold);">Program</div>
+      <a href="./program.html" class="resource-card">
+        <div class="rc-cat">Program</div>
         <div class="rc-title">Curriculum Overview</div>
-        <div class="rc-desc">All 9 semesters mapped out — course codes, names, credit hours, and delivery format for the Class of 2028 curriculum plan.</div>
+        <div class="rc-desc">All 9 semesters mapped out for the Class of 2028.</div>
         <div class="rc-cta">View program map →</div>
       </a>
       <a href="./calendar.html" class="resource-card">
         <div class="rc-cat">Class of 2028</div>
         <div class="rc-title">Cohort Calendar</div>
-        <div class="rc-desc">Your program calendar — intensives, breaks, holidays, and key dates specific to the Class of 2028.</div>
+        <div class="rc-desc">Intensives, breaks, and key dates for the Class of 2028.</div>
         <div class="rc-cta">View cohort calendar</div>
       </a>
       <a href="https://lmunet.edu" target="_blank" class="resource-card">
         <div class="rc-cat">University</div>
         <div class="rc-title">LMU Student Portal</div>
-        <div class="rc-desc">Lincoln Memorial University's main student portal — academic resources, email, registration, and university services.</div>
+        <div class="rc-desc">Academic resources, email, and registration.</div>
         <div class="rc-cta">Visit lmunet.edu</div>
       </a>
       <a href="https://www.lmunet.edu/caylor-school-of-nursing/doctor-of-nursing-practice/dnp-nurse-anesthesia/dnp-nursing-anesthesia.php" target="_blank" class="resource-card">
         <div class="rc-cat">Program</div>
         <div class="rc-title">LMU Nurse Anesthesia</div>
-        <div class="rc-desc">Official DNP Nurse Anesthesia program page — curriculum information and contact information for program leadership.</div>
+        <div class="rc-desc">Official program page — curriculum and faculty contacts.</div>
         <div class="rc-cta">View program page</div>
       </a>
       <a href="https://studentlmunet.sharepoint.com/sites/NAPCohort2028" target="_blank" class="resource-card">
         <div class="rc-cat">Handbook</div>
         <div class="rc-title">Student Handbook</div>
-        <div class="rc-desc">Program policies, expectations, academic standards, and essential information for DNP Nurse Anesthesia students.</div>
+        <div class="rc-desc">Program policies and academic standards.</div>
         <div class="rc-cta">View handbook</div>
       </a>
     </div>
@@ -695,7 +695,7 @@
          onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
         <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">SharePoint</div>
         <div style="font-size:16px;font-weight:700;color:white;margin-bottom:8px;font-family:var(--serif);">Clinical Rotations</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Site guides, placement information, and program resources for your clinical experience.</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Site guides, placements, and clinical program resources.</div>
         <div style="margin-top:16px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.3px;">Open SharePoint →</div>
       </a>
       <a href="https://www.typhongroup.net/nast/data/login.asp?facility=7072&expired=y" target="_blank" rel="noopener"
@@ -703,7 +703,7 @@
          onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
         <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Clinical Tracking</div>
         <div style="font-size:16px;font-weight:700;color:white;margin-bottom:8px;font-family:var(--serif);">Typhon Group</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Log and track your clinical hours, cases, and experiences throughout the program.</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Log clinical hours, cases, and experiences.</div>
         <div style="margin-top:16px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.3px;">Open Typhon →</div>
       </a>
     </div>
@@ -734,7 +734,7 @@
       <a href="https://forms.gle/dfBYGrPvD2Z3tMiMA" target="_blank" class="resource-card">
         <div class="rc-cat">Contribute</div>
         <div class="rc-title">Submit a Recommendation</div>
-        <div class="rc-desc">Got a book, podcast, or article worth adding? Submit it and we'll review it for the list.</div>
+        <div class="rc-desc">Have something worth adding? Submit it and we'll review it.</div>
         <div class="rc-cta">Submit a suggestion</div>
       </a>
     </div>
@@ -744,19 +744,19 @@
       <a href="https://library.lmunet.edu/library" target="_blank" class="resource-card">
         <div class="rc-cat">Library</div>
         <div class="rc-title">LMU Library</div>
-        <div class="rc-desc">LMU's digital library — databases, journals, research tools, and resources available to online students.</div>
+        <div class="rc-desc">Databases, journals, and research tools.</div>
         <div class="rc-cta">Visit library.lmunet.edu</div>
       </a>
       <a href="https://www.lmunet.edu/student-life/book-bundle-program.php" target="_blank" class="resource-card">
         <div class="rc-cat">Program</div>
         <div class="rc-title">LMU Book Bundle</div>
-        <div class="rc-desc">LMU's course material subscription program. Review opt-out deadlines and return windows each semester — check your email for term-specific dates.</div>
+        <div class="rc-desc">Course material subscription — check opt-out deadlines each semester.</div>
         <div class="rc-cta">View book bundle info</div>
       </a>
       <a href="https://www.lmunet.edu/academics/academic-calendar.php" target="_blank" class="resource-card" id="calendarCard">
         <div class="rc-cat">Academic</div>
         <div class="rc-title">LMU Academic Calendar</div>
-        <div class="rc-desc">LMU's official academic calendar — university dates, semester breaks, registration deadlines, and key academic milestones.</div>
+        <div class="rc-desc">University dates, breaks, and registration deadlines.</div>
         <div class="rc-cta">View LMU calendar</div>
       </a>
     </div>
