@@ -398,7 +398,16 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      body { overflow-x: clip; max-width: 100%; }
+      body { overflow-x: clip; max-width: 100vw; }
+      .section-inner, .hero-inner, .notices-inner { max-width: 100%; }
+      .resources-grid { grid-template-columns: 1fr; }
+      .clinical-grid { grid-template-columns: 1fr !important; }
+      .update-item, [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+      .cs-banner { justify-content: center; text-align: center; }
+      .cs-line { display: none; }
+      .merch-header-row { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; }
+      .form-placeholder { padding: 40px 20px; text-align: center; }
+      .form-placeholder .btn { display: block; text-align: center; }
       nav, .hero, .reps-section, .section { padding-left: 24px; padding-right: 24px; }
       nav > ul { display: none; }
       .hero { padding-top: 72px; padding-bottom: 64px; }
@@ -634,6 +643,26 @@
       </a>
     </div>
 
+    <div class="resource-category">Clinical Resources</div>
+    <div class="clinical-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px;">
+      <a href="https://studentlmunet.sharepoint.com/sites/NurseAnesthesiaClinicalInformation/SitePages/CollabHome.aspx" target="_blank" rel="noopener"
+         style="display:flex;flex-direction:column;padding:24px;background:var(--ink);text-decoration:none;border-radius:var(--radius);transition:background 0.15s;"
+         onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
+        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">SharePoint</div>
+        <div style="font-size:16px;font-weight:700;color:white;margin-bottom:8px;font-family:var(--serif);">Clinical Rotations</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Site guides, placement information, and program resources for your clinical experience.</div>
+        <div style="margin-top:16px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.3px;">Open SharePoint →</div>
+      </a>
+      <a href="https://www.typhongroup.net/nast/data/login.asp?facility=7072&expired=y" target="_blank" rel="noopener"
+         style="display:flex;flex-direction:column;padding:24px;background:var(--ink);text-decoration:none;border-radius:var(--radius);transition:background 0.15s;"
+         onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
+        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Clinical Tracking</div>
+        <div style="font-size:16px;font-weight:700;color:white;margin-bottom:8px;font-family:var(--serif);">Typhon Group</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Log and track your clinical hours, cases, and experiences throughout the program.</div>
+        <div style="margin-top:16px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.3px;">Open Typhon →</div>
+      </a>
+    </div>
+
     <div class="resource-category">Readings &amp; Recommendations</div>
     <div class="resources-grid">
       <div class="resource-card" style="display:flex;flex-direction:column;">
@@ -691,36 +720,8 @@
 </section>
 
 <!-- CLINICAL -->
-<section class="section s-white" id="clinical">
-  <div class="section-inner">
-    <div class="section-header">
-      <div class="section-kicker">Rotations</div>
-      <div class="section-h">Clinical Resources</div>
-      <p class="section-sub">Placement info, site guides, and your clinical tracking system.</p>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <a href="https://studentlmunet.sharepoint.com/sites/NurseAnesthesiaClinicalInformation/SitePages/CollabHome.aspx" target="_blank" rel="noopener"
-         style="display:flex;flex-direction:column;padding:28px;background:var(--ink);text-decoration:none;border-radius:var(--radius);transition:background 0.15s;"
-         onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
-        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">SharePoint</div>
-        <div style="font-size:16px;font-weight:700;color:white;margin-bottom:8px;font-family:var(--serif);">Clinical Rotations</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Site guides, placement information, and program resources for your clinical experience.</div>
-        <div style="margin-top:20px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.3px;">Open SharePoint →</div>
-      </a>
-      <a href="https://www.typhongroup.net/nast/data/login.asp?facility=7072&expired=y" target="_blank" rel="noopener"
-         style="display:flex;flex-direction:column;padding:28px;background:var(--ink);text-decoration:none;border-radius:var(--radius);transition:background 0.15s;"
-         onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
-        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Clinical Tracking</div>
-        <div style="font-size:16px;font-weight:700;color:white;margin-bottom:8px;font-family:var(--serif);">Typhon Group</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Log and track your clinical hours, cases, and experiences throughout the program.</div>
-        <div style="margin-top:20px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.3px;">Open Typhon →</div>
-      </a>
-    </div>
-  </div>
-</section>
-
 <!-- SURVEYS -->
-<section class="section s-off" id="surveys">
+<section class="section s-white" id="surveys">
   <div class="section-inner">
     <div class="section-header">
       <div class="section-kicker">Your Voice</div>
@@ -732,7 +733,7 @@
 </section>
 
 <!-- BOARD -->
-<section class="section s-white" id="board">
+<section class="section s-off" id="board">
   <div class="section-inner">
     <div class="section-header">
       <div class="section-kicker">Transparency</div>
@@ -762,7 +763,7 @@
 </section>
 
 <!-- MERCH -->
-<section class="section s-off" id="merch">
+<section class="section s-white" id="merch">
   <div class="section-inner">
     <div class="section-header">
       <div class="section-kicker">Class of 2028</div>
@@ -775,12 +776,12 @@
       <span class="cs-note">Designs in progress — ordering opens soon.</span>
     </div>
     <div style="margin-top:8px;background:var(--ink);border-radius:10px;overflow:hidden;">
-      <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08);">
+      <div class="merch-header-row" style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid rgba(255,255,255,0.08);">
         <div>
           <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:3px;">Sneak Peek</div>
           <div style="font-size:13px;font-weight:600;color:white;letter-spacing:0.3px;">Class of 2028 · Final Logo Designs</div>
         </div>
-        <span style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(201,168,76,0.4);color:var(--gold);border-radius:20px;white-space:nowrap;">Approved — Sending to Vendor</span>
+        <span style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(201,168,76,0.4);color:var(--gold);border-radius:20px;flex-shrink:0;">Approved — Sending to Vendor</span>
       </div>
       <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
         <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
@@ -798,7 +799,7 @@
 </section>
 
 <!-- SUBMIT -->
-<section class="section s-white" id="submit">
+<section class="section s-off" id="submit">
   <div class="section-inner">
     <div class="section-header">
       <div class="section-kicker">Get in Touch</div>
@@ -817,7 +818,7 @@
 </section>
 
 <!-- MORE RESOURCES -->
-<section class="section s-off" id="more-resources">
+<section class="section s-white" id="more-resources">
   <div class="section-inner">
     <div class="resource-category">Professional Organizations</div>
     <div class="resources-grid">
