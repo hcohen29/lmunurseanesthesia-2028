@@ -379,6 +379,9 @@
     /* ── TRIAGE GRID (mobile only) ── */
     .mobile-triage { display: none; }
 
+    /* ── MOBILE DASHBOARD ── */
+    .mobile-dashboard { display: none; }
+
     /* ── SUBMIT ── */
     .form-shell { border: 1px solid var(--border-light); background: white; }
     .form-placeholder { padding: 64px 40px; text-align: center; }
@@ -424,17 +427,36 @@
       .triage-btn:active { background: var(--off-white); }
       .tb-icon { width: 44px; height: 44px; background: var(--ink); color: var(--gold); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; letter-spacing: 0.5px; font-family: var(--sans); }
       .tb-label { font-size: 10.5px; font-weight: 600; color: var(--ink); text-align: center; line-height: 1.2; font-family: var(--sans); }
+      /* ── Mobile dashboard: replace sections with tiles ── */
+      .mobile-dashboard { display: block; padding: 0 0 56px; }
+      .hero { display: none !important; }
+      section.section { display: none !important; }
+      .notices-bar { display: none !important; }
+      .mob-label { font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin: 28px 0 12px; }
+      .mob-label:first-child { margin-top: 8px; }
+      .mob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .mob-grid-hop .mob-tile:nth-child(3n) { grid-column: span 2; }
+      .mob-tile { background: var(--ink); color: white; border-radius: 14px; padding: 20px 16px; min-height: 96px; font-size: 15px; font-weight: 600; font-family: var(--serif); text-decoration: none; display: flex; align-items: flex-end; cursor: pointer; -webkit-tap-highlight-color: transparent; line-height: 1.25; border: none; }
+      .mob-tile:active { background: var(--ink-mid); }
+      .mob-full { grid-column: span 2 !important; }
+      .mob-tile-gold { background: var(--gold) !important; color: var(--ink) !important; font-weight: 700; }
+      .mob-tile-gold:active { background: #b8962e !important; }
+
       /* Mobile resource cards — dark hopscotch bento grid */
-      .resources-grid { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 10px !important; background: none !important; border: none !important; }
+      /* 6-column base; pattern repeats every 7 cards: 2-col, full, 3-col, full */
+      .resources-grid { display: grid !important; grid-template-columns: repeat(6, 1fr) !important; gap: 10px !important; background: none !important; border: none !important; }
       .resource-category { display: block !important; }
-      .resource-card { background: var(--ink) !important; color: white !important; border-radius: 14px !important; padding: 18px 16px !important; min-height: 110px !important; }
-      /* Every 3rd card goes full-width — hopscotch pattern */
-      .resources-grid .resource-card:nth-child(3n) { grid-column: span 2 !important; }
+      .resource-card { background: var(--ink) !important; color: white !important; border-radius: 14px !important; padding: 18px 16px !important; min-height: 110px !important; grid-column: span 3 !important; } /* default: 2-col */
+      .resources-grid .resource-card:nth-child(7n+3) { grid-column: span 6 !important; } /* full width */
+      .resources-grid .resource-card:nth-child(7n+4),
+      .resources-grid .resource-card:nth-child(7n+5),
+      .resources-grid .resource-card:nth-child(7n+6) { grid-column: span 2 !important; } /* 3-col */
+      .resources-grid .resource-card:nth-child(7n) { grid-column: span 6 !important; } /* full width */
       .resource-card:active { background: var(--ink-mid) !important; }
       .rc-title { color: white !important; font-family: var(--serif) !important; font-size: 15px !important; margin-bottom: 6px !important; }
       .rc-desc { color: rgba(255,255,255,0.4) !important; font-size: 12px !important; }
       .rc-cta { color: var(--gold) !important; border-top: 1px solid rgba(255,255,255,0.08) !important; margin-top: 12px !important; padding-top: 10px !important; font-size: 11px !important; }
-      /* Clinical dark grid: same 2-col treatment */
+      /* Clinical dark grid: side by side */
       .clinical-grid { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
       /* Hide the mobile triage grid */
       .mobile-triage { display: none !important; }
@@ -567,6 +589,35 @@
     <div class="notices-label">On Your Radar</div>
     <div class="notices-grid" id="noticesGrid"></div>
   </div>
+</div>
+
+<!-- MOBILE DASHBOARD (replaces all sections on mobile) -->
+<div class="mobile-dashboard" style="padding-left:24px;padding-right:24px;">
+
+  <div class="mob-label">Pages</div>
+  <div class="mob-grid">
+    <a href="./announcements.html" class="mob-tile">Updates</a>
+    <a href="./calendar.html" class="mob-tile">Upcoming Dates</a>
+    <a href="./program.html" class="mob-tile">Curriculum</a>
+    <div class="mob-tile" onclick="openChecklist()">What's Coming Up</div>
+  </div>
+
+  <div class="mob-label">Resources</div>
+  <div class="mob-grid mob-grid-hop">
+    <a href="./zoom.html" class="mob-tile">Zoom</a>
+    <div class="mob-tile" onclick="openWAModal()">WhatsApp</div>
+    <a href="https://studentlmunet.sharepoint.com/sites/NAPCohort2028/SitePages/CollabHome.aspx" target="_blank" class="mob-tile">2028 SharePoint</a>
+    <a href="https://drive.google.com/drive/folders/13E9EZUimdubnOoQ00_DSDZCDz_2G3JpP?usp=drive_link" target="_blank" class="mob-tile">Google Drive</a>
+    <a href="https://photos.app.goo.gl/QSbX67EXYgDheJDj6" target="_blank" class="mob-tile">Photo Album</a>
+    <a href="https://lmunet.instructure.com" target="_blank" class="mob-tile">Canvas</a>
+  </div>
+
+  <div class="mob-label">More</div>
+  <div class="mob-grid">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScA1hZWQd9KL2-JiJkhjbY1TWsAkkgLZEWKDthiKPuN1hVpRw/viewform?usp=publish-editor" target="_blank" class="mob-tile mob-full">General Info Survey</a>
+    <a href="https://forms.gle/uVoJf9nrqquicTKb7" target="_blank" class="mob-tile mob-full mob-tile-gold">Submit an Idea or Concern</a>
+  </div>
+
 </div>
 
 <!-- UPDATES -->
