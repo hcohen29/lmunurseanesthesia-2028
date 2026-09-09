@@ -461,7 +461,7 @@
         <a href="#updates"   class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Weekly Updates</div><div class="dd-sub">Rep log &amp; announcements</div></div></a>
         <a href="#dates"     class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Upcoming Dates</div><div class="dd-sub">Events, deadlines &amp; key dates</div></div></a>
         <a href="#resources" class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Resources</div><div class="dd-sub">Professional orgs, study tools &amp; more</div></div></a>
-        <a href="#clinical"  class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Clinical Site Guide</div><div class="dd-sub">Local tips for each rotation site</div></div></a>
+        <a href="#clinical"  class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Clinical Resources</div><div class="dd-sub">Local tips for each rotation site</div></div></a>
         <a href="#surveys"   class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Surveys</div><div class="dd-sub">Have your say</div></div></a>
         <a href="#board"     class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Ideas &amp; Concerns Board</div><div class="dd-sub">Track what we're working on</div></div></a>
         <a href="#submit"    class="dd-item" onclick="closeDropdown()"><span class="dd-dot"></span><div><div>Submit an Idea or Concern</div><div class="dd-sub">Anonymous submissions welcome</div></div></a>
@@ -583,12 +583,6 @@
         <div class="rc-cat">SharePoint</div>
         <div class="rc-title">NAP Cohort 2028 — SharePoint</div>
         <div class="rc-desc">The official LMU SharePoint site for our cohort — program resources, announcements, and collaboration tools.</div>
-        <div class="rc-cta">Open SharePoint →</div>
-      </a>
-      <a href="https://studentlmunet.sharepoint.com/sites/NurseAnesthesiaClinicalInformation/SitePages/CollabHome.aspx" target="_blank" class="resource-card">
-        <div class="rc-cat">SharePoint</div>
-        <div class="rc-title">Clinical Rotations — SharePoint</div>
-        <div class="rc-desc">LMU's clinical rotation SharePoint — site guides, placement information, and resources for your clinical experience.</div>
         <div class="rc-cta">Open SharePoint →</div>
       </a>
       <a href="https://lmu.zoom.us/j/86301644455?pwd=eLnWZGqvNfLj744jembAshgtEOpxoV.1" target="_blank" class="resource-card">
@@ -746,38 +740,26 @@
   <div class="section-inner">
     <div class="section-header">
       <div class="section-kicker">Rotations</div>
-      <div class="section-h">Clinical Site Guide</div>
+      <div class="section-h">Clinical Resources</div>
       <p class="section-sub">Crowd-sourced tips from classmates who've been there — housing, food, parking, and what to expect. Grows over time.</p>
     </div>
-    <!-- SHAREPOINT LINK — swap the href below once you have the URL -->
-    <a href="https://studentlmunet.sharepoint.com/sites/NurseAnesthesiaClinicalInformation/SitePages/CollabHome.aspx" target="_blank" rel="noopener" id="sharepointLink"
-       style="display:flex;align-items:center;gap:16px;background:var(--ink);color:white;padding:20px 24px;text-decoration:none;margin-bottom:28px;border-radius:var(--radius);transition:background 0.15s;"
-       onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
-      <div style="width:40px;height:40px;background:rgba(201,168,76,0.15);border:1px solid var(--gold-line);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;">📁</div>
-      <div style="flex:1;">
-        <div style="font-size:13px;font-weight:700;color:white;margin-bottom:3px;">Nurse Anesthesia Clinical Information</div>
-        <div style="font-size:12px;color:var(--muted);font-weight:300;">Official LMU clinical information site — rotation resources, protocols, and program guidance.</div>
-      </div>
-      <div style="font-size:11px;font-weight:600;color:var(--gold);white-space:nowrap;">Open →</div>
-    </a>
-    <div class="cs-banner">
-      <span class="cs-pill">Coming Soon</span>
-      <span class="cs-line"></span>
-      <span class="cs-note">We're gathering site info before clinical rotations begin. Cards below show the format.</span>
-    </div>
-    <div class="site-grid">
-      <div class="site-card" style="opacity:0.45;pointer-events:none;">
-        <div class="site-head">
-          <div class="site-name">Example Site</div>
-          <div class="site-loc">City, State</div>
-        </div>
-        <div class="site-body">
-          <div class="site-tip"><span class="tip-label">Housing</span><span>Hotel or Airbnb recommendations — avg. nightly rate, distance from site.</span></div>
-          <div class="site-tip"><span class="tip-label">Food</span><span>Local restaurant recommendations near the site.</span></div>
-          <div class="site-tip"><span class="tip-label">Parking</span><span>Where to park, cost, and any site-specific notes.</span></div>
-          <div class="site-tip"><span class="tip-label">Tips</span><span>What to know before your first day — dress code, culture, who to contact.</span></div>
-        </div>
-      </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;">
+      <a href="https://studentlmunet.sharepoint.com/sites/NurseAnesthesiaClinicalInformation/SitePages/CollabHome.aspx" target="_blank" rel="noopener"
+         style="display:flex;flex-direction:column;padding:28px;background:var(--ink);text-decoration:none;border-radius:var(--radius);transition:background 0.15s;"
+         onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
+        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">SharePoint</div>
+        <div style="font-size:16px;font-weight:700;color:white;margin-bottom:8px;font-family:var(--serif);">Clinical Rotations</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Site guides, placement information, and program resources for your clinical experience.</div>
+        <div style="margin-top:20px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.3px;">Open SharePoint →</div>
+      </a>
+      <a href="https://www.typhongroup.net/nast/data/login.asp?facility=7072&expired=y" target="_blank" rel="noopener"
+         style="display:flex;flex-direction:column;padding:28px;background:var(--ink);text-decoration:none;border-radius:var(--radius);transition:background 0.15s;"
+         onmouseover="this.style.background='var(--ink-mid)'" onmouseout="this.style.background='var(--ink)'">
+        <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Clinical Tracking</div>
+        <div style="font-size:16px;font-weight:700;color:white;margin-bottom:8px;font-family:var(--serif);">Typhon Group</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:300;flex:1;">Log and track your clinical hours, cases, and experiences throughout the program.</div>
+        <div style="margin-top:20px;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.3px;">Open Typhon →</div>
+      </a>
     </div>
   </div>
 </section>
@@ -856,11 +838,25 @@
       <span class="cs-line"></span>
       <span class="cs-note">Designs in progress — ordering opens soon.</span>
     </div>
-    <div class="merch-placeholder">
-      <div class="merch-rule"></div>
-      <div class="merch-title">Designs in the Works</div>
-      <div class="merch-sub">We are working on something you will actually want to wear. Class of 2028 sweatshirts and tees are coming — we will announce here and via email when ordering opens.</div>
-      <a href="#submit" class="btn btn-dark">Have a design idea? Submit it.</a>
+    <div style="margin-top:8px;background:var(--ink);border-radius:10px;overflow:hidden;">
+      <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08);">
+        <div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:3px;">Sneak Peek</div>
+          <div style="font-size:13px;font-weight:600;color:white;letter-spacing:0.3px;">Class of 2028 · Final Logo Designs</div>
+        </div>
+        <span style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(201,168,76,0.4);color:var(--gold);border-radius:20px;white-space:nowrap;">Pending Approval</span>
+      </div>
+      <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+        <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
+        <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-mountain.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
+        <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope-text.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
+        <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-seal.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
+        <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-lmu-block.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
+        <div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-dept.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div>
+      </div>
+      <div style="padding:12px 20px;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:400;">Crew necks · T-shirts · Vests · Pullovers · and more</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1068,18 +1064,11 @@
   // ═══════════════════════════════════════════════════════
   const SURVEYS = [
     {
-      title: "Semester 2 Pulse Check",
-      desc:  "How are you feeling about the program so far? This survey helps us understand where the class stands and what to bring to leadership.",
-      url:   "https://forms.gle/tdLSRQGvEu6yreqc9",
+      title: "General Info",
+      desc:  "Share your general information with your class reps.",
+      url:   "https://docs.google.com/forms/d/e/1FAIpQLScA1hZWQd9KL2-JiJkhjbY1TWsAkkgLZEWKDthiKPuN1hVpRw/viewform?usp=publish-editor",
       open:  true,
-      date:  "Summer 2026"
-    },
-    {
-      title: "Post Intensive Vibe Check",
-      desc:  "A moment-in-time capture of how the class is feeling after intensives.",
-      url:   "https://docs.google.com/forms/d/e/1FAIpQLSffW_MxSpmcqzJesnFKycjsFCZnx9vQ8jkYJYx7hO4zGHurUg/viewform?usp=header",
-      open:  true,
-      date:  "July 2026"
+      date:  "Fall 2026"
     },
   ];
 
