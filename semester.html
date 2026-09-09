@@ -156,6 +156,19 @@
       .sem-btn { font-size: 12px; padding: 8px 14px; }
       .week-strip { overflow-x: auto; min-width: 0; }
       footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 20px; }
+
+      /* Compact schedule rows on mobile */
+      .sched-row { padding: 10px 14px; gap: 10px; }
+      .sched-color { width: 3px; height: 28px; }
+      .sched-name { font-size: 12.5px; }
+      .sched-code { font-size: 10px; }
+      .sched-time { font-size: 11px; }
+      .join-btn { font-size: 10.5px; padding: 5px 10px; }
+      .sched-day-head { padding: 7px 14px; }
+      .sched-async { padding: 10px 14px; font-size: 12px; }
+      .week-day-head { padding: 7px 8px; font-size: 8.5px; }
+      .week-pill { padding: 4px 6px; font-size: 9.5px; }
+      .week-pill-time { font-size: 8.5px; }
     }
   </style>
 </head>
@@ -218,7 +231,7 @@
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-kicker">Lincoln Memorial University &nbsp;·&nbsp; DNP Nurse Anesthesia</div>
-    <h1>Semester <span id="heroSemLabel">View</span></h1>
+    <h1><span id="heroSemLabel">Weekly Schedule</span></h1>
     <div class="sem-selector" id="semSelector"></div>
   </div>
 </section>
