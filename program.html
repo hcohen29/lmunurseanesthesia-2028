@@ -297,6 +297,16 @@
       nav > ul { display: none; }
       .progress-strip { overflow-x: auto; }
       .prog-label { display: none; }
+      /* Faculty section: clear visual break from curriculum on mobile */
+      #faculty {
+        padding-top: 0 !important;
+        margin-top: 0;
+        border-top: 6px solid var(--off-white, #f5f4f0);
+        background: white;
+      }
+      #faculty > div:first-child {
+        padding-top: 32px !important;
+      }
     }
   </style>
 </head>

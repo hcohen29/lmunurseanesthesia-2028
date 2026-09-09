@@ -384,6 +384,9 @@
     /* ── MOBILE DASHBOARD ── */
     .mobile-dashboard { display: none; }
 
+    /* ── MOBILE-ONLY ELEMENTS (hidden on desktop) ── */
+    .mob-back { display: none; }
+
     /* ── SUBMIT ── */
     .form-shell { border: 1px solid var(--border-light); background: white; }
     .form-placeholder { padding: 64px 40px; text-align: center; }
@@ -458,17 +461,28 @@
       /* Fix dropdown scroll on mobile */
       .nav-dropdown { -webkit-overflow-scrolling: touch; touch-action: pan-y; max-height: 70vh; }
 
-      /* Mobile resource cards — dark hopscotch bento grid */
-      /* 6-column base; pattern repeats every 7 cards: 2-col, full, 3-col, full */
+      /* Mobile back-to-home button (shown only in sections on mobile) */
+      .mob-back {
+        display: flex; align-items: center; gap: 6px;
+        font-size: 12px; font-weight: 600; letter-spacing: 0.3px;
+        color: var(--muted-dark); text-decoration: none;
+        padding-bottom: 20px; margin-bottom: 24px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .mob-back::before { content: '←'; font-size: 13px; }
+
+      /* Mobile resource cards — half-width bento grid (cleaner, consistent heights) */
       .resources-grid { display: grid !important; grid-template-columns: repeat(6, 1fr) !important; gap: 10px !important; background: none !important; border: none !important; }
       .resource-category { display: block !important; }
-      .resource-card { background: var(--ink) !important; color: white !important; border-radius: 14px !important; padding: 18px 16px !important; min-height: 110px !important; grid-column: span 3 !important; } /* default: 2-col */
+      .resource-card { background: var(--ink) !important; color: white !important; border-radius: 14px !important; padding: 18px 16px !important; min-height: 110px !important; grid-column: span 3 !important; } /* default: half width */
       .resources-grid .resource-card:nth-child(7n+3) { grid-column: span 6 !important; } /* full width */
-      .resources-grid .resource-card:nth-child(7n+4),
-      .resources-grid .resource-card:nth-child(7n+5),
-      .resources-grid .resource-card:nth-child(7n+6) { grid-column: span 2 !important; } /* 3-col */
       .resources-grid .resource-card:nth-child(7n) { grid-column: span 6 !important; } /* full width */
       .resource-card:active { background: var(--ink-mid) !important; }
+      /* Podcast link buttons: wrap on narrow mobile cards */
+      .podcast-links { flex-wrap: wrap !important; }
+      .podcast-links a { color: var(--ink) !important; background: rgba(255,255,255,0.9) !important; border-color: transparent !important; }
+      /* Submit recommendation: full width on mobile so title doesn't overflow */
+      .rc-full-mob { grid-column: span 6 !important; }
       .rc-title { color: white !important; font-family: var(--serif) !important; font-size: 15px !important; margin-bottom: 6px !important; }
       .rc-desc { color: rgba(255,255,255,0.4) !important; font-size: 12px !important; }
       .rc-cta { color: var(--gold) !important; border-top: 1px solid rgba(255,255,255,0.08) !important; margin-top: 12px !important; padding-top: 10px !important; font-size: 11px !important; }
@@ -683,6 +697,7 @@
 <!-- UPDATES -->
 <section class="section s-off" id="updates">
   <div class="section-inner">
+    <a href="./index.html" class="mob-back">Home</a>
     <div class="section-header">
       <div class="section-kicker">Rep Log</div>
       <div class="section-h">Updates</div>
@@ -698,6 +713,7 @@
 <!-- DATES -->
 <section class="section s-white" id="dates">
   <div class="section-inner">
+    <a href="./index.html" class="mob-back">Home</a>
     <div class="section-header">
       <div class="section-kicker">Calendar</div>
       <div class="section-h">Upcoming Dates</div>
@@ -713,6 +729,7 @@
 <!-- RESOURCES -->
 <section class="section s-off" id="resources">
   <div class="section-inner">
+    <a href="./index.html" class="mob-back">Home</a>
     <div class="section-header">
       <div class="section-kicker">Hub</div>
       <div class="section-h">Resources</div>
@@ -835,7 +852,7 @@
         <div class="rc-cat">Podcast</div>
         <div class="rc-title">Peter Attia · Dr. Sean Mackey on Pain</div>
         <div class="rc-desc" style="flex:1;">The Drive Podcast — a deep dive into the science of chronic pain, perception, and management. Highly relevant to anesthesia practice.</div>
-        <div style="display:flex;gap:8px;margin-top:14px;">
+        <div class="podcast-links" style="display:flex;gap:8px;margin-top:14px;">
           <a href="https://open.spotify.com/episode/1Ige1J8jqHNvZ7sij7N3jN" target="_blank" rel="noopener" style="font-size:11px;font-weight:700;letter-spacing:0.3px;color:var(--ink);text-decoration:none;background:var(--off-white);border:1px solid var(--border-light);padding:5px 12px;border-radius:20px;transition:background 0.15s;" onmouseover="this.style.background='#e8e8e8'" onmouseout="this.style.background='var(--off-white)'">Spotify</a>
           <a href="https://podcasts.apple.com/us/podcast/chronic-pain-pathways-treatment-and-the-path-to/id1400828889?i=1000704261791" target="_blank" rel="noopener" style="font-size:11px;font-weight:700;letter-spacing:0.3px;color:var(--ink);text-decoration:none;background:var(--off-white);border:1px solid var(--border-light);padding:5px 12px;border-radius:20px;transition:background 0.15s;" onmouseover="this.style.background='#e8e8e8'" onmouseout="this.style.background='var(--off-white)'">Apple Podcasts</a>
         </div>
@@ -852,7 +869,7 @@
         <div class="rc-desc">The science of successful learning — evidence-based strategies for retaining complex material. Highly recommended for the long road ahead.</div>
         <div class="rc-cta">View book</div>
       </a>
-      <a href="https://forms.gle/dfBYGrPvD2Z3tMiMA" target="_blank" class="resource-card">
+      <a href="https://forms.gle/dfBYGrPvD2Z3tMiMA" target="_blank" class="resource-card rc-full-mob">
         <div class="rc-cat">Contribute</div>
         <div class="rc-title">Submit a Recommendation</div>
         <div class="rc-desc">Have something worth adding? Submit it and we'll review it.</div>
@@ -889,6 +906,7 @@
 <!-- SURVEYS -->
 <section class="section s-white" id="surveys">
   <div class="section-inner">
+    <a href="./index.html" class="mob-back">Home</a>
     <div class="section-header">
       <div class="section-kicker">Your Voice</div>
       <div class="section-h">Surveys</div>
@@ -901,6 +919,7 @@
 <!-- BOARD -->
 <section class="section s-off" id="board">
   <div class="section-inner">
+    <a href="./index.html" class="mob-back">Home</a>
     <div class="section-header">
       <div class="section-kicker">Transparency</div>
       <div class="section-h">Class Board</div>
@@ -931,6 +950,7 @@
 <!-- MERCH -->
 <section class="section s-white" id="merch">
   <div class="section-inner">
+    <a href="./index.html" class="mob-back">Home</a>
     <div class="section-header">
       <div class="section-kicker">Class of 2028</div>
       <div class="section-h">Class Merch</div>
@@ -966,6 +986,7 @@
 <!-- SUBMIT -->
 <section class="section s-off" id="submit">
   <div class="section-inner">
+    <a href="./index.html" class="mob-back">Home</a>
     <div class="section-header">
       <div class="section-kicker">Get in Touch</div>
       <div class="section-h">Submit an Idea or Concern</div>
@@ -985,6 +1006,7 @@
 <!-- MORE RESOURCES -->
 <section class="section s-white" id="more-resources">
   <div class="section-inner">
+    <a href="./index.html" class="mob-back">Home</a>
     <div class="resource-category">Professional Organizations</div>
     <div class="resources-grid">
       <a href="https://www.aana.com" target="_blank" class="resource-card">
