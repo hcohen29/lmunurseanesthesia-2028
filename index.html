@@ -97,7 +97,7 @@
       width: 1px; background: linear-gradient(to bottom, transparent, var(--gold-line), transparent);
       right: 20%;
     }
-    .hero-inner { max-width: 700px; position: relative; z-index: 1; }
+    .hero-inner { max-width: 860px; position: relative; z-index: 1; }
     .hero-kicker {
       font-size: 11px; font-weight: 600; letter-spacing: 3px;
       text-transform: uppercase; color: var(--gold);
@@ -145,7 +145,7 @@
       border-bottom: 1px solid var(--border-light);
       padding: 20px 56px;
     }
-    .notices-inner { max-width: 960px; margin: 0 auto; }
+    .notices-inner { max-width: 1200px; margin: 0 auto; }
     .notices-label {
       font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
       text-transform: uppercase; color: var(--muted-dark);
@@ -185,7 +185,7 @@
 
     /* ── REPS ── */
     .reps-section { background: white; padding: 72px 56px; border-bottom: 1px solid var(--border-light); }
-    .reps-inner { max-width: 960px; margin: 0 auto; }
+    .reps-inner { max-width: 1200px; margin: 0 auto; }
     .section-kicker { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
     .section-h { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--ink); margin-bottom: 10px; line-height: 1.2; }
     .section-sub { font-size: 15px; color: var(--muted-dark); margin-bottom: 40px; font-weight: 300; max-width: 520px; }
@@ -204,7 +204,7 @@
 
     /* ── GENERIC SECTION ── */
     .section { padding: 72px 56px; }
-    .section-inner { max-width: 960px; margin: 0 auto; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
     .section-header { margin-bottom: 40px; }
     .s-dark  { background: var(--ink); color: white; }
     .s-mid   { background: var(--ink-soft); color: white; }
@@ -232,6 +232,7 @@
     .date-card.open .date-details { display: block; }
     .date-details li { font-size: 12px; color: var(--muted-dark); line-height: 1.6; padding: 2px 0 2px 14px; position: relative; }
     .date-details li::before { content: ''; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+    .date-details li.no-dot::before { display: none; }
 
     /* ── LIGHTBOX ── */
     .lightbox-overlay { display:none; position:fixed; inset:0; background:rgba(10,14,26,0.85); backdrop-filter:blur(6px); z-index:600; align-items:center; justify-content:center; cursor:zoom-out; }
@@ -249,6 +250,7 @@
     .date-popup-list { list-style: none; padding: 0; border-top: 1px solid var(--border-light); padding-top: 14px; }
     .date-popup-list li { font-size: 13px; color: var(--muted-dark); line-height: 1.6; padding: 4px 0 4px 16px; position: relative; }
     .date-popup-list li::before { content: ''; position: absolute; left: 0; top: 11px; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+    .date-popup-list li.no-dot::before { display: none; }
 
     /* ── UPDATES ── */
     .updates-list { display: flex; flex-direction: column; border: 1px solid var(--border-light); }
@@ -292,7 +294,7 @@
     /* ── REP MODAL ── */
     .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:500; align-items:center; justify-content:center; }
     .modal-overlay.open { display:flex; }
-    .modal-card { background:white; max-width:380px; width:90%; padding:40px; position:relative; }
+    .modal-card { background:white; max-width:380px; width:90%; padding:40px; position:relative; max-height:90vh; overflow-y:auto; }
     .modal-close { position:absolute; top:16px; right:20px; font-size:20px; cursor:pointer; color:var(--muted-dark); line-height:1; background:none; border:none; font-family:var(--sans); }
     .modal-close:hover { color:var(--ink); }
     .modal-initials { width:52px; height:52px; background:var(--ink); color:var(--gold); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:16px; font-weight:700; margin-bottom:16px; }
@@ -630,10 +632,10 @@
 
   <div class="mob-label">Resources</div>
   <div class="mob-grid mob-grid-hop">
-    <a href="./zoom.html" class="mob-tile">
+    <div class="mob-tile" onclick="openZoomModal()">
       <div class="mob-tile-title">Zoom</div>
       <div class="mob-tile-cta">View links →</div>
-    </a>
+    </div>
     <div class="mob-tile" onclick="openWAModal()">
       <div class="mob-tile-title">WhatsApp</div>
       <div class="mob-tile-cta">View chats →</div>
@@ -650,7 +652,7 @@
       <div class="mob-tile-title">Photo Album</div>
       <div class="mob-tile-cta">Add photos →</div>
     </a>
-    <a href="https://lmunet.instructure.com" target="_blank" class="mob-tile">
+    <a href="https://lmunet.instructure.com" target="_blank" class="mob-tile" onclick="openCanvas(event)">
       <div class="mob-tile-title">Canvas</div>
       <div class="mob-tile-cta">Open →</div>
     </a>
@@ -701,7 +703,7 @@
       <div class="section-h">Upcoming Dates</div>
       <p class="section-sub">Academic deadlines, program events, and anticipatory travel dates.</p>
     </div>
-    <div class="dates-grid" id="datesGrid"></div>
+    <div id="datesGrid"></div>
     <div style="margin-top:28px;">
       <a href="./calendar.html" style="display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:0.5px;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.3);padding-bottom:2px;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.3)'">View Full Calendar &#8594;</a>
     </div>
@@ -719,7 +721,7 @@
 
     <!-- MOBILE TRIAGE GRID: replaces cards on small screens -->
     <div class="mobile-triage">
-      <a href="./zoom.html" class="triage-btn"><div class="tb-icon">ZM</div><div class="tb-label">Zoom</div></a>
+      <div class="triage-btn" onclick="openZoomModal()"><div class="tb-icon">ZM</div><div class="tb-label">Zoom</div></div>
       <div class="triage-btn" onclick="openWAModal()"><div class="tb-icon">WA</div><div class="tb-label">WhatsApp</div></div>
       <a href="https://studentlmunet.sharepoint.com/sites/NAPCohort2028/SitePages/CollabHome.aspx" target="_blank" class="triage-btn"><div class="tb-icon">SP</div><div class="tb-label">SharePoint</div></a>
       <a href="https://drive.google.com/drive/folders/13E9EZUimdubnOoQ00_DSDZCDz_2G3JpP?usp=drive_link" target="_blank" class="triage-btn"><div class="tb-icon">GD</div><div class="tb-label">Drive</div></a>
@@ -730,17 +732,17 @@
       <a href="https://studentlmunet.sharepoint.com/sites/NAPCohort2028" target="_blank" class="triage-btn"><div class="tb-icon">HB</div><div class="tb-label">Handbook</div></a>
       <a href="https://www.lmunet.edu/caylor-school-of-nursing/doctor-of-nursing-practice/dnp-nurse-anesthesia/dnp-nursing-anesthesia.php" target="_blank" class="triage-btn"><div class="tb-icon">DNP</div><div class="tb-label">Program</div></a>
       <a href="https://www.typhongroup.net/nast/data/login.asp?facility=7072&expired=y" target="_blank" class="triage-btn"><div class="tb-icon">TY</div><div class="tb-label">Typhon</div></a>
-      <a href="https://lmunet.instructure.com" target="_blank" class="triage-btn"><div class="tb-icon">CV</div><div class="tb-label">Canvas</div></a>
+      <a href="https://lmunet.instructure.com" target="_blank" class="triage-btn" onclick="openCanvas(event)"><div class="tb-icon">CV</div><div class="tb-label">Canvas</div></a>
     </div>
 
     <div class="resource-category">Class Resources</div>
     <div class="resources-grid">
-      <a href="./zoom.html" class="resource-card">
+      <div class="resource-card" onclick="openZoomModal()" style="cursor:pointer;">
         <div class="rc-cat">Virtual Classroom</div>
         <div class="rc-title">Zoom Links</div>
         <div class="rc-desc">Lectures, Grand Rounds, study sessions, and office hours.</div>
         <div class="rc-cta">View Zoom links →</div>
-      </a>
+      </div>
       <div class="resource-card" onclick="openWAModal()" style="cursor:pointer;">
         <div class="rc-cat">Group Chats</div>
         <div class="rc-title">WhatsApp</div>
@@ -765,12 +767,6 @@
         <div class="rc-desc">Shared album, open to the whole class.</div>
         <div class="rc-cta">Add your photos →</div>
       </a>
-      <a href="https://lmunet.instructure.com" target="_blank" class="resource-card">
-        <div class="rc-cat">Learning Management</div>
-        <div class="rc-title">Canvas</div>
-        <div class="rc-desc">Assignments, grades, and course materials.</div>
-        <div class="rc-cta">Open Canvas →</div>
-      </a>
     </div>
 
     <div class="resource-category">DNP Program</div>
@@ -793,17 +789,23 @@
         <div class="rc-desc">Academic resources, email, and registration.</div>
         <div class="rc-cta">Visit lmunet.edu</div>
       </a>
-      <a href="https://www.lmunet.edu/caylor-school-of-nursing/doctor-of-nursing-practice/dnp-nurse-anesthesia/dnp-nursing-anesthesia.php" target="_blank" class="resource-card">
-        <div class="rc-cat">Program</div>
-        <div class="rc-title">LMU Nurse Anesthesia</div>
-        <div class="rc-desc">Official program page — curriculum and faculty contacts.</div>
-        <div class="rc-cta">View program page</div>
+      <a href="https://lmunet.instructure.com" target="_blank" class="resource-card" onclick="openCanvas(event)">
+        <div class="rc-cat">Learning Management</div>
+        <div class="rc-title">Canvas</div>
+        <div class="rc-desc">Assignments, grades, and course materials.</div>
+        <div class="rc-cta">Open Canvas →</div>
       </a>
       <a href="https://studentlmunet.sharepoint.com/sites/NAPCohort2028" target="_blank" class="resource-card">
         <div class="rc-cat">Handbook</div>
         <div class="rc-title">Student Handbook</div>
         <div class="rc-desc">Program policies and academic standards.</div>
         <div class="rc-cta">View handbook</div>
+      </a>
+      <a href="https://www.lmunet.edu/caylor-school-of-nursing/doctor-of-nursing-practice/dnp-nurse-anesthesia/dnp-nursing-anesthesia.php" target="_blank" class="resource-card">
+        <div class="rc-cat">Program</div>
+        <div class="rc-title">LMU Nurse Anesthesia</div>
+        <div class="rc-desc">Official program page — curriculum and faculty contacts.</div>
+        <div class="rc-cta">View program page</div>
       </a>
     </div>
 
@@ -1162,7 +1164,7 @@
     {
       id: "intensives-airbnb",
       type: "action",
-      title: "Book your Airbnb for Intensives Week",
+      title: "Book your hotel/Airbnb/place to stay for intensives",
       desc: "Intensives run November 9–13, 2026 in Harrogate, TN. Accommodations fill up — book early.",
       date: "Nov 9–13",
     },
@@ -1253,11 +1255,68 @@
     { mo:"AUG",   dy:"17",   type:"academic", title:"Fall 2026 — Classes Begin",
       details:["August 17, 2026", "First day of the Fall 2026 semester"],
       iso:"2026-08-17" },
+
+    // ── Fall 2026 exams & quizzes ──
+    { mo:"SEP",   dy:"3",    type:"academic", title:"NURS 701 — Exam 1",
+      details:["September 3, 2026", "Advanced A&P"],
+      iso:"2026-09-03" },
+    { mo:"SEP",   dy:"10",   type:"academic", title:"NURS 701 — Quiz 2",
+      details:["September 10, 2026", "Advanced A&P", "Covers: Circulation"],
+      iso:"2026-09-10" },
+    { mo:"SEP",   dy:"14",   type:"academic", title:"NURS 733 — Exam 1",
+      details:["September 14, 2026", "Advanced Anesthesia Pharmacology II", "Covers: Intro to Anesthetic Pharmacology · General Principles of Drug Actions · History & Types of Anesthesia · Induction and Sedation Agents"],
+      iso:"2026-09-14" },
+    { mo:"SEP",   dy:"15",   type:"academic", title:"NURS 753 — Exam 1",
+      details:["September 15, 2026", "Principles & Practice of Anesthesia I", "Covers: Anesthesia Machine — Gas Delivery, Machine Setup, Vaporizer & Gas Laws, Ventilator & Machine Check (Modules 1–4)"],
+      iso:"2026-09-15" },
+    { mo:"SEP",   dy:"22",   type:"academic", title:"NURS 701 — Exam 2",
+      details:["September 22, 2026", "Advanced A&P", "Covers: Classes 5, 7, 8, 9, 10"],
+      iso:"2026-09-22" },
+    { mo:"OCT",   dy:"5",    type:"academic", title:"NURS 733 — Exam 2",
+      details:["October 5, 2026", "Advanced Anesthesia Pharmacology II", "Covers: Muscle Relaxants & Neuromuscular Monitoring · NMB Antagonism · Clinical Aspects of Anti-muscarinic"],
+      iso:"2026-10-05" },
+    { mo:"OCT",   dy:"6",    type:"academic", title:"NURS 701 — Quiz 3",
+      details:["October 6, 2026", "Advanced A&P", "Covers: Renal"],
+      iso:"2026-10-06" },
+    { mo:"OCT",   dy:"8",    type:"academic", title:"NURS 753 — Exam 2",
+      details:["October 8, 2026", "Principles & Practice of Anesthesia I", "Covers: Pre-operative Assessment · Cardiac & Non-cardiac Monitors · Breathing Systems (Modules 6–8)"],
+      iso:"2026-10-08" },
+    { mo:"OCT",   dy:"13",   type:"academic", title:"NURS 701 — Exam 3",
+      details:["October 13, 2026", "Advanced A&P", "Covers: Classes 12–16"],
+      iso:"2026-10-13" },
+    { mo:"OCT",   dy:"26",   type:"academic", title:"NURS 733 — Exam 3",
+      details:["October 26, 2026", "Advanced Anesthesia Pharmacology II", "Covers: Opioid Agonists & Antagonists · Uptake & Distribution of Inhaled Anesthetics · Blood Components / MTP"],
+      iso:"2026-10-26" },
+    { mo:"OCT",   dy:"27",   type:"academic", title:"NURS 701 — Quiz 4",
+      details:["October 27, 2026", "Advanced A&P", "Covers: Brachial Plexus · Lumbar Plexus · Sacral Plexus · Autonomic Nervous System Anatomy Lab"],
+      iso:"2026-10-27" },
+    { mo:"NOV",   dy:"3",    type:"academic", title:"NURS 701 — Exam 4",
+      details:["November 3, 2026", "Advanced A&P", "Covers: Classes 18–22"],
+      iso:"2026-11-03" },
+    { mo:"NOV",   dy:"5",    type:"academic", title:"NURS 753 — Exam 3",
+      details:["November 5, 2026", "Principles & Practice of Anesthesia I", "Covers: Positioning · Basic Airway · Introduction to Room Setup (Modules 10–12)"],
+      iso:"2026-11-05" },
+    { mo:"NOV",   dy:"17",   type:"academic", title:"NURS 701 — Quiz 5",
+      details:["November 17, 2026", "Advanced A&P", "Covers: Upper Airway Anatomy"],
+      iso:"2026-11-17" },
+    { mo:"NOV",   dy:"24",   type:"academic", title:"NURS 701 — Exam 5",
+      details:["November 24, 2026", "Advanced A&P", "Covers: Classes 24–27"],
+      iso:"2026-11-24" },
+    { mo:"DEC",   dy:"7",    type:"academic", title:"NURS 733 — Exam 4 (Final)",
+      details:["December 7, 2026", "Advanced Anesthesia Pharmacology II — Final Exam", "Covers: Local Anesthetics · Sympathomimetics · Sympatholytic & Vasodilators · Anti-arrhythmic Drugs"],
+      iso:"2026-12-07" },
+    { mo:"DEC",   dy:"8",    type:"academic", title:"NURS 701 — Exam 6 (Final)",
+      details:["December 8, 2026", "Advanced A&P — Final Exam", "Covers: Classes 28, 30, 31, 32"],
+      iso:"2026-12-08" },
+    { mo:"DEC",   dy:"9",    type:"academic", title:"NURS 753 — Final Exam",
+      details:["December 9, 2026", "Principles & Practice of Anesthesia I — Final Exam", "Covers: Fluid & Blood Management · Safety & OR Hazards · PACU (Modules 14–16)"],
+      iso:"2026-12-09" },
+
     { mo:"NOV",   dy:"9",    type:"academic", title:"753A Simulation Intensive",
       range:"Nov 9–13, 2026",
-      details:["November 9–13, 2026 · On campus, Harrogate TN", "Mon: Machine check-off demo + bay rotations (machine check, circuits, pre-op setup)", "Tue: Positioning, airway (mask/LMA), induction sequence + ACLS/BLS/PALS renewal (Dr. Roberts)", "Wed: Group A shadows at clinical site · Group B sim lab (0800)", "Thu: Groups swap — Group B shadows · Group A sim lab (0800)", "Fri: Station check-offs (machine, positioning, induction) · 0900 Lambert Uniforms white coat fitting"],
+      details:["Mon: Machine check-off demo + bay rotations (machine check, circuits, pre-op setup)", "Tue: Positioning, airway (mask/LMA), induction sequence + ACLS/BLS/PALS renewal (Dr. Roberts)", "Wed: Group A shadows at clinical site · Group B sim lab (0800)", "Thu: Groups swap — Group B shadows · Group A sim lab (0800)", "Fri: Station check-offs (machine, positioning, induction) · 0900 Lambert Uniforms white coat fitting", "Must have navy blue scrubs", "Class event: Bowling night — date TBD during the week", "Class event: Friendsgiving — date TBD during the week"],
       link:"./syllabi/NURS 753a Intensive Schedule FINAL.pdf", linkLabel:"View full schedule →",
-      iso:"2026-11-09", plan:true, badge:"Harrogate" },
+      iso:"2026-11-09", plan:true },
     { mo:"NOV",   dy:"13",   type:"deadline", title:"DNP Project Dissemination",
       details:["November 13, 2026", "2026 cohort presentation", "All cohorts required to attend", "Via Zoom"],
       iso:"2026-11-13" },
@@ -1312,12 +1371,29 @@
   // ═══════════════════════════════════════════════════════
   const UPDATES = [
     {
-      date:       "Aug 2026",
+      date:       "Sep 2026",
+      tag:        "event", tagLabel: "Cohort Meeting",
+      title:      "First Class Meeting — Vote on Your Date",
+      body:       "We&#8217;re hosting our first cohort meeting &amp; want to see you there! We thought this would be a great way to not only walk you all through the resources we&#8217;ve built for the class but to also give you all a platform to communicate with the cohort as a whole. We&#8217;ll have a very loose agenda just to keep things moving in an established direction &#8212; and we&#8217;ll keep it capped at an hour, because we know time is invaluable right now.<br><br>A poll is live in the GroupMe. The options are <strong>Saturday, September 12</strong>, <strong>Wednesday, September 16</strong>, and <strong>Friday, September 18</strong> &#8212; vote for the day that works best for you.<br><br>If there&#8217;s something you want to discuss, you can <a href=\"https://forms.gle/uVoJf9nrqquicTKb7\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--gold);font-weight:600;\">submit an agenda topic</a> through the intake form &#8212; just select &#8220;Agenda Topic&#8221; when it asks what kind of submission this is. See you all soon!",
+      minutesUrl: null,
+      extraHtml:  null,
+    },
+    {
+      date:       "Sep 2026",
       tag:        "announce", tagLabel: "Merch Update",
+      title:      "Merch in Motion",
+      body:       "Designs are now approved! Next up: we&#8217;re meeting with the vendor to select our products, review minimums, and evaluate pricing &#8212; we&#8217;re planning to connect with them within the next couple of weeks.<br><br>Currently we&#8217;re planning to offer crew neck sweatshirts, t-shirts, vests, and pullovers &#8212; and potentially a hat or bag depending on what the vendor supports. If we end up needing to narrow it down, we&#8217;d love to hear from the class on what matters most &#8212; that&#8217;s something we plan to bring to the cohort meeting. And this won&#8217;t be the only run: if there&#8217;s demand, we&#8217;ll place additional orders as we go.<br><br>The goal is still to have everything in hand before Intensives, so we&#8217;ll send out order forms as soon as we have options to choose from!",
+      minutesUrl: null,
+      extraHtml:  null,
+    },
+    {
+      date:       "Aug 2026",
+      tag:        "announce", tagLabel: "Prior Announcement",
       title:      "Class gear is in motion",
+      archiveOnly: true,
       body:       "Designs are approved &#8212; Dr. Julien and Dr. Todd have signed off, and we&#8217;re now sending everything to the vendor. They&#8217;ll confirm what they can work with and walk us through the final options from there.<br><br>We&#8217;ll share everything with the class so you can see what&#8217;s available before orders open. We&#8217;re currently planning to offer crew neck sweatshirts, t-shirts, vests, and pullovers &#8212; and potentially a hat or bag depending on what the vendor supports.<br><br>The goal is still to have everything in hand before Intensives Week in November. We&#8217;ll keep you posted every step of the way.",
       minutesUrl: null,
-      extraHtml:  `<div style="margin-top:24px;background:var(--ink);border-radius:10px;overflow:hidden;max-width:620px;width:100%;box-sizing:border-box;"><div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08);"><div><div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:3px;">Sneak Peek</div><div style="font-size:13px;font-weight:600;color:white;letter-spacing:0.3px;">Class of 2028 &middot; Final Logo Designs</div></div><span style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(201,168,76,0.4);color:var(--gold);border-radius:20px;white-space:nowrap;">Approved — Sending to Vendor</span></div><div style="padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;"><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-mountain.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope-text.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-seal.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-lmu-block.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-dept.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div></div><div style="padding:12px 20px;border-top:1px solid rgba(255,255,255,0.06);"><div style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:400;">Crew necks &middot; T-shirts &middot; Vests &middot; Pullovers &middot; and more</div></div></div>`
+      extraHtml:  `<div style="margin-top:24px;background:var(--ink);border-radius:10px;overflow:hidden;max-width:620px;width:100%;box-sizing:border-box;margin-left:auto;margin-right:auto;"><div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.08);"><div><div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:3px;">Sneak Peek</div><div style="font-size:13px;font-weight:600;color:white;letter-spacing:0.3px;">Class of 2028 &middot; Final Logo Designs</div></div><span style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(201,168,76,0.4);color:var(--gold);border-radius:20px;white-space:nowrap;">Approved — Sending to Vendor</span></div><div style="padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;"><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-mountain.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-laryngoscope-text.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-seal.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-lmu-block.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div><div style="background:white;border-radius:8px;padding:16px;display:flex;align-items:center;justify-content:center;min-height:110px;"><img src="./merch-logo-dept.png" style="max-width:100%;max-height:90px;object-fit:contain;cursor:zoom-in;" onclick="openLightbox(this.src)"/></div></div><div style="padding:12px 20px;border-top:1px solid rgba(255,255,255,0.06);"><div style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:400;">Crew necks &middot; T-shirts &middot; Vests &middot; Pullovers &middot; and more</div></div></div>`
     },
   ];
 
@@ -1345,7 +1421,8 @@
     const el = document.getElementById('updatesList');
     if (!el || !UPDATES.length) return;
     const tagClass = { announce:'ut-announce', event:'ut-event', meeting:'ut-meeting', action:'ut-action' };
-    el.innerHTML = UPDATES.map(u => {
+    const visible = UPDATES.filter(u => !u.archiveOnly);
+    el.innerHTML = visible.map(u => {
       const cls  = tagClass[u.tag] || 'ut-announce';
       const mins = u.minutesUrl
         ? '<a href="' + u.minutesUrl + '" target="_blank" rel="noopener" class="update-minutes-link">→ Meeting minutes</a>'
@@ -1410,20 +1487,22 @@
 
   function renderDates() {
     const typeClass = { event:'dt-event', deadline:'dt-deadline', academic:'dt-academic', clinical:'dt-clinical' };
-    const now   = new Date(); now.setHours(0,0,0,0);
-    const limit = new Date(now); limit.setDate(limit.getDate() + 60);
-    const visible = DATES.filter(d => {
+    const now = new Date(); now.setHours(0,0,0,0);
+    const tenDaysOut = new Date(now); tenDaysOut.setDate(tenDaysOut.getDate() + 10);
+
+    const upcoming = DATES.filter(d => {
       if (!d.iso) return false;
       const dt = new Date(d.iso + 'T00:00:00');
-      if (dt < now) return false;
-      return dt <= limit || d.plan;
+      return dt >= now && dt <= tenDaysOut;
     });
+    const planAhead = DATES.filter(d => {
+      if (!d.plan || !d.iso) return false;
+      return new Date(d.iso + 'T00:00:00') >= now;
+    });
+
     const grid = document.getElementById('datesGrid');
-    if (!visible.length) {
-      grid.innerHTML = '<p style="color:var(--muted-dark);font-size:14px;padding:24px 0;grid-column:1/-1;">No dates scheduled in the next two months — check back soon.</p>';
-      return;
-    }
-    grid.innerHTML = visible.map(d => `
+
+    const cardHTML = d => `
       <div class="date-card">
         <div class="date-cal">
           <span class="date-mo">${d.mo}</span>
@@ -1432,19 +1511,42 @@
         <div>
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
             <div class="date-type ${typeClass[d.type] || 'dt-event'}" style="margin-bottom:0;">${d.type}</div>
-            ${d.plan ? (d.badge
-              ? `<span style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#9a3d00;background:#fff0e0;border:1px solid #f5c080;padding:2px 6px;">${d.badge}</span>`
-              : '<span style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#7a5a00;background:var(--gold-dim);border:1px solid var(--gold-line);padding:2px 6px;">Plan Ahead</span>') : ''}
+            ${d.plan ? '<span style="font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#7a5a00;background:var(--gold-dim);border:1px solid var(--gold-line);padding:2px 6px;">Plan Ahead</span>' : ''}
           </div>
           <div class="date-title">${d.title}</div>
           ${d.range ? `<div class="date-range">${d.range}</div>` : ''}
-          ${d.details ? `<ul class="date-details">${d.details.map(i=>`<li>${i}</li>`).join('')}${d.link ? `<li style="list-style:none;padding-left:0;margin-top:8px;"><a href="${d.link}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="font-size:12px;font-weight:600;color:var(--gold);text-decoration:none;">${d.linkLabel || 'View document →'}</a></li>` : ''}</ul>` : `<div class="date-details" style="display:none;"></div>`}
+          ${d.details ? `<ul class="date-details">${d.details.map(i=>`<li>${i}</li>`).join('')}${d.link ? `<li class="no-dot" style="padding-left:0;margin-top:8px;"><a href="${d.link}" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="font-size:12px;font-weight:600;color:var(--gold);text-decoration:none;">${d.linkLabel || 'View document →'}</a></li>` : ''}${d.link2 ? `<li class="no-dot" style="padding-left:0;margin-top:4px;"><a href="${d.link2 === 'checklist' ? 'javascript:void(0)' : d.link2}" ${d.link2 !== 'checklist' ? 'target="_blank" rel="noopener"' : ''} onclick="event.stopPropagation();${d.link2 === 'checklist' ? 'openChecklist()' : ''}" style="font-size:12px;font-weight:600;color:var(--gold);text-decoration:none;">${d.link2Label || 'View →'}</a></li>` : ''}</ul>` : `<div class="date-details" style="display:none;"></div>`}
         </div>
-      </div>`).join('');
-    document.querySelectorAll('.date-card').forEach((card, i) => {
-      card.addEventListener('click', (e) => {
+      </div>`;
+
+    const sectionLabel = (text, mt) =>
+      `<div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding:4px 0 10px;${mt ? 'margin-top:14px;' : ''}">${text}</div>`;
+
+    let html = '';
+
+    if (upcoming.length) {
+      html += sectionLabel('Short Term', false);
+      html += '<div class="dates-grid">' + upcoming.map(cardHTML).join('') + '</div>';
+    } else {
+      html += '<p style="color:var(--muted-dark);font-size:14px;padding:4px 0 8px;">No exams or events in the next 10 days.</p>';
+    }
+
+    if (planAhead.length) {
+      html += sectionLabel('Long Term', true);
+      html += '<div class="dates-grid">' + planAhead.map(cardHTML).join('') + '</div>';
+    }
+
+    if (!upcoming.length && !planAhead.length) {
+      html = '<p style="color:var(--muted-dark);font-size:14px;padding:24px 0;">Nothing scheduled right now — check back soon.</p>';
+    }
+
+    grid.innerHTML = html;
+
+    const allVisible = [...upcoming, ...planAhead];
+    document.querySelectorAll('#datesGrid .date-card').forEach((card, i) => {
+      card.addEventListener('click', e => {
         if (e.target.tagName === 'A') return;
-        openDatePopup(visible[i]);
+        openDatePopup(allVisible[i]);
       });
     });
   }
@@ -1622,6 +1724,43 @@
     }
   }
 
+  function openCanvas(e) {
+    if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) return;
+    e.preventDefault();
+    var iframe = document.createElement('iframe');
+    iframe.style.cssText = 'display:none;width:0;height:0;border:0;';
+    iframe.src = 'canvas-courses://lmunet.instructure.com';
+    document.body.appendChild(iframe);
+    setTimeout(function() {
+      document.body.removeChild(iframe);
+      window.location.href = 'https://lmunet.instructure.com';
+    }, 1500);
+  }
+
+  function openZoomModal() {
+    showZoomPanel(0);
+    document.getElementById('zoomModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeZoomModal(e) {
+    if (!e || e.target === document.getElementById('zoomModal')) {
+      document.getElementById('zoomModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+  function showZoomPanel(n) {
+    [0,1,2].forEach(function(i) {
+      document.getElementById('zmPanel' + i).style.display = (i === n) ? '' : 'none';
+    });
+  }
+  function toggleOH(btn) {
+    var body = btn.nextElementSibling;
+    var chevron = btn.querySelector('.oh-chevron');
+    var isOpen = body.style.display !== 'none';
+    body.style.display = isOpen ? 'none' : '';
+    chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     renderUpdates(); renderDates(); renderSurveys(); renderStats(); applyConfig();
   });
@@ -1636,7 +1775,8 @@
     document.getElementById('datePopupRange').textContent = d.range || d.mo + (d.dy && d.dy !== '—' ? ' ' + d.dy : '');
     const list = document.getElementById('datePopupList');
     list.innerHTML = d.details ? d.details.map(i => `<li>${i}</li>`).join('') : '';
-    if (d.link) list.innerHTML += `<li style="list-style:none;padding-left:0;margin-top:10px;"><a href="${d.link}" target="_blank" rel="noopener" style="font-size:13px;font-weight:600;color:var(--gold);text-decoration:none;">${d.linkLabel || 'View document →'}</a></li>`;
+    if (d.link) list.innerHTML += `<li class="no-dot" style="padding-left:0;margin-top:10px;"><a href="${d.link}" target="_blank" rel="noopener" style="font-size:13px;font-weight:600;color:var(--gold);text-decoration:none;">${d.linkLabel || 'View document →'}</a></li>`;
+    if (d.link2) list.innerHTML += `<li class="no-dot" style="padding-left:0;margin-top:4px;"><a href="${d.link2 === 'checklist' ? 'javascript:void(0)' : d.link2}" ${d.link2 !== 'checklist' ? 'target="_blank" rel="noopener"' : ''} onclick="${d.link2 === 'checklist' ? 'openChecklist()' : ''}" style="font-size:13px;font-weight:600;color:var(--gold);text-decoration:none;">${d.link2Label || 'View →'}</a></li>`;
     document.getElementById('datePopupOverlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -1676,6 +1816,162 @@
       <button onclick="copyChecklist()" class="btn" style="flex:1;min-width:100px;background:var(--off-white);color:var(--ink);border:1px solid var(--border-light);" id="copyBtn">Copy Text</button>
     </div>
     <p style="font-size:11px;color:var(--muted-dark);margin-top:12px;margin-bottom:0;line-height:1.5;">Items already saved won't be duplicated if you save again after new ones are added.</p>
+  </div>
+</div>
+
+<!-- ZOOM MODAL -->
+<div class="modal-overlay" id="zoomModal" onclick="closeZoomModal(event)">
+  <div class="modal-card" style="max-width:400px;" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeZoomModal()">&times;</button>
+
+    <!-- PANEL 0: Main Menu -->
+    <div id="zmPanel0">
+      <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Virtual Classroom</div>
+      <div class="modal-name" style="margin-bottom:4px;">Zoom Links</div>
+      <p style="font-size:13px;color:var(--muted-dark);margin-bottom:20px;line-height:1.5;">Jump to class, office hours, or a recurring session.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <a href="https://lmu.zoom.us/j/86301644455?pwd=eLnWZGqvNfLj744jembAshgtEOpxoV.1" target="_blank" rel="noopener" class="btn btn-gold" style="text-align:center;">Grand Rounds →</a>
+        <a href="https://us06web.zoom.us/j/88622542577?pwd=MCILEWNJTqjlOGXNavKDoRxu856zoa.1" target="_blank" rel="noopener" class="btn btn-gold" style="text-align:center;background:transparent;border:1.5px solid var(--gold);color:var(--gold);">Julian's Study Session →</a>
+        <button onclick="showZoomPanel(1)" class="btn" style="background:var(--off-white);color:var(--ink);border:1px solid var(--border-light);text-align:center;cursor:pointer;width:100%;font-family:var(--sans);font-size:13px;font-weight:600;">Classes →</button>
+        <button onclick="showZoomPanel(2)" class="btn" style="background:var(--off-white);color:var(--ink);border:1px solid var(--border-light);text-align:center;cursor:pointer;width:100%;font-family:var(--sans);font-size:13px;font-weight:600;">Office Hours →</button>
+      </div>
+    </div>
+
+    <!-- PANEL 1: Classes -->
+    <div id="zmPanel1" style="display:none;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <button onclick="showZoomPanel(0)" style="background:none;border:none;cursor:pointer;color:var(--gold);font-size:20px;line-height:1;padding:0;font-weight:700;flex-shrink:0;">&#8592;</button>
+        <div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);">Zoom Links</div>
+          <div style="font-size:18px;font-weight:700;font-family:var(--serif);color:var(--ink);">Classes</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;border:1px solid var(--border-light);">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--border-light);gap:12px;">
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--ink);">NURS 701 — A&amp;P</div>
+            <div style="font-size:11px;color:var(--muted-dark);">Tue &amp; Thu · 9:00–11:00 AM EST</div>
+          </div>
+          <a href="https://lmu.zoom.us/j/84445738443" target="_blank" rel="noopener" style="font-size:11.5px;font-weight:700;color:white;background:#1a6dd4;padding:6px 12px;text-decoration:none;border-radius:5px;white-space:nowrap;flex-shrink:0;">Join →</a>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--border-light);gap:12px;">
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--ink);">NURS 733 — Pharm II</div>
+            <div style="font-size:11px;color:var(--muted-dark);">Mon · 1:00–4:00 PM EST</div>
+          </div>
+          <a href="https://lmu.zoom.us/j/84449080445" target="_blank" rel="noopener" style="font-size:11.5px;font-weight:700;color:white;background:#1a6dd4;padding:6px 12px;text-decoration:none;border-radius:5px;white-space:nowrap;flex-shrink:0;">Join →</a>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--border-light);gap:12px;">
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--ink);">NURS 753 — P&amp;P I</div>
+            <div style="font-size:11px;color:var(--muted-dark);">Tue &amp; Thu · 12:00–2:00 PM EST</div>
+          </div>
+          <a href="https://lmu.zoom.us/j/85788361114?pwd=VRfoh8EFGzLnc6AzUtsxybhwD2dzqF.1" target="_blank" rel="noopener" style="font-size:11.5px;font-weight:700;color:white;background:#1a6dd4;padding:6px 12px;text-decoration:none;border-radius:5px;white-space:nowrap;flex-shrink:0;">Join →</a>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;gap:12px;opacity:0.45;">
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--ink);">NURS 741 — Leadership</div>
+            <div style="font-size:11px;color:var(--muted-dark);">Asynchronous — no live link</div>
+          </div>
+          <span style="font-size:11px;color:var(--muted-dark);background:var(--off-white);padding:6px 10px;border:1px solid var(--border-light);border-radius:5px;white-space:nowrap;flex-shrink:0;">Async</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 2: Office Hours (accordion) -->
+    <div id="zmPanel2" style="display:none;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <button onclick="showZoomPanel(0)" style="background:none;border:none;cursor:pointer;color:var(--gold);font-size:20px;line-height:1;padding:0;font-weight:700;flex-shrink:0;">&#8592;</button>
+        <div>
+          <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);">Zoom Links</div>
+          <div style="font-size:18px;font-weight:700;font-family:var(--serif);color:var(--ink);">Office Hours</div>
+        </div>
+      </div>
+      <div style="border:1px solid var(--border-light);">
+
+        <!-- Dr. Todd -->
+        <div>
+          <button onclick="toggleOH(this)" style="display:flex;width:100%;align-items:center;justify-content:space-between;padding:13px 14px;background:none;border:none;border-bottom:1px solid var(--border-light);cursor:pointer;text-align:left;gap:10px;">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--ink);">Dr. Raleigh Todd</div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);">NURS 701 · 733 · 753</div>
+            </div>
+            <span class="oh-chevron" style="color:var(--muted-dark);font-size:11px;transition:transform 0.2s;flex-shrink:0;">▾</span>
+          </button>
+          <div class="oh-acc-body" style="display:none;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid var(--border-light);gap:10px;background:var(--off-white);">
+              <div style="font-size:12px;color:var(--ink);">Mon, Tue, Thu · 8–9 AM EST</div>
+              <a href="https://lmu.zoom.us/j/82121285195?pwd=r0FA6S8Mjb81apasrJ0TShVfGbn234.1" target="_blank" rel="noopener" style="font-size:11px;font-weight:700;color:#1a6dd4;padding:4px 10px;border:1px solid #c5d8f5;border-radius:5px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Join →</a>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid var(--border-light);gap:10px;background:var(--off-white);">
+              <div style="font-size:12px;color:var(--ink);">Wed · 8–11 AM EST</div>
+              <a href="https://lmu.zoom.us/j/88986877532?pwd=mRpcVdsIx9bUtgfSj1DgTqBskoHo50.1" target="_blank" rel="noopener" style="font-size:11px;font-weight:700;color:#1a6dd4;padding:4px 10px;border:1px solid #c5d8f5;border-radius:5px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Join →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dr. Roberts -->
+        <div>
+          <button onclick="toggleOH(this)" style="display:flex;width:100%;align-items:center;justify-content:space-between;padding:13px 14px;background:none;border:none;border-bottom:1px solid var(--border-light);cursor:pointer;text-align:left;gap:10px;">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--ink);">Dr. Matthew Roberts</div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);">NURS 733</div>
+            </div>
+            <span class="oh-chevron" style="color:var(--muted-dark);font-size:11px;transition:transform 0.2s;flex-shrink:0;">▾</span>
+          </button>
+          <div class="oh-acc-body" style="display:none;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid var(--border-light);gap:10px;background:var(--off-white);">
+              <div style="font-size:12px;color:var(--ink);">Tue &amp; Thu · 10 AM–12 PM EST</div>
+              <a href="https://lmu.zoom.us/j/88362182343" target="_blank" rel="noopener" style="font-size:11px;font-weight:700;color:#1a6dd4;padding:4px 10px;border:1px solid #c5d8f5;border-radius:5px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Join →</a>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid var(--border-light);gap:10px;background:var(--off-white);">
+              <div style="font-size:12px;color:var(--ink);">Wed · 10 AM–1 PM EST</div>
+              <a href="https://lmu.zoom.us/j/85755518881" target="_blank" rel="noopener" style="font-size:11px;font-weight:700;color:#1a6dd4;padding:4px 10px;border:1px solid #c5d8f5;border-radius:5px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Join →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Michelle Palmer -->
+        <div>
+          <button onclick="toggleOH(this)" style="display:flex;width:100%;align-items:center;justify-content:space-between;padding:13px 14px;background:none;border:none;border-bottom:1px solid var(--border-light);cursor:pointer;text-align:left;gap:10px;">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--ink);">Michelle Palmer</div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);">NURS 753</div>
+            </div>
+            <span class="oh-chevron" style="color:var(--muted-dark);font-size:11px;transition:transform 0.2s;flex-shrink:0;">▾</span>
+          </button>
+          <div class="oh-acc-body" style="display:none;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid var(--border-light);gap:10px;background:var(--off-white);">
+              <div style="font-size:12px;color:var(--ink);">Mon &amp; Wed · 1–4 PM EST</div>
+              <a href="https://lmu.zoom.us/j/86866841989?pwd=c7nyoW51LHcWUfPwQZ7yEeeXOqDtzi.1" target="_blank" rel="noopener" style="font-size:11px;font-weight:700;color:#1a6dd4;padding:4px 10px;border:1px solid #c5d8f5;border-radius:5px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Join →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dr. Julien -->
+        <div>
+          <button onclick="toggleOH(this)" style="display:flex;width:100%;align-items:center;justify-content:space-between;padding:13px 14px;background:none;border:none;cursor:pointer;text-align:left;gap:10px;">
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--ink);">Dr. Marie Julien</div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);">NURS 701</div>
+            </div>
+            <span class="oh-chevron" style="color:var(--muted-dark);font-size:11px;transition:transform 0.2s;flex-shrink:0;">▾</span>
+          </button>
+          <div class="oh-acc-body" style="display:none;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-top:1px solid var(--border-light);gap:10px;background:var(--off-white);">
+              <div style="font-size:12px;color:var(--ink);">Mon · 1–3 PM EST</div>
+              <a href="https://us06web.zoom.us/j/82065299858?pwd=dwmWFHxkKTZVTR1CaYGhTsGdOQaHVh.1" target="_blank" rel="noopener" style="font-size:11px;font-weight:700;color:#1a6dd4;padding:4px 10px;border:1px solid #c5d8f5;border-radius:5px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Join →</a>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-top:1px solid var(--border-light);gap:10px;background:var(--off-white);">
+              <div style="font-size:12px;color:var(--ink);">Thu · 12–3 PM EST</div>
+              <a href="https://us06web.zoom.us/j/85383800700?pwd=uknsDPYvM0k4UcaxjtkeKhG6MF9IMl.1" target="_blank" rel="noopener" style="font-size:11px;font-weight:700;color:#1a6dd4;padding:4px 10px;border:1px solid #c5d8f5;border-radius:5px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Join →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </div>
 
