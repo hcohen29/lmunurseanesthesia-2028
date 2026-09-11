@@ -766,10 +766,9 @@
           <div class="sem-number">${s.label}</div>
           <div class="sem-info">
             <div class="sem-term">${s.term}</div>
-            <div class="sem-credits">${s.credits} credit hours · ${s.courses.length} courses</div>
+            <div class="sem-credits">${s.credits} credit hours · ${s.courses.length} courses${s.courses.some(c => c.schedule) ? ` · <a href="./semester.html?sem=${s.number}" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.3);font-weight:600;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.3)'">View weekly schedule →</a>` : ''}</div>
           </div>
           <span class="sem-badge ${badgeCls}">${badgeLbl}</span>
-          ${s.courses.some(c => c.schedule) ? `<a href="./semester.html?sem=${s.number}" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--gold-dim);border:1px solid var(--gold-line);border-radius:4px;font-size:11.5px;font-weight:600;color:var(--gold);text-decoration:none;transition:all 0.15s;margin-left:auto;" onmouseover="this.style.background='rgba(201,168,76,0.15)'" onmouseout="this.style.background='var(--gold-dim)'">Weekly Schedule →</a>` : ''}
         </div>
         <div class="courses-grid">${coursesHTML}</div>
         <div class="totals-strip">
