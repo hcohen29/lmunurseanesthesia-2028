@@ -700,6 +700,11 @@
       <p class="section-sub">A running record of what we've heard, who we've met with, and what happened next.</p>
     </div>
     <div class="updates-list" id="updatesList"></div>
+    <div id="updatesNav" style="display:none;align-items:center;gap:12px;margin-top:16px;">
+      <button id="updatesPrev" onclick="stepUpdates(-1)" style="background:white;border:1px solid var(--border-light);border-radius:6px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--ink);cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='var(--off-white)'" onmouseout="this.style.background='white'">← Newer</button>
+      <span id="updatesPageLabel" style="font-size:12px;color:var(--muted-dark);font-weight:500;"></span>
+      <button id="updatesNext" onclick="stepUpdates(1)" style="background:white;border:1px solid var(--border-light);border-radius:6px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--ink);cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='var(--off-white)'" onmouseout="this.style.background='white'">Older →</button>
+    </div>
     <div style="margin-top:20px;">
       <a href="./announcements.html" style="display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:0.5px;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.3);padding-bottom:2px;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.3)'">View all announcements &#8594;</a>
     </div>
@@ -1396,6 +1401,22 @@
   // ═══════════════════════════════════════════════════════
   const UPDATES = [
     {
+      date:       "Nov 2026",
+      tag:        "event", tagLabel: "Friendsgiving 🍂",
+      title:      "Post-Intensives Friendsgiving — Friday, Nov 13 · 6 PM",
+      body:       "We made it through Intensives &amp; we&#8217;re celebrating. After checkoffs wrap up, take some time to decompress, regroup, pack up &#8212; literally whatever you need to do &#8212; then meet us back @ the <strong>MAC Shack</strong> at <strong>6 PM</strong> for a proper Friendsgiving.<br><br>We&#8217;re doing a brown bag catered dinner: grilled chicken &amp; flank steak, baby spinach salad with fresh berries &amp; poppyseed vinaigrette, roasted veggies, red skin mashed potatoes, rolls, and brownies &#8212; plus as many pans of mac &amp; cheese as we need, because this is Friendsgiving and we deserve it.<br><br>Let us know you&#8217;re coming and what your preferences are!",
+      minutesUrl: null,
+      extraHtml:  `<div style="margin-top:20px;"><a href="https://www.surveymonkey.com/r/PSLWPRT" target="_blank" rel="noopener" style="font-size:12px;font-weight:700;color:white;background:var(--ink);text-decoration:none;padding:7px 16px;border-radius:6px;white-space:nowrap;letter-spacing:0.3px;">RSVP</a></div>`,
+    },
+    {
+      date:       "Oct 2026",
+      tag:        "announce", tagLabel: "Intensives Info",
+      title:      "Fitness Center Access During Intensives",
+      body:       "Hi friends &#8212; coordinated with admin to make sure we had access to on-campus resources &amp; the gym this week. &#127947;<br><br><strong>Location:</strong> Student Center &#8212; enter through the door where Chick-fil-A is, and it&#8217;s immediately to your left.<br><strong>Hours:</strong> Daily, 6 AM &#8211; 12 AM<br><strong>Required:</strong> Each person must fill out the liability waiver before their first visit.<br><br><a href=\"https://lmunet.edu/campus-recreation/fitness-center\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--gold);font-weight:600;\">Fitness Center Info &#8594;</a>",
+      minutesUrl: null,
+      extraHtml:  `<div style="margin-top:20px;"><a href="https://lincolnmemorialuniversity.formstack.com/forms/student_life_participation_application_agreement" target="_blank" rel="noopener" style="font-size:12px;font-weight:700;color:white;background:var(--ink);text-decoration:none;padding:7px 16px;border-radius:6px;white-space:nowrap;letter-spacing:0.3px;">Waiver</a></div>`,
+    },
+    {
       date:       "Sep 2026",
       tag:        "event", tagLabel: "Cohort Meeting",
       title:      "First Class Meeting — Vote on Your Date",
@@ -1442,12 +1463,19 @@
     if (!document.querySelector('.nav-brand-wrap').contains(e.target)) closeDropdown();
   }
 
+  let updatesPage = 0;
+  const UPDATES_PER_PAGE = 3;
+
   function renderUpdates() {
     const el = document.getElementById('updatesList');
+    const nav = document.getElementById('updatesNav');
     if (!el || !UPDATES.length) return;
     const tagClass = { announce:'ut-announce', event:'ut-event', meeting:'ut-meeting', action:'ut-action' };
     const visible = UPDATES.filter(u => !u.archiveOnly);
-    el.innerHTML = visible.map(u => {
+    const totalPages = Math.ceil(visible.length / UPDATES_PER_PAGE);
+    updatesPage = Math.min(updatesPage, totalPages - 1);
+    const slice = visible.slice(updatesPage * UPDATES_PER_PAGE, (updatesPage + 1) * UPDATES_PER_PAGE);
+    el.innerHTML = slice.map(u => {
       const cls  = tagClass[u.tag] || 'ut-announce';
       const mins = u.minutesUrl
         ? '<a href="' + u.minutesUrl + '" target="_blank" rel="noopener" class="update-minutes-link">→ Meeting minutes</a>'
@@ -1459,6 +1487,20 @@
            + '<div class="update-body">' + u.body + '</div>'
            + mins + extra + '</div></div>';
     }).join('');
+    if (nav) {
+      if (totalPages <= 1) { nav.style.display = 'none'; return; }
+      nav.style.display = 'flex';
+      document.getElementById('updatesPrev').disabled = updatesPage === 0;
+      document.getElementById('updatesNext').disabled = updatesPage === totalPages - 1;
+      document.getElementById('updatesPageLabel').textContent = (updatesPage + 1) + ' / ' + totalPages;
+    }
+  }
+
+  function stepUpdates(dir) {
+    const visible = UPDATES.filter(u => !u.archiveOnly);
+    const totalPages = Math.ceil(visible.length / UPDATES_PER_PAGE);
+    updatesPage = Math.max(0, Math.min(totalPages - 1, updatesPage + dir));
+    renderUpdates();
   }
 
     function filterBoard(type, btn) {
